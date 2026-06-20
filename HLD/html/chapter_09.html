@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 09</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 09</h2>
+<p>Design A <span class="inline-code">URL</span> Shortener In this chapter, we will tackle an interesting and classic system design interview question: designing a <span class="inline-code">URL</span> shortening service like tinyurl.</p>
+<h3>Step 1 - Understand the problem</h3>
+<p>and establish design scope System design interview questions are intentionally left open-ended. To design a well-crafted system, it is critical to ask clarification questions. Candidate: Can you give an example of how a <span class="inline-code">URL</span> shortener work? Interviewer: Assume <span class="inline-code">URL</span> https://www.systeminterview.com/q=chatsystem&amp;c=loggedin&amp;v=v3&amp;l=long is the original <span class="inline-code">URL</span>. Your service creates an alias with shorter length: https://tinyurl.com/y7keocwj. If you click the alias, it redirects you to the original <span class="inline-code">URL</span>. Candidate: What is the traffic volume? Interviewer: 100 million <span class="inline-code">URLs</span> are generated per day. Candidate: How long is the shortened <span class="inline-code">URL</span>? Interviewer: As short as possible. Candidate: What characters are allowed in the shortened <span class="inline-code">URL</span>? Interviewer: Shortened <span class="inline-code">URL</span> can be a combination of numbers (0-9) and characters (a-z, A-Z). Candidate: Can shortened <span class="inline-code">URLs</span> be deleted or updated? Interviewer: For simplicity, let us assume shortened <span class="inline-code">URLs</span> cannot be deleted or updated.</p>
+<h2>Here are the basic use cases:</h2>
+<ol><li>URL shortening: given a long URL =&gt; return a much shorter URL</li><li>URL redirecting: given a shorter URL =&gt; redirect to the original URL</li><li>High availability, scalability, and fault tolerance considerations</li></ol>
+<p>Back of the envelope estimation Write operation: 100 million <span class="inline-code">URLs</span> are generated per day.</p>
+
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Write operation per second: 100 million / 24 /3600 = 1160 Read operation: Assuming ratio of read operation to write operation is 10:1, read operation per second: 1160 * 10 = 11,600 Assuming the <span class="inline-code">URL</span> shortener service will run for 10 years, this means we must support 100 million * 365 * 10 = 365 billion records. Assume average <span class="inline-code">URL</span> length is 100. Storage requirement over 10 years: 365 billion * 100 bytes = 36.5 <span class="inline-code">TB</span> It is important for you to walk through the assumptions and calculations with your interviewer so that both of you are on the same page.</p>
+<h3>Step 2 - Propose high-</h3>
+<p>level design and get buy-in In this section, we discuss the <span class="inline-code">API</span> endpoints, <span class="inline-code">URL</span> redirecting, and <span class="inline-code">URL</span> shortening flows. <span class="inline-code">API</span> Endpoints <span class="inline-code">API</span> endpoints facilitate the communication between clients and servers. We will design the <span class="inline-code">APIs</span> <span class="inline-code">REST</span>-style. If you are unfamiliar with restful <span class="inline-code">API</span>, you can consult external materials, such as the one in the reference material [1]. A <span class="inline-code">URL</span> shortener primary needs two <span class="inline-code">API</span> endpoints.</p>
+<ol><li>URL shortening. To create a new short URL, a client sends a POST request, which</li></ol>
+<p>contains one parameter: the original long <span class="inline-code">URL</span>. The <span class="inline-code">API</span> looks like this: <span class="inline-code">POST</span> api/v1/data/shorten</p>
+<pre><code>- request parameter: {longUrl: longURLString}
+- return: shortURL
+2. URL redirecting. To redirect a short URL to the corresponding long URL, a client sends a</code></pre>
+<h2>GET request. The API looks like this:</h2>
+<p><span class="inline-code">GET</span> api/v1/<span class="inline-code">shortUrl</span></p>
+<ul><li>return: longURL for HTTP redirection</li></ul>
+<p><span class="inline-code">URL</span> redirecting</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<div class="figure-label">Figure 1 shows what happens when you enter a tinyurl onto the browser. Once the server</div>
+<p>receives a tinyurl request, it changes the short <span class="inline-code">URL</span> to the long <span class="inline-code">URL</span> with 301 redirect.</p>
+<div class="figure-label">Figure 1</div>
+<p>The detailed communication between clients and servers is shown in Figure 2.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_117_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 118" /></div>
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<div class="figure-label">Figure 2</div>
+<p>One thing worth discussing here is 301 redirect vs 302 redirect. 301 redirect. A 301 redirect shows that the requested <span class="inline-code">URL</span> is “permanently” moved to the long <span class="inline-code">URL</span>. Since it is permanently redirected, the browser caches the response, and subsequent requests for the same <span class="inline-code">URL</span> will not be sent to the <span class="inline-code">URL</span> shortening service. Instead, requests are redirected to the long <span class="inline-code">URL</span> server directly. 302 redirect. A 302 redirect means that the <span class="inline-code">URL</span> is “temporarily” moved to the long <span class="inline-code">URL</span>, meaning that subsequent requests for the same <span class="inline-code">URL</span> will be sent to the <span class="inline-code">URL</span> shortening service first. Then, they are redirected to the long <span class="inline-code">URL</span> server. Each redirection method has its pros and cons. If the priority is to reduce the server load, using 301 redirect makes sense as only the first request of the same <span class="inline-code">URL</span> is sent to <span class="inline-code">URL</span> shortening servers. However, if analytics is important, 302 redirect is a better choice as it can track click rate and source of the click more easily.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_118_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 119" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>The most intuitive way to implement <span class="inline-code">URL</span> redirecting is to use hash tables. Assuming the hash table stores &lt;<span class="inline-code">shortURL</span>, <span class="inline-code">longURL</span>&gt; pairs, <span class="inline-code">URL</span> redirecting can be implemented by the following: Get <span class="inline-code">longURL</span>: <span class="inline-code">longURL</span> = <span class="inline-code">hashTable</span>.get(<span class="inline-code">shortURL</span>) Once you get the <span class="inline-code">longURL</span>, perform the <span class="inline-code">URL</span> redirect. <span class="inline-code">URL</span> shortening Let us assume the short <span class="inline-code">URL</span> looks like this: www.tinyurl.com/{<span class="inline-code">hashValue</span>}. To support the <span class="inline-code">URL</span> shortening use case, we must find a hash function fx that maps a long <span class="inline-code">URL</span> to the *<span class="inline-code">hashValue</span>*, as shown in Figure 3. <span class="inline-code">longURL</span> hash https://tinyurl.com/ qtj5opu</p>
+<div class="figure-label">Figure 3</div>
+<p>The hash function must satisfy the following requirements: Each <span class="inline-code">longURL</span> must be hashed to one <span class="inline-code">hashValue</span>. Each <span class="inline-code">hashValue</span> can be mapped back to the <span class="inline-code">longURL</span>. Detailed design for the hash function is discussed in deep dive.</p>
+<h3>Step 3 - Design deep dive</h3>
+<p>Up until now, we have discussed the high-level design of <span class="inline-code">URL</span> shortening and <span class="inline-code">URL</span> redirecting. In this section, we dive deep into the following: data model, hash function, <span class="inline-code">URL</span> shortening and <span class="inline-code">URL</span> redirecting. Data model</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_119_img_0.png" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 120" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<pre><code>In the high-level design, everything is stored in a hash table. This is a good starting point;
+however, this approach is not feasible for real-world systems as memory resources are limited
+and expensive. A better option is to store &lt;shortURL, longURL&gt; mapping in a relational</code></pre>
+<p>database. Figure 4 shows a simple database table design. The simplified version of the table contains 3 columns: id, <span class="inline-code">shortURL</span>, <span class="inline-code">longURL</span>.</p>
+<div class="figure-label">Figure 4</div>
+<p>Hash function Hash function is used to hash a long <span class="inline-code">URL</span> to a short <span class="inline-code">URL</span>, also known as <span class="inline-code">hashValue</span>. Hash value length The <span class="inline-code">hashValue</span> consists of characters from [0-9, a-z, A-Z], containing 10 + 26 + 26 = 62 possible characters. To figure out the length of <span class="inline-code">hashValue</span>, find the smallest n such that 62^n ≥ 365 billion. The system must support up to 365 billion <span class="inline-code">URLs</span> based on the back of the envelope estimation. Table 1 shows the length of <span class="inline-code">hashValue</span> and the corresponding maximal number of <span class="inline-code">URLs</span> it can support. n Maximal number of <span class="inline-code">URLs</span> 1 62^1 = 62 2 62^2 = 3,844 3 62^3 = 238,328 4 62^ 4 = 14,776,336 5 62^5 = 916,132,832 6 62^6 = 56,800,235,584</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_120_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 121" /></div>
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>7 62^7 = 3,521,614,606,208 = ~3.5 trillion 8 62^8 = 218,340,105,584,896</p>
+<div class="figure-label">Table 1</div>
+<p>When n = 7, 62 ^ n = ~3.5 trillion, 3.5 trillion is more than enough to hold 365 billion <span class="inline-code">URLs</span>, so the length of <span class="inline-code">hashValue</span> is 7. We will explore two types of hash functions for a <span class="inline-code">URL</span> shortener. The first one is “hash + collision resolution”, and the second one is “base 62 conversion.” Let us look at them one by one. Hash + collision resolution To shorten a long <span class="inline-code">URL</span>, we should implement a hash function that hashes a long <span class="inline-code">URL</span> to a 7- character string. A straightforward solution is to use well-known hash functions like <span class="inline-code">CRC32</span>, <span class="inline-code">MD5</span>, or <span class="inline-code">SHA</span>-1. The following table compares the hash results after applying different hash</p>
+<h2>functions on this URL:</h2>
+<p>https://en.wikipedia.org/wiki/<span class="inline-code">Systems_design</span></p>
+<div class="figure-label">Table 2</div>
+<p>As shown in Table 2, even the shortest hash value (from <span class="inline-code">CRC32</span>) is too long (more than 7 characters). How can we make it shorter? The first approach is to collect the first 7 characters of a hash value; however, this method can lead to hash collisions. To resolve hash collisions, we can recursively append a new predefined string until no more collision is discovered. This process is explained in Figure 5. Hash <span class="inline-code">functionHash</span> value (Hexadecimal) <span class="inline-code">CRC32</span> 5cb54054 <span class="inline-code">MD5</span> 5a62509a84df9ee03fe1230b9df8b84e <span class="inline-code">SHA</span>-1 0eeae7916c06853901d9ccbefbfcaf4de57ed85b</p>
+
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>input: <span class="inline-code">longURL</span> no exist in <span class="inline-code">DB</span>? hash function <span class="inline-code">shortURL</span> save to <span class="inline-code">DB</span> <span class="inline-code">longURL</span> + predefined string yes has collision end start</p>
+<div class="figure-label">Figure 5</div>
+<p>This method can eliminate collision; however, it is expensive to query the database to check if a <span class="inline-code">shortURL</span> exists for every request. A technique called bloom filters [2] can improve performance. A bloom filter is a space-efficient probabilistic technique to test if an element is a member of a set. Refer to the reference material [2] for more details. Base 62 conversion Base conversion is another approach commonly used for <span class="inline-code">URL</span> shorteners. Base conversion helps to convert the same number between its different number representation systems. Base 62 conversion is used as there are 62 possible characters for <span class="inline-code">hashValue</span>. Let us use an example to explain how the conversion works: convert 1115710 to base 62 representation (1115710 represents 11157 in a base 10 system). From its name, base 62 is a way of using 62 characters for encoding. The mappings are: 0-0, ..., 9-9, 10-a, 11-b, ..., 35-z, 36-A, ..., 61-Z, where ‘a’ stands for 10, ‘Z’ stands for 61, etc. 1115710 = 2 x 622 + 55 x 621 + 59 x 620 = [2, 55, 59] -&gt; [2, T, X] in base 62 representation.</p>
+<div class="figure-label">Figure 6 shows the conversation process.</div>
+
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>1115762 17962 262 0</p>
+<h2>Section 59</h2>
+<h2>Section 55</h2>
+<p>2</p>
+<h2>X</h2>
+<h2>T</h2>
+<p>2 Remainder Representation in base 62</p>
+<div class="figure-label">Figure 6</div>
+<p>Thus, the short <span class="inline-code">URL</span> is https://tinyurl.com/2TX Comparison of the two approaches</p>
+<div class="figure-label">Table 3 shows the differences of the two approaches.</div>
+<div class="figure-label">Table 3</div>
+<p><span class="inline-code">URL</span> shortening deep dive As one of the core pieces of the system, we want the <span class="inline-code">URL</span> shortening flow to be logically simple and functional. Base 62 conversion is used in our design. We build the following diagram (Figure 7) to demonstrate the flow. Hash + collision <span class="inline-code">resolutionBase</span> 62 conversion Fixed short <span class="inline-code">URL</span> length. Short <span class="inline-code">URL</span> length is not fixed. It goes up with the <span class="inline-code">ID</span>. Does not need a unique <span class="inline-code">ID</span> generator. This option depends on a unique <span class="inline-code">ID</span> generator. Collision is possible and needs to be resolved. Collision is not possible because <span class="inline-code">ID</span> is unique. It’s not possible to figure out the next available short <span class="inline-code">URL</span> because it doesn’t depend on <span class="inline-code">ID</span>. It is easy to figure out what is the next available short <span class="inline-code">URL</span> if <span class="inline-code">ID</span> increments by 1 for a new entry. This can be a security concern.</p>
+
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<ol><li>input: longURL yes no</li><li>longURL in DB? 3. return shortURL</li><li>Convert ID to shortURL</li><li>Save ID, shortURL, longURL in DB</li><li>Generate a new ID</li></ol>
+<div class="figure-label">Figure 7</div>
+<ol><li>longURL is the input.</li><li>The system checks if the longURL is in the database.</li><li>If it is, it means the longURL was converted to shortURL before. In this case, fetch the</li></ol>
+<p><span class="inline-code">shortURL</span> from the database and return it to the client.</p>
+<ol><li>If not, the longURL is new. A new unique ID (primary key) Is generated by the unique ID generator.</li><li>Convert the ID to shortURL with base 62 conversion.</li><li>Create a new database row with the ID, shortURL, and longURL.</li></ol>
+<p>To make the flow easier to understand, let us look at a concrete example.</p>
+<h2>Assuming the input longURL is:</h2>
+<p>https://en.wikipedia.org/wiki/<span class="inline-code">Systems_design</span> Unique <span class="inline-code">ID</span> generator returns <span class="inline-code">ID</span>: 2009215674938. Convert the <span class="inline-code">ID</span> to <span class="inline-code">shortURL</span> using the base 62 conversion. <span class="inline-code">ID</span> (2009215674938) is converted to “zn9edcu”. Save <span class="inline-code">ID</span>, <span class="inline-code">shortURL</span>, and <span class="inline-code">longURL</span> to the database as shown in Table 4. id <span class="inline-code">shortURLlongURL</span></p>
+
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<div class="figure-label">Table 4</div>
+<p>The distributed unique <span class="inline-code">ID</span> generator is worth mentioning. Its primary function is to generate globally unique <span class="inline-code">IDs</span>, which are used for creating <span class="inline-code">shortURLs</span>. In a highly distributed environment, implementing a unique <span class="inline-code">ID</span> generator is challenging. Luckily, we have already discussed a few solutions in the “Design A Unique <span class="inline-code">ID</span> Generator in Distributed Systems” chapter. You can refer back to it to refresh your memory. <span class="inline-code">URL</span> redirecting deep dive</p>
+<div class="figure-label">Figure 8 shows the detailed design of the URL redirecting. As there are more reads than writes,</div>
+<p>&lt;<span class="inline-code">shortURL</span>, <span class="inline-code">longURL</span>&gt; mapping is stored in a cache to improve performance.</p>
+<div class="figure-label">Figure 8</div>
+<p>The flow of <span class="inline-code">URL</span> redirecting is summarized as follows:</p>
+<ol><li>A user clicks a short URL link: https://tinyurl.com/zn9edcu</li><li>The load balancer forwards the request to web servers.</li><li>If a shortURL is already in the cache, return the longURL directly.</li><li>If a shortURL is not in the cache, fetch the longURL from the database. If it is not in the</li></ol>
+<p>database, it is likely a user entered an invalid <span class="inline-code">shortURL</span>.</p>
+<ol><li>The longURL is returned to the user.</li></ol>
+<h3>Step 4 - Wrap up</h3>
+<p>2009215674938zn9edcu https://en.wikipedia.org/wiki/<span class="inline-code">Systems_des</span></p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_125_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 126" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>In this chapter, we talked about the <span class="inline-code">API</span> design, data model, hash function, <span class="inline-code">URL</span> shortening, and <span class="inline-code">URL</span> redirecting. If there is extra time at the end of the interview, here are a few additional talking points. Rate limiter: A potential security problem we could face is that malicious users send an overwhelmingly large number of <span class="inline-code">URL</span> shortening requests. Rate limiter helps to filter out requests based on <span class="inline-code">IP</span> address or other filtering rules. If you want to refresh your memory about rate limiting, refer to the “Design a rate limiter” chapter. Web server scaling: Since the web tier is stateless, it is easy to scale the web tier by adding or removing web servers. Database scaling: Database replication and sharding are common techniques. Analytics: Data is increasingly important for business success. Integrating an analytics solution to the <span class="inline-code">URL</span> shortener could help to answer important questions like how many people click on a link? When do they click the link? etc. Availability, consistency, and reliability. These concepts are at the core of any large system’s success. We discussed them in detail in the &quot;Scale From Zero To Millions Of Users&quot; chapter, please refresh your memory on these topics. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Reference materials [1] A <span class="inline-code">RESTful</span> Tutorial: https://www.restapitutorial.com/index.html [2] Bloom filter: https://en.wikipedia.org/wiki/<span class="inline-code">Bloom_filter</span> Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

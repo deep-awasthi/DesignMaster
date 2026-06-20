@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 12</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-lld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 12</h2>
+<p>Design a Shipping Locker System In this chapter, we will design a Shipping Locker system similar to <span class="inline-code">UPS</span>, <span class="inline-code">FedEx</span>, or Amazon Locker. It offers customers a convenient and secure way to pick up their online orders. The system manages locker availability, assigns incoming packages to appropriate lockers, and ensures a smooth package retrieval process for customers. To realize this vision of a convenient and secure locker system, let’s explore what it needs to do. Shipping Locker System Requirements Gathering The first step in designing a shipping locker system is to clarify the requirements and narrow down the scope. Here is an example of a typical prompt an interviewer might give: “Imagine you’ve just received a notification that your online order has been delivered to a shipping locker near you. You head to the locker, enter a secure access code, and instantly, the door pops open, revealing your package. Behind the scenes, the system has already managed</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_241_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 242" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>locker availability, assigned an appropriately sized compartment, and ensured a seamless pickup experience. Now, let’s design a shipping locker system that can do all of this.” Requirements clarification Here is an example of how a conversation between a candidate and an interviewer might</p>
+<h2>unfold:</h2>
+<p>Candidate: Does the system support multiple locker sizes? Interviewer: Yes, the system has lockers of different sizes. The design should ensure packages are assigned to the smallest available locker that fits, optimizing space use. Candidate: So, what happens when a package gets to the locker, and how does the customer end up picking it up? Interviewer: When a package arrives, the system finds an open locker that’s the right size and assigns it there. Once the package is tucked inside, the customer gets a notification with the locker’s location and a unique access code. They just punch in the code to pop the locker open, grab their package, and that frees up the locker for the next delivery. Candidate: Is there a time limit or any fees for using the locker? Interviewer: Good question. That’s actually a big part of how the system works. We’ve got a locker policy that gives customers a ‘Free Period’, a set number of days during which they can use the locker for free. Once that’s up, we start charging a daily fee based on the locker’s size. And if the package sits there past a ‘Maximum Period,’ which is also predefined, one of our staff members steps in, pulls it out, and clears the locker for someone else. Candidate: Since the system tracks locker usage costs through the locker policy, does it handle payments too? Interviewer: For simplicity’s sake, we let an external service take care of the actual payment processing. That’s not something the system itself has to worry about. Requirements Here are the key functional requirements we’ve identified. The system should keep track of all lockers and support different locker sizes. The system should smartly assign lockers by matching package size to the smallest available option that fits, keeping things efficient. Customers should be able to pop open their assigned locker with a unique access code.</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>The system should monitor storage costs based on the customer’s locker policy, factoring in the daily rate tied to that specific locker size. Below are the non-functional requirements: The system should handle a high volume of locker operations per site without performance degradation, accommodating busy locations. The system must maintain high availability, ensuring lockers are accessible to customers and staff at all times. Now that we’ve outlined the system’s needs, let’s pinpoint the building blocks to fulfill them. Identify Core Objects Before diving into the design, it’s important to identify the core objects. Locker: This class represents an individual locker. Site: This class represents a locker facility that consists of multiple lockers of various sizes. It is responsible for managing the collection of lockers and organizing them by size. <span class="inline-code">ShippingPackage</span>: An interface defining the standard for packages, with <span class="inline-code">BasicShippingPackage</span> as its concrete implementation, tracking details like order <span class="inline-code">ID</span>, dimensions, and status. Account: This class represents customers and their associated accounts. Customers own packages stored in lockers, and their accounts store policy information for free and maximum storage periods, along with their current balance. Design Class Diagram Now that we know the core objects and their roles, the next step is to create classes and methods that turn the requirements into an easy-to-maintain system. Let’s take a closer look. Locker The Locker class represents a physical storage unit for holding packages. It includes the</p>
+<h2>following attributes:</h2>
+<p><span class="inline-code">LockerSize</span> size: Represents the size of the locker. <span class="inline-code">ShippingPackage</span> <span class="inline-code">currentPackage</span>: Stores the package currently assigned to the locker. Date <span class="inline-code">assignmentDate</span>: Tracks the date when the package was placed in the locker. String <span class="inline-code">accessCode</span>: A unique security code required for package retrieval.</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Below is the representation of this class. It provides functionalities such as assigning a package to the locker, releasing the locker upon</p>
+<pre><code>package retrieval, calculating storage charges based on usage duration, determining locker
+availability, and ensuring secure access through code verification.
+Design choice: The Locker class is designed as a standalone entity to encapsulate
+the state and behavior of an individual locker, ensuring modularity and ease of
+maintenance.
+LockerSize</code></pre>
+<p>The <span class="inline-code">LockerSize</span> enum represents the predefined sizes of lockers available in the system. Each size is associated with specific attributes that define its dimensions and daily usage charge. String <span class="inline-code">sizeName</span>: A label identifying the locker size (e.g., &#x27;Small,&#x27; &#x27;Medium,&#x27; &#x27;Large&#x27;). <span class="inline-code">BigDecimal</span> <span class="inline-code">dailyCharge</span>: The cost per day for using a locker of a specific size (“Small,” “Medium,” or “Large”). <span class="inline-code">BigDecimal</span> width, height, depth: The physical dimensions of the locker, determining its capacity to accommodate different package sizes.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_244_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 245" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_244_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 245" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_244_img_2.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 245" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Design choice: We use an enum here because locker sizes, such as Small, Medium, and Large, are a fixed set of options that don’t change during runtime, ensuring type safety and simplicity. Site The Site class models a physical location containing a collection of lockers, organized by their size.</p>
+<h2>Key functionalities include:</h2>
+<p>Locker <span class="inline-code">findAvailableLocker</span>(<span class="inline-code">LockerSize</span> size): This method searches for an empty locker that matches the exact size you need, like &quot;small,&quot; &quot;medium,&quot; or &quot;large.&quot; Locker <span class="inline-code">placePackage</span>(<span class="inline-code">ShippingPackage</span> pkg, Date date): This method takes a package, finds it a locker that fits, and locks it inside. It also keeps track of when the package was placed there and updates the package’s status. The lockers at each site are managed using a map-based structure, where the key is a <span class="inline-code">LockerSize</span> and the value is a set of lockers for that size. This structure allows quick access to available lockers based on their size. <span class="inline-code">ShippingPackage</span> We have modeled <span class="inline-code">ShippingPackage</span> as an interface to establish a standard for all package types within the locker system. It defines key methods that any package type must implement to ensure compatibility with locker storage and retrieval processes. The <span class="inline-code">BasicShippingPackage</span></p>
+<pre><code>class is a concrete implementation of the ShippingPackage interface. It represents a standard
+package intended for storage in a locker.</code></pre>
+<p>The <span class="inline-code">ShippingStatus</span> enum defines a fixed set of valid states for a package’s lifecycle in the locker system, such as <span class="inline-code">PENDING</span>, <span class="inline-code">STORED</span>, and <span class="inline-code">RETRIEVED</span>. This enum ensures that</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_245_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 246" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_245_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 246" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<pre><code>package status updates are consistent and restricted to predefined values, enhancing type
+safety.</code></pre>
+<p>The <span class="inline-code">UML</span> diagram below illustrates this structure. <span class="inline-code">ShippingPackage</span> interface and <span class="inline-code">ShippingStatus</span> enum Design choice: Modeling <span class="inline-code">ShippingPackage</span> as an interface allows for extensibility, enabling the system to support diverse package types (e.g., fragile or perishable) without modifying core logic. Account The Account class represents a customer using the locker system. It maintains the customer’s balance for locker-related charges and is associated with an <span class="inline-code">AccountLockerPolicy</span>, which defines terms for free usage limits and maximum storage duration. This ensures that charges are applied in accordance with the policy.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_246_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 247" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_246_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 247" /></div>
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>The class provides functionality to add funds to the account. Design choice: By associating an <span class="inline-code">AccountLockerPolicy</span>, it supports flexible billing rules based on customer policies. This separation of customer and policy data enhances maintainability and allows for personalized locker usage terms. <span class="inline-code">AccountLockerPolicy</span> This class defines the rules and policies for locker usage associated with an account. It includes the number of days during which locker usage is free (<span class="inline-code">freePeriodDays</span>) and the maximum number of days a package can remain in the locker before it must be cleared (<span class="inline-code">maximumPeriodDays</span>). Here is the representation of this class. <span class="inline-code">NotificationInterface</span> Defines the contract for sending notifications. It includes a single method, <span class="inline-code">sendNotification</span>, which takes a message and an account as parameters.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_247_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 248" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_247_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 248" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_247_img_2.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 248" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_247_img_3.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 248" /></div>
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>Implementations of this interface manage user notifications, such as alerts for package pickup availability and locker usage fees. Best practices: In <span class="inline-code">OOD</span> interviews, external systems like notifications are often represented as interfaces to keep the design flexible and scalable while avoiding unnecessary complexity. <span class="inline-code">LockerManager</span> The <span class="inline-code">LockerManager</span> class is responsible for managing package storage and retrieval at a specific site, ensuring that packages are assigned to suitable lockers based on size availability.</p>
+<h2>It works with the following components:</h2>
+<p>Site site: Represents the physical location of the lockers. <span class="inline-code">NotificationInterface</span> <span class="inline-code">notificationService</span>: Sends notifications to customers when their packages are assigned to a locker or ready for pick-up. Map&lt;String, Account&gt; accounts: Maintains a mapping of account <span class="inline-code">IDs</span> to user accounts for managing locker usage and charges. Map&lt;String, Locker&gt; <span class="inline-code">accessCodeMap</span>: Maintains a mapping of access codes to lockers, allowing for quick retrieval during package pick-up. Design choice: The <span class="inline-code">LockerManager</span> class is designed as a facade to simplify interactions between core objects, providing a single point of control for package assignment and retrieval. Complete Class Diagram Below is the complete class diagram of the shipping locker service:</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_248_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 249" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_248_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 249" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_248_img_2.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 249" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>Class Diagram of Locker Service With the class diagram as our guide, let’s bring the system to life through code. Code - Shipping Locker Service</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_249_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 250" /></div>
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>After completing the class diagram, the interviewer might ask you to implement key components of the shipping locker system. In this section, we’ll implement essential classes that handle locker operations, package assignments, and notifications. Locker and <span class="inline-code">LockerSize</span> The Locker class represents an individual locker unit. Each locker has a fixed size (an instance of <span class="inline-code">LockerSize</span>) and maintains details about the currently stored package, including the assignment date and a randomly generated access code for secure retrieval. This class provides functionalities for: Assigning a package to a locker, recording the assignment date, and generating a secure access code. Calculating storage charges based on the number of days the package has been stored and the locker’s daily rate, according to its size. Once the package is picked up, make the locker available for future use. Below is the implementation of this class.</p>
+<pre><code>public class Locker {
+    // Size of the locker
+    private final LockerSize size;
+    // Currently stored package
+    private ShippingPackage currentPackage;
+    // Date when the current package was assigned
+    private Date assignmentDate;
+    // Access code for retrieving the package
+    private String accessCode;
+    public Locker(LockerSize size) {
+        this.size = size;
+    }
+    // Assigns a package to this locker and generates an access c
+    public void assignPackage(ShippingPackage pkg, Date date) {
+        this.currentPackage = pkg;
+        this.assignmentDate = date;
+        this.accessCode = generateAccessCode();
+    }
+    // Releases the locker by removing the current package and it
+    public void releaseLocker() {</code></pre>
+
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<pre><code>        this.currentPackage = null;
+        this.assignmentDate = null;
+        this.accessCode = null;
+    }
+    // Calculates storage charges based on usage duration and pol
+    public BigDecimal calculateStorageCharges() {
+        if (currentPackage == null || assignmentDate == null) {
+            return BigDecimal.ZERO;
+        }</code></pre>
+<p><span class="inline-code">AccountLockerPolicy</span> policy = <span class="inline-code">currentPackage</span>.<span class="inline-code">getUser</span>().get long <span class="inline-code">totalDaysUsed</span> = (new <span class="inline-code">Date()</span>.<span class="inline-code">getTime</span>() - <span class="inline-code">assignmentDate</span>.<span class="inline-code">getTime</span>()) // Check if exceeds maximum period</p>
+<pre><code>        if (totalDaysUsed &gt; policy.getMaximumPeriodDays()) {
+            currentPackage.updateShippingStatus(ShippingStatus.EX
+            throw new MaximumStoragePeriodExceededException(</code></pre>
+<p>&quot;Package has exceeded maximum allowed storage + policy.<span class="inline-code">getMaximumPeriodDays</span>()</p>
+<pre><code>                            + &quot; days&quot;);
+        }
+        // Calculate chargeable days (excluding free period)
+        long chargeableDays = Math.max(0, totalDaysUsed - policy
+        return size.dailyCharge.multiply(new BigDecimal(chargeabl
+    }
+    // Checks if the locker is available for new packages
+    public boolean isAvailable() {
+        return currentPackage == null;
+    }
+    // Verifies if the provided access code matches the locker&#x27;s 
+    public boolean checkAccessCode(String code) {
+        return this.accessCode != null &amp;&amp; accessCode.equals(code)
+    }
+    // getter and setter methods are omitted for brevity
+}
+The LockerSize enum defines different locker sizes, each with an associated daily charge rate
+and physical dimensions (width, height, and depth). These predefined sizes allow the system to</code></pre>
+
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>categorize lockers and ensure packages are placed in appropriately sized compartments.</p>
+<pre><code>public enum LockerSize {
+    // Small locker with 10x10x10 dimensions and $5 daily charge
+    SMALL(
+            &quot;Small&quot;,
+            new BigDecimal(&quot;5.00&quot;),
+            new BigDecimal(&quot;10.00&quot;),
+            new BigDecimal(&quot;10.00&quot;),
+            new BigDecimal(&quot;10.00&quot;)),
+    // Medium locker with 20x20x20 dimensions and $10 daily charg
+    MEDIUM(
+            &quot;Medium&quot;,
+            new BigDecimal(&quot;10.00&quot;),
+            new BigDecimal(&quot;20.00&quot;),
+            new BigDecimal(&quot;20.00&quot;),
+            new BigDecimal(&quot;20.00&quot;)),
+    // Large locker with 30x30x30 dimensions and $15 daily charge
+    LARGE(
+            &quot;Large&quot;,
+            new BigDecimal(&quot;15.00&quot;),
+            new BigDecimal(&quot;30.00&quot;),
+            new BigDecimal(&quot;30.00&quot;),
+            new BigDecimal(&quot;30.00&quot;));
+    // Name of the locker size
+    final String sizeName;
+    // Daily charge for using this size locker
+    final BigDecimal dailyCharge;
+    // Width of the locker in inches
+    final BigDecimal width;
+    // Height of the locker in inches
+    final BigDecimal height;
+    // Depth of the locker in inches
+    final BigDecimal depth;
+    // Creates a new locker size with specified dimensions and ch
+    LockerSize(
+            String sizeName,
+            BigDecimal dailyCharge,
+            BigDecimal width,
+            BigDecimal height,
+            BigDecimal depth) {
+        this.sizeName = sizeName;
+        this.dailyCharge = dailyCharge;
+        this.width = width;</code></pre>
+
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<pre><code>        this.height = height;
+        this.depth = depth;
+    }
+    // getter methods are omitted for brevity
+}</code></pre>
+<p>Implementation choice: You might have noticed that we have used <span class="inline-code">BigDecimal</span> for <span class="inline-code">dailyCharge</span> and dimensions in the <span class="inline-code">LockerSize</span> enum to ensure precision in financial calculations, unlike float or double, which could introduce rounding errors. Site The Site class represents a physical location containing multiple lockers, organized by size for efficient storage management. It maintains a collection of lockers grouped by size, treating lockers of the same size as interchangeable. This means any available locker of a given size can store a package, simplifying locker assignment. To efficiently manage lockers, the class uses a map-based structure, where: Each key is a <span class="inline-code">LockerSize</span>, representing a specific locker category (&quot;Small,&quot; &quot;Medium,&quot; &quot;Large&quot;). Each value is a Set&lt;Locker&gt;, containing all lockers of that size. This design allows the system to quickly find an available locker and assign packages accordingly. Here is the implementation of this class.</p>
+<pre><code>public class Site {
+    // Map of locker sizes to sets of lockers of that size
+    final Map&lt;LockerSize, Set&lt;Locker&gt;&gt; lockers = new HashMap&lt;&gt;()
+    // Creates a new site with specified number of lockers for ea
+    public Site(Map&lt;LockerSize, Integer&gt; lockers) {
+        for (Map.Entry&lt;LockerSize, Integer&gt; entry : lockers.entry
+            Set&lt;Locker&gt; lockerSet = new HashSet&lt;&gt;();
+            for (int i = 0; i &lt; entry.getValue(); i++) {
+                lockerSet.add(new Locker(entry.getKey()));
+            }
+            this.lockers.put(entry.getKey(), lockerSet);
+        }
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<p>// Finds an available locker of the specified size</p>
+<pre><code>    public Locker findAvailableLocker(LockerSize size) {
+        for (Locker locker : lockers.get(size)) {
+            if (locker.isAvailable()) {
+                return locker;
+            }
+        }
+        return null;
+    }
+    // Places a package in an available locker of appropriate siz
+    public Locker placePackage(ShippingPackage pkg, Date date) {
+        // Determine the smallest locker size that can fit this p
+        LockerSize size = pkg.getLockerSize();
+        Locker locker = findAvailableLocker(size);
+        if (locker != null) {
+            locker.assignPackage(pkg, date);
+            pkg.updateShippingStatus(ShippingStatus.IN_LOCKER);
+            return locker;
+        }
+        throw new NoLockerAvailableException(</code></pre>
+<p>&quot;No locker of size &quot; + size + &quot; is currently avai</p>
+<pre><code>    }
+}
+findAvailableLocker(LockerSize size): Locates and returns an available locker of the
+specified size.
+placePackage(ShippingPackage pkg, Date date): A convenience method that finds an
+available locker and assigns the package in one step. If no locker is available, it returns
+null.</code></pre>
+<p>Implementation choice: While the same result could be achieved by separately calling <span class="inline-code">findAvailableLocker</span>() and then manually assigning a package, providing helper methods such as <span class="inline-code">placePackage</span>() is beneficial. It provides atomic transaction-like behavior by encapsulating the find-and-assign operations in a single method call, ensuring thread safety and preventing inconsistent states that could occur if these operations were performed separately. <span class="inline-code">BasicShippingPackage</span> The <span class="inline-code">BasicShippingPackage</span> class represents a standard package within the locker system, implementing the <span class="inline-code">ShippingPackage</span> interface. It encapsulates essential package details such</p>
+
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>as order <span class="inline-code">ID</span>, user account, dimensions (width, height, depth), and shipping status. These attributes allow the system to determine where the package can be stored. Here is the implementation of this class.</p>
+<pre><code>public class BasicShippingPackage implements ShippingPackage {
+    // Unique identifier for the order
+    private final String orderId;
+    // User account associated with this package
+    private final Account user;
+    private final BigDecimal width;
+    private final BigDecimal height;
+    private final BigDecimal depth;
+    // Current status of the package
+    private ShippingStatus status;
+    // Creates a new shipping package with specified dimensions
+    public BasicShippingPackage(
+            String orderId, Account user, BigDecimal width, BigDe
+        this.orderId = orderId;
+        this.user = user;
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
+        this.status = ShippingStatus.CREATED;
+    }
+    // Returns the current package status
+    @Override
+    public ShippingStatus getStatus() {
+        return status;
+    }
+    // Updates the package status
+    @Override
+    public void updateShippingStatus(ShippingStatus status) {
+        this.status = status;
+    }
+    // Determines the smallest locker size that can fit this pack
+    @Override
+    public LockerSize getLockerSize() {
+        for (LockerSize size : LockerSize.values()) {</code></pre>
+<p>if (size.<span class="inline-code">getWidth</span>().<span class="inline-code">compareTo</span>(width) &gt;= 0 &amp;&amp; size.<span class="inline-code">getHeight</span>().<span class="inline-code">compareTo</span>(height) &gt;= 0</p>
+<pre><code>                    &amp;&amp; size.getDepth().compareTo(depth) &gt;= 0) {</code></pre>
+
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<pre><code>                return size;
+            }
+        }
+        throw new PackageIncompatibleException(&quot;No locker size av</code></pre>
+<p>} // getter methods are omitted for brevity</p>
+<pre><code>}
+A key functionality of this class is determining the appropriate locker size for a package. The
+getLockerSize() method evaluates all available locker sizes (&quot;Small,&quot; &quot;Medium,&quot; &quot;Large&quot;) and
+returns the smallest suitable locker based on the package’s dimensions.
+Additionally, the updateShippingStatus() method allows the locker system to communicate
+status updates (e.g., when a package is stored or retrieved) to the user.</code></pre>
+<p>Account and <span class="inline-code">AccountLockerPolicy</span> The Account class represents a user’s account within the locker system. It stores basic account details, including the <span class="inline-code">accountId</span>, <span class="inline-code">ownerName</span>, the current usage charges, and the user’s <span class="inline-code">lockerPolicy</span> (an instance of <span class="inline-code">AccountLockerPolicy</span>), which defines the user-specific rules for locker usage. The account <span class="inline-code">usageCharges</span> is used to track locker usage fees, and funds can be added dynamically using the <span class="inline-code">addUsageCharge</span>(<span class="inline-code">BigDecimal</span> amount) method.</p>
+<pre><code>public class Account {
+    private final String accountId;
+    private final String ownerName;
+    // Policy defining locker usage rules for this account
+    private final AccountLockerPolicy lockerPolicy;
+    // Total charges accumulated for locker usage
+    private BigDecimal usageCharges = new BigDecimal(&quot;0.00&quot;);
+    // Creates a new account with specified details and policy
+    public Account(String accountId, String ownerName, AccountLoc
+        this.accountId = accountId;
+        this.ownerName = ownerName;
+        this.lockerPolicy = lockerPolicy;
+    }
+    // Adds a charge to the account&#x27;s total usage charges
+    public void addUsageCharge(BigDecimal amount) {</code></pre>
+
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<pre><code>        usageCharges = usageCharges.add(amount);
+    }
+    // getter methods are omitted for brevity
+}
+The AccountLockerPolicy class encapsulates the rules for locker usage. It specifies:</code></pre>
+<p><span class="inline-code">freePeriodDays</span>: The number of days a user can store a package without incurring charges. <span class="inline-code">maximumPeriodDays</span>: The maximum number of days a package can remain in a locker before further action is required (e.g., additional charges or forced retrieval). This policy allows customized locker usage limits, ensuring that different users can have varying storage privileges based on their account settings. Check out the implementation of this class.</p>
+<pre><code>public class AccountLockerPolicy {
+    // Number of days of free storage
+    final int freePeriodDays;
+    // Maximum number of days a package can be stored
+    final int maximumPeriodDays;
+    // Creates a new locker policy with specified free and maximu
+    public AccountLockerPolicy(int freePeriodDays, int maximumPer
+        this.freePeriodDays = freePeriodDays;
+        this.maximumPeriodDays = maximumPeriodDays;
+    }
+    // getter methods are omitted for brevity
+}
+LockerManager
+The LockerManager class acts as a facade for the overall locker system. It serves as the
+central coordinator for the locker system, coordinating package assignments to lockers,
+package pick-ups, and locker releases. It interacts with Site, which oversees the locker</code></pre>
+<p>inventory and handles the actual placement of packages in available lockers. The</p>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<p><span class="inline-code">NotificationInterface</span> is responsible for sending user notifications regarding package assignments and pickups. Additionally, it maintains a Map&lt;String, Account&gt; to store customer accounts, which are used to track locker usage charges. To ensure secure and efficient package retrieval, it uses a Map&lt;String, Locker&gt; to map access codes to their corresponding lockers. Below is the implementation of this class.</p>
+<pre><code>public class LockerManager {
+    // The site being managed
+    private final Site site;
+    // Service for sending notifications
+    private final NotificationInterface notificationService;
+    // Map of account IDs to account objects
+    private final Map&lt;String, Account&gt; accounts;
+    // Map of access codes to lockers
+    private final Map&lt;String, Locker&gt; accessCodeMap = new HashMap
+    // Creates a new locker manager for a site
+    public LockerManager(
+            Site site, Map&lt;String, Account&gt; accounts, Notificatio
+        this.site = site;
+        this.accounts = accounts;
+        this.notificationService = notificationService;
+    }
+    // Assigns a package to an available locker
+    public Locker assignPackage(ShippingPackage pkg, Date date) {
+        Locker locker = site.placePackage(pkg, date);
+        if (locker != null) {
+            accessCodeMap.put(locker.getAccessCode(), locker);
+            notificationService.sendNotification(</code></pre>
+<p>&quot;Package assigned to locker&quot; + locker.<span class="inline-code">getAcce</span></p>
+<pre><code>        }
+        return locker;
+    }
+    // Processes package pickup using an access code
+    public Locker pickUpPackage(String accessCode) {
+        Locker locker = accessCodeMap.get(accessCode);</code></pre>
+<p>if (locker != null &amp;&amp; locker.<span class="inline-code">checkAccessCode</span>(<span class="inline-code">accessCode</span>))</p>
+<pre><code>            try {</code></pre>
+<p><span class="inline-code">BigDecimal</span> charge = locker.<span class="inline-code">calculateStorageCharge</span></p>
+<pre><code>                ShippingPackage pkg = locker.getPackage();</code></pre>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<pre><code>                locker.releaseLocker();
+                pkg.getUser().addUsageCharge(charge);
+                pkg.updateShippingStatus(ShippingStatus.RETRIEVED
+                return locker;
+            } catch (MaximumStoragePeriodExceededException e) {
+                locker.releaseLocker();
+                return locker;
+            }
+        }
+        return null;
+    }
+    // getter methods are omitted for brevity
+}
+assignPackage(ShippingPackage pkg, Date date): Assigns a package to an available</code></pre>
+<p>locker via site.<span class="inline-code">placePackage</span>(). <span class="inline-code">pickUpPackage</span>(String <span class="inline-code">accessCode</span>): Retrieves the package if the provided access code</p>
+<h2>matches the stored locker. It then:</h2>
+<p>Calculates charges based on locker usage duration. Updates the user’s usage charges. Releases the locker and marks the package as retrieved. Best practices: In complex systems, a manager class like <span class="inline-code">LockerManager</span> is commonly used to centralize operations such as package assignment, retrieval, and notifications. However, to maintain a thin manager class, it is essential to delegate low-level operations, such as finding available lockers, storing packages, and enforcing locker policies, to specialized classes like Site and Locker. Deep Dive Topic Now that the basic design is complete, the interviewer might ask you some deep dive questions. Let’s check out some of these. Designing an extensible locker creation system Currently, lockers are created directly based on predefined sizes, which makes the system rigid and difficult to extend. For example, if we need to introduce a new locker size (e.g., <span class="inline-code">XLARGE</span>) or a specialized locker type (e.g., temperature-controlled lockers), we would have to modify</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_259_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 260" /></div>
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p>multiple parts of the codebase where lockers are instantiated manually. This increases maintenance overhead and reduces flexibility. To address this, we can use the Factory design pattern to centralize the creation logic for different types of lockers, making the system more modular and extensible. Note: To learn more about the Factory Pattern and its common use cases, refer to the Further Reading section at the end of this chapter. Here is the code for the <span class="inline-code">LockerFactory</span> class.</p>
+<pre><code>class LockerFactory {
+    // Creates a new locker of the specified size
+    public static Locker createLocker(LockerSize size) {
+        return switch (size) {
+            case SMALL -&gt; new Locker(LockerSize.SMALL);
+            case MEDIUM -&gt; new Locker(LockerSize.MEDIUM);
+            case LARGE -&gt; new Locker(LockerSize.LARGE);
+            case XLARGE -&gt; new Locker(LockerSize.XLARGE);
+        };
+    }
+}
+Here’s how a LockerFactory class enhances the locker system:</code></pre>
+<p>Centralized object creation: The <span class="inline-code">LockerFactory</span> encapsulates the locker instantiation process, so any changes to locker creation (e.g., adding new sizes or types) are localized to this class. Extensibility: If we need to add new locker sizes or types in the future, the factory class can be easily updated, without modifying core business logic in other parts of the system. Improved readability and maintainability: Using a factory method to create lockers allows us to separate locker creation from locker usage logic, aligning with the Single Responsibility Principle. Decoupling event handling with an event-driven approach Currently, the <span class="inline-code">LockerManager</span> directly invokes <span class="inline-code">NotificationInterface</span>.<span class="inline-code">sendNotification</span>() to notify customers when key events occur, such as package assignment or locker expiration. While this</p>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<p>approach works, it tightly couples <span class="inline-code">LockerManager</span> with the notification system, meaning any changes to how notifications are sent require modifying <span class="inline-code">LockerManager</span> itself. How can we improve the system design to make event handling more flexible and scalable? To decouple event handling from <span class="inline-code">LockerManager</span>, we can use an event-driven approach where multiple components can subscribe to and respond to system events dynamically. Instead of directly calling <span class="inline-code">sendNotification</span>(), <span class="inline-code">LockerManager</span> will broadcast events to registered observers, ensuring a more modular and extensible system. By implementing the Observer pattern, we can send notifications to customers or administrative staff when certain events occur, such as when a package is delivered or a locker exceeds its maximum usage period. Note: To learn more about the Observer Pattern and its common use cases, refer to the Elevator System chapter. Instead of hardcoding the notification logic in the <span class="inline-code">LockerManager</span>, the locker system can maintain a list of observers. These observers can be various notification services (e.g., email, <span class="inline-code">SMS</span>) or other systems (e.g., analytics, metrics). When a key event occurs, the <span class="inline-code">LockerManager</span> can notify all registered observers, allowing the system to be easily extended without modifying the core logic. Below is the implementation of the relevant interface and classes for the observer pattern. Subject: <span class="inline-code">LockerManagerChange</span>, which maintains a list of observers and notifies them of state changes, such as package assignments.</p>
+<pre><code>class LockerManagerChange {
+    // List of observers that will be notified of locker events
+    private final List&lt;LockerEventObserver&gt; observers = new Array
+    public void addObserver(LockerEventObserver observer) {
+        observers.add(observer);
+    }
+    public void removeObserver(LockerEventObserver observer) {
+        observers.remove(observer);
+    }
+    private void notifyObservers(String message, Account account)
+        for (LockerEventObserver observer : observers) {
+            observer.update(message, account);</code></pre>
+
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<pre><code>        }
+    }
+    // Assigns a package to an available locker and notifies obse
+    public void assignPackage(ShippingPackage pkg) {
+        Locker locker = assignLockerToPackage(pkg);
+        if (locker != null) {
+            notifyObservers(&quot;Package assigned to locker&quot;, pkg.get
+        }
+    }
+    private Locker assignLockerToPackage(ShippingPackage pkg) {
+        return null;
+    }
+}
+Observer: The LockerEventObserver interface, which defines the update() method that</code></pre>
+<p>observers must implement to handle notifications. // Interface for objects that need to be notified of locker event</p>
+<pre><code>public interface LockerEventObserver {
+    // Updates the observer with a message and the affected accou
+    void update(String message, Account account);
+}
+Concrete Observers: Classes like EmailNotification, which implement
+LockerEventObserver to send email alerts for specific events, enabling flexible and</code></pre>
+<p>extensible event handling. // Implementation of <span class="inline-code">LockerEventObserver</span> that sends email notific</p>
+<pre><code>class EmailNotification implements LockerEventObserver {
+    // Updates the observer with a message and sends it to the ac
+    public void update(String message, Account account) {
+        // send email to account owner
+    }
+}
+Wrap Up</code></pre>
+
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<p>In this chapter, we designed a Shipping Locker System. We began by clarifying requirements through a structured Q&amp;A discussion, similar to an interviewer-candidate exchange. From there, we identified core objects and developed a class diagram to represent the system&#x27;s structure. We implemented the key components of the locker service, bringing the design to life. In the deep dive section, we explored advanced topics, including how the Factory Pattern simplifies locker instantiation for future scalability and how the Observer Pattern decouples event handling, enabling flexible notifications. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Further Reading: Factory Design Pattern This section gives a quick overview of the design patterns used in this chapter. It’s helpful if you’re new to these patterns or need a refresher to better understand the design choices. Factory design pattern The Factory Method Pattern is a creational design pattern that provides an interface for creating instances of a class but allows subclasses to alter the type of objects that will be created. In the shipping locker system, we use the Factory pattern through the <span class="inline-code">LockerFactory</span> class to centralize locker creation, enabling easy addition of new locker sizes (e.g., <span class="inline-code">XLARGE</span>) without modifying existing code. To illustrate the Factory pattern in another domain, the following example uses an e-commerce payment system. Problem Imagine building an e-commerce payment system that initially supports only credit card payments, with logic tied to a <span class="inline-code">CreditCardPayment</span> class. As demand grows for new payment options like digital wallets or cryptocurrency, adding them requires altering multiple parts of the tightly coupled codebase, increasing maintenance effort, and reducing flexibility. Solution</p>
+
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<p>Factory design pattern The Factory Method pattern addresses this by replacing direct object creation (using the new operator) with a factory method that encapsulates instantiation. This allows new payment types to be added via subclasses without changing existing code, decoupling payment processing from the main system for better scalability and maintainability. When to use The factory design pattern is particularly useful in the following scenarios: Use the Factory Method when the specific types and dependencies of objects required by your code are unknown in advance. Use the Factory Method to allow users of your library or framework to extend its internal components without modifying existing code. Use the Factory Method to optimize resource utilization by reusing existing objects rather than creating new instances each time. Mark as Complete</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_264_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 265" /></div>
+</div>
+  </div>
+</body>
+</html>

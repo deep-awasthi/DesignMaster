@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 08</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 08</h2>
+<p>Design A Unique <span class="inline-code">ID</span> Generator In Distributed Systems In this chapter, you are asked to design a unique <span class="inline-code">ID</span> generator in distributed systems. Your first thought might be to use a primary key with the <span class="inline-code">auto_increment</span> attribute in a traditional database. However, <span class="inline-code">auto_increment</span> does not work in a distributed environment because a single database server is not large enough and generating unique <span class="inline-code">IDs</span> across multiple databases with minimal delay is challenging.</p>
+<h2>Here are a few examples of unique IDs:</h2>
+<div class="figure-label">Figure 1</div>
+<h3>Step 1 - Understand the problem</h3>
+<p>and establish design scope Asking clarification questions is the first step to tackle any system design interview question. Here is an example of candidate-interviewer interaction: Candidate: What are the characteristics of unique <span class="inline-code">IDs</span>? Interviewer: <span class="inline-code">IDs</span> must be unique and sortable. Candidate: For each new record, does <span class="inline-code">ID</span> increment by 1? Interviewer: The <span class="inline-code">ID</span> increments by time but not necessarily only increments by 1. <span class="inline-code">IDs</span> created in the evening are larger than those created in the morning on the same day.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_107_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 108" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Candidate: Do <span class="inline-code">IDs</span> only contain numerical values? Interviewer: Yes, that is correct. Candidate: What is the <span class="inline-code">ID</span> length requirement? Interviewer: <span class="inline-code">IDs</span> should fit into 64-bit. Candidate: What is the scale of the system? Interviewer: The system should be able to generate 10,000 <span class="inline-code">IDs</span> per second. Above are some of the sample questions that you can ask your interviewer. It is important to understand the requirements and clarify ambiguities. For this interview question, the</p>
+<h2>requirements are listed as follows:</h2>
+<p><span class="inline-code">IDs</span> must be unique. <span class="inline-code">IDs</span> are numerical values only. <span class="inline-code">IDs</span> fit into 64-bit. <span class="inline-code">IDs</span> are ordered by date. Ability to generate over 10,000 unique <span class="inline-code">IDs</span> per second.</p>
+<h3>Step 2 - Propose high-</h3>
+<p>level design and get buy-in Multiple options can be used to generate unique <span class="inline-code">IDs</span> in distributed systems. The options we</p>
+<h2>considered are:</h2>
+<p>Multi-master replication Universally unique identifier (<span class="inline-code">UUID</span>) Ticket server Twitter snowflake approach Let us look at each of them, how they work, and the pros/cons of each option. Multi-master replication As shown in Figure 2, the first approach is multi-master replication.</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>1, 3, 5 ... 2, 4, 6 ... Web servers</p>
+<div class="figure-label">Figure 2</div>
+<p>This approach uses the databases’ <span class="inline-code">auto_increment</span> feature. Instead of increasing the next <span class="inline-code">ID</span> by 1, we increase it by k, where k is the number of database servers in use. As illustrated in</p>
+<div class="figure-label">Figure 2, next ID to be generated is equal to the previous ID in the same server plus 2. This</div>
+<p>solves some scalability issues because <span class="inline-code">IDs</span> can scale with the number of database servers. However, this strategy has some major drawbacks: Hard to scale with multiple data centers <span class="inline-code">IDs</span> do not go up with time across multiple servers. It does not scale well when a server is added or removed.</p>
+<h2>UUID</h2>
+<p>A <span class="inline-code">UUID</span> is another easy way to obtain unique <span class="inline-code">IDs</span>. <span class="inline-code">UUID</span> is a 128-bit number used to identify information in computer systems. <span class="inline-code">UUID</span> has a very low probability of getting collusion. Quoted from Wikipedia, “after generating 1 billion <span class="inline-code">UUIDs</span> every second for approximately 100 years would the probability of creating a single duplicate reach 50%” [1]. Here is an example of <span class="inline-code">UUID</span>: 09c93e62-50b4-468d-bf8a-c07e1040bfb2. <span class="inline-code">UUIDs</span> can be generated independently without coordination between servers. Figure 3 presents the <span class="inline-code">UUIDs</span> design.</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Web Sever <span class="inline-code">ID</span> gen Web Sever <span class="inline-code">ID</span> gen Web Sever <span class="inline-code">ID</span> gen Web Sever <span class="inline-code">ID</span> gen</p>
+<div class="figure-label">Figure 3</div>
+<p>In this design, each web server contains an <span class="inline-code">ID</span> generator, and a web server is responsible for generating <span class="inline-code">IDs</span> independently.</p>
+<h2>Pros:</h2>
+<p>Generating <span class="inline-code">UUID</span> is simple. No coordination between servers is needed so there will not be any synchronization issues. The system is easy to scale because each web server is responsible for generating <span class="inline-code">IDs</span> they consume. <span class="inline-code">ID</span> generator can easily scale with web servers.</p>
+<h2>Cons:</h2>
+<p><span class="inline-code">IDs</span> are 128 bits long, but our requirement is 64 bits. <span class="inline-code">IDs</span> do not go up with time. <span class="inline-code">IDs</span> could be non-numeric. Ticket Server Ticket servers are another interesting way to generate unique <span class="inline-code">IDs</span>. Flicker developed ticket servers to generate distributed primary keys [2]. It is worth mentioning how the system works.</p>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Web Sever Web Sever Web Sever Web Sever Ticket Server</p>
+<div class="figure-label">Figure 4</div>
+<p>The idea is to use a centralized <span class="inline-code">auto_increment</span> feature in a single database server (Ticket Server). To learn more about this, refer to flicker’s engineering blog article [2].</p>
+<h2>Pros:</h2>
+<p>Numeric <span class="inline-code">IDs</span>. It is easy to implement, and it works for small to medium-scale applications.</p>
+<h2>Cons:</h2>
+<p>Single point of failure. Single ticket server means if the ticket server goes down, all systems that depend on it will face issues. To avoid a single point of failure, we can set up multiple ticket servers. However, this will introduce new challenges such as data synchronization. Twitter snowflake approach Approaches mentioned above give us some ideas about how different <span class="inline-code">ID</span> generation systems work. However, none of them meet our specific requirements; thus, we need another approach. Twitter’s unique <span class="inline-code">ID</span> generation system called “snowflake” [3] is inspiring and can satisfy our requirements. Divide and conquer is our friend. Instead of generating an <span class="inline-code">ID</span> directly, we divide an <span class="inline-code">ID</span> into different sections. Figure 5 shows the layout of a 64-bit <span class="inline-code">ID</span>.</p>
+
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>0                                   timestamp                                 datacenter <span class="inline-code">ID</span>  machine <span class="inline-code">ID</span>        sequence number 41 bits 5 bits 5 bits 12 bits1 bit</p>
+<div class="figure-label">Figure 5</div>
+<p>Each section is explained below. Sign bit: 1 bit. It will always be 0. This is reserved for future uses. It can potentially be used to distinguish between signed and unsigned numbers. Timestamp: 41 bits. Milliseconds since the epoch or custom epoch. We use Twitter snowflake default epoch 1288834974657, equivalent to Nov 04, 2010, 01:42:54 <span class="inline-code">UTC</span>. Datacenter <span class="inline-code">ID</span>: 5 bits, which gives us 2 ^ 5 = 32 datacenters. Machine <span class="inline-code">ID</span>: 5 bits, which gives us 2 ^ 5 = 32 machines per datacenter. Sequence number: 12 bits. For every <span class="inline-code">ID</span> generated on that machine/process, the sequence number is incremented by 1. The number is reset to 0 every millisecond.</p>
+<h3>Step 3 - Design deep dive</h3>
+<p>In the high-level design, we discussed various options to design a unique <span class="inline-code">ID</span> generator in distributed systems. We settle on an approach that is based on the Twitter snowflake <span class="inline-code">ID</span> generator. Let us dive deep into the design. To refresh our memory, the design diagram is relisted below. 0                                   timestamp                                 datacenter <span class="inline-code">ID</span>  machine <span class="inline-code">ID</span>        sequence number 41 bits 5 bits 5 bits 12 bits1 bit</p>
+<div class="figure-label">Figure 6</div>
+<p>Datacenter <span class="inline-code">IDs</span> and machine <span class="inline-code">IDs</span> are chosen at the startup time, generally fixed once the system is up running. Any changes in datacenter <span class="inline-code">IDs</span> and machine <span class="inline-code">IDs</span> require careful review since an accidental change in those values can lead to <span class="inline-code">ID</span> conflicts. Timestamp and sequence numbers are generated when the <span class="inline-code">ID</span> generator is running. Timestamp The most important 41 bits make up the timestamp section. As timestamps grow with time, <span class="inline-code">IDs</span> are sortable by time. Figure 7 shows an example of how binary representation is converted to <span class="inline-code">UTC</span>. You can also convert <span class="inline-code">UTC</span> back to binary representation using a similar method.</p>
+
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>0-00100010101001011010011011000101101011000-01010-01100-000000000000 to decimal 297616116568 Apr 09 2020 16:51:31UTC 1586451091225 + Twitter epoch 1288834974657 convert milliseconds to <span class="inline-code">UTC</span> time</p>
+<div class="figure-label">Figure 7</div>
+<p>The maximum timestamp that can be represented in 41 bits is 2 ^ 41 - 1 = 2199023255551 milliseconds (ms), which gives us: ~ 69 years = 2199023255551 ms / 1000 / 365 days / 24 hours/ 3600 seconds. This means the <span class="inline-code">ID</span> generator will work for 69 years and having a custom epoch time close to today’s date delays the overflow time. After 69 years, we will need a new epoch time or adopt other techniques to migrate <span class="inline-code">IDs</span>. Sequence number Sequence number is 12 bits, which give us 2 ^ 12 = 4096 combinations. This field is 0 unless more than one <span class="inline-code">ID</span> is generated in a millisecond on the same server. In theory, a machine can support a maximum of 4096 new <span class="inline-code">IDs</span> per millisecond.</p>
+<h3>Step 4 - Wrap up</h3>
+<p>In this chapter, we discussed different approaches to design a unique <span class="inline-code">ID</span> generator: multi- master replication, <span class="inline-code">UUID</span>, ticket server, and Twitter snowflake-like unique <span class="inline-code">ID</span> generator. We settle on snowflake as it supports all our use cases and is scalable in a distributed environment. If there is extra time at the end of the interview, here are a few additional talking points:</p>
+
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>Clock synchronization. In our design, we assume <span class="inline-code">ID</span> generation servers have the same clock. This assumption might not be true when a server is running on multiple cores. The same challenge exists in multi-machine scenarios. Solutions to clock synchronization are out of the scope of this course; however, it is important to understand the problem exists. Network Time Protocol is the most popular solution to this problem. For interested readers, refer to the reference material [4]. Section length tuning. For example, fewer sequence numbers but more timestamp bits are effective for low concurrency and long-term applications. High availability. Since an <span class="inline-code">ID</span> generator is a mission-critical system, it must be highly available. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Reference materials</p>
+<h2>[1] Universally unique identifier:</h2>
+<p>https://en.wikipedia.org/wiki/<span class="inline-code">Universally_unique_identifier</span> [2] Ticket Servers: Distributed Unique Primary Keys on the Cheap: https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/</p>
+<h2>[3] Announcing Snowflake:</h2>
+<p>https://blog.twitter.com/engineering/<span class="inline-code">en_us</span>/a/2010/announcing-snowflake.html</p>
+<h2>[4] Network time protocol:</h2>
+<p>https://en.wikipedia.org/wiki/<span class="inline-code">Network_Time_Protocol</span> Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 13</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 13</h2>
+<p>Design A Chat System In this chapter we explore the design of a chat system. Almost everyone uses a chat app.</p>
+<div class="figure-label">Figure 1 shows some of the most popular apps in the marketplace.</div>
+<div class="figure-label">Figure 1</div>
+<p>A chat app performs different functions for different people. It is extremely important to nail down the exact requirements. For example, you do not want to design a system that focuses on group chat when the interviewer has one-on-one chat in mind. It is important to explore the feature requirements.</p>
+<h3>Step 1 - Understand the problem</h3>
+<p>and establish design scope It is vital to agree on the type of chat app to design. In the marketplace, there are one-on-one chat apps like Facebook Messenger, <span class="inline-code">WeChat</span>, and <span class="inline-code">WhatsApp</span>, office chat apps that focus on group chat like Slack, or game chat apps, like Discord, that focus on large group interaction and low voice chat latency. The first set of clarification questions should nail down what the interviewer has in mind exactly when she asks you to design a chat system. At the very least, figure out if you should focus on a one-on-one chat or group chat app. Some questions you might ask are as follows: Candidate: What kind of chat app shall we design? 1 on 1 or group based? Interviewer: It should support both 1 on 1 and group chat. Candidate: Is this a mobile app? Or a web app? Or both? Interviewer: Both.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_176_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 177" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Candidate: What is the scale of this app? A startup app or massive scale? Interviewer: It should support 50 million daily active users (<span class="inline-code">DAU</span>). Candidate: For group chat, what is the group member limit? Interviewer: A maximum of 100 people Candidate: What features are important for the chat app? Can it support attachment? Interviewer: 1 on 1 chat, group chat, online indicator. The system only supports text messages. Candidate: Is there a message size limit? Interviewer: Yes, text length should be less than 100,000 characters long. Candidate: Is end-to-end encryption required? Interviewer: Not required for now but we will discuss that if time allows. Candidate: How long shall we store the chat history? Interviewer: Forever. In the chapter, we focus on designing a chat app like Facebook messenger, with an emphasis</p>
+<h2>on the following features:</h2>
+<p>A one-on-one chat with low delivery latency Small group chat (max of 100 people) Online presence Multiple device support. The same account can be logged in to multiple accounts at the same time. Push notifications It is also important to agree on the design scale. We will design a system that supports 50 million <span class="inline-code">DAU</span>.</p>
+<h3>Step 2 - Propose high-</h3>
+<p>level design and get buy-in To develop a high-quality design, we should have a basic knowledge of how clients and servers communicate. In a chat system, clients can be either mobile applications or web applications. Clients do not communicate directly with each other. Instead, each client connects to a chat service, which supports all the features mentioned above. Let us focus on fundamental operations. The chat service must support the following functions:</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>Receive messages from other clients. Find the right recipients for each message and relay the message to the recipients. If a recipient is not online, hold the messages for that recipient on the server until she is online.</p>
+<div class="figure-label">Figure 2 shows the relationships between clients (sender and receiver) and the chat service.</div>
+<div class="figure-label">Figure 2</div>
+<p>When a client intends to start a chat, it connects the chats service using one or more network protocols. For a chat service, the choice of network protocols is important. Let us discuss this with the interviewer. Requests are initiated by the client for most client/server applications. This is also true for the sender side of a chat application. In Figure 2, when the sender sends a message to the receiver via the chat service, it uses the time-tested <span class="inline-code">HTTP</span> protocol, which is the most common web protocol. In this scenario, the client opens a <span class="inline-code">HTTP</span> connection with the chat service and sends the message, informing the service to send the message to the receiver. The keep-alive is efficient for this because the keep-alive header allows a client to maintain a persistent connection with the chat service. It also reduces the number of <span class="inline-code">TCP</span> handshakes. <span class="inline-code">HTTP</span> is a fine option on the sender side, and many popular chat applications such as Facebook [1] used <span class="inline-code">HTTP</span> initially to send messages. However, the receiver side is a bit more complicated. Since <span class="inline-code">HTTP</span> is client-initiated, it is not trivial to send messages from the server. Over the years, many techniques are used to simulate a server-initiated connection: polling, long polling, and <span class="inline-code">WebSocket</span>. Those are important techniques widely used in system design interviews so let us examine each of them. Polling As shown in Figure 3, polling is a technique that the client periodically asks the server if there are messages available. Depending on polling frequency, polling could be costly. It could consume precious server resources to answer a question that offers no as an answer most of the time.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_178_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 179" /></div>
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Client Server connection closed . . . New messages?</p>
+<h2>NO</h2>
+<p>connection closed New messages?</p>
+<h2>NO</h2>
+<p>connection closed New messages? Yes. Return new messages connection closed New messages?</p>
+<h2>NO</h2>
+<div class="figure-label">Figure 3</div>
+<p>Long polling Because polling could be inefficient, the next progression is long polling (Figure 4).</p>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Client Server ... New messages? connection closed Yes. Return new messages New messages? Wait for new messages connection closed Timeout New messages?</p>
+<div class="figure-label">Figure 4</div>
+<p>In long polling, a client holds the connection open until there are actually new messages available or a timeout threshold has been reached. Once the client receives new messages, it immediately sends another request to the server, restarting the process. Long polling has a few</p>
+<h2>drawbacks:</h2>
+<p>Sender and receiver may not connect to the same chat server. <span class="inline-code">HTTP</span> based servers are usually stateless. If you use round robin for load balancing, the server that receives the message might not have a long-polling connection with the client who receives the message. A server has no good way to tell if a client is disconnected. It is inefficient. If a user does not chat much, long polling still makes periodic connections after timeouts. <span class="inline-code">WebSocket</span></p>
+
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p><span class="inline-code">WebSocket</span> is the most common solution for sending asynchronous updates from server to client. Figure 5 shows how it works. Client Server <span class="inline-code">HTTP</span> Handshake Bidirectional messages Acknowledgement <span class="inline-code">GET</span> /ws</p>
+<div class="figure-label">Figure 5</div>
+<p><span class="inline-code">WebSocket</span> connection is initiated by the client. It is bi-directional and persistent. It starts its life as a <span class="inline-code">HTTP</span> connection and could be “upgraded” via some well-defined handshake to a <span class="inline-code">WebSocket</span> connection. Through this persistent connection, a server could send updates to a client. <span class="inline-code">WebSocket</span> connections generally work even if a firewall is in place. This is because they use port 80 or 443 which are also used by <span class="inline-code">HTTP</span>/<span class="inline-code">HTTPS</span> connections. Earlier we said that on the sender side <span class="inline-code">HTTP</span> is a fine protocol to use, but since <span class="inline-code">WebSocket</span> is bidirectional, there is no strong technical reason not to use it also for sending. Figure 6 shows how <span class="inline-code">WebSockets</span> (ws) is used for both sender and receiver sides.</p>
+<div class="figure-label">Figure 6</div>
+<p>By using <span class="inline-code">WebSocket</span> for both sending and receiving, it simplifies the design and makes implementation on both client and server more straightforward. Since <span class="inline-code">WebSocket</span> connections</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_181_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 182" /></div>
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>are persistent, efficient connection management is critical on the server-side. High-level design Just now we mentioned that <span class="inline-code">WebSocket</span> was chosen as the main communication protocol between the client and server for its bidirectional communication, it is important to note that everything else does not have to be <span class="inline-code">WebSocket</span>. In fact, most features (sign up, login, user profile, etc) of a chat application could use the traditional request/response method over <span class="inline-code">HTTP</span>. Let us drill in a bit and look at the high-level components of the system. As shown in Figure 7, the chat system is broken down into three major categories: stateless services, stateful services, and third-party integration.</p>
+
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<div class="figure-label">Figure 7</div>
+<p>Stateless Services Stateless services are traditional public-facing request/response services, used to manage the login, signup, user profile, etc. These are common features among many websites and apps. Stateless services sit behind a load balancer whose job is to route requests to the correct services based on the request paths. These services can be monolithic or individual microservices. We do not need to build many of these stateless services by ourselves as there are services in the market that can be integrated easily. The one service that we will discuss more in deep dive is the service discovery. Its primary job is to give the client a list of <span class="inline-code">DNS</span> host names of chat servers that the client could connect to.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_183_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 184" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>Stateful Service The only stateful service is the chat service. The service is stateful because each client maintains a persistent network connection to a chat server. In this service, a client normally does not switch to another chat server as long as the server is still available. The service discovery coordinates closely with the chat service to avoid server overloading. We will go into detail in deep dive. Third-party integration For a chat app, push notification is the most important third-party integration. It is a way to inform users when new messages have arrived, even when the app is not running. Proper integration of push notification is crucial. Refer to &quot;Design a notification system&quot; chapter for more information. Scalability On a small scale, all services listed above could fit in one server. Even at the scale we design for, it is in theory possible to fit all user connections in one modern cloud server. The number of concurrent connections that a server can handle will most likely be the limiting factor. In our scenario, at 1M concurrent users, assuming each user connection needs 10K of memory on the server (this is a very rough figure and very dependent on the language choice), it only needs about 10GB of memory to hold all the connections on one box. If we propose a design where everything fits in one server, this may raise a big red flag in the interviewer’s mind. No technologist would design such a scale in a single server. Single server design is a deal breaker due to many factors. The single point of failure is the biggest among them. However, it is perfectly fine to start with a single server design. Just make sure the interviewer knows this is a starting point. Putting everything we mentioned together, Figure 8 shows the adjusted high-level design.</p>
+
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<div class="figure-label">Figure 8</div>
+<p>In Figure 8, the client maintains a persistent <span class="inline-code">WebSocket</span> connection to a chat server for real- time messaging. Chat servers facilitate message sending/receiving. Presence servers manage online/offline status. <span class="inline-code">API</span> servers handle everything including user login, signup, change profile, etc. Notification servers send push notifications. Finally, the key-value store is used to store chat history. When an offline user comes online, she will see all her previous chat history.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_185_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 186" /></div>
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>Storage At this point, we have servers ready, services up running and third-party integrations complete. Deep down the technical stack is the data layer. Data layer usually requires some effort to get it correct. An important decision we must make is to decide on the right type of database to use: relational databases or <span class="inline-code">NoSQL</span> databases? To make an informed decision, we will examine the data types and read/write patterns. Two types of data exist in a typical chat system. The first is generic data, such as user profile, setting, user friends list. These data are stored in robust and reliable relational databases. Replication and sharding are common techniques to satisfy availability and scalability requirements. The second is unique to chat systems: chat history data. It is important to understand the read/write pattern. The amount of data is enormous for chat systems. A previous study [2] reveals that Facebook messenger and Whatsapp process 60 billion messages a day. Only recent chats are accessed frequently. Users do not usually look up for old chats. Although very recent chat history is viewed in most cases, users might use features that require random access of data, such as search, view your mentions, jump to specific messages, etc. These cases should be supported by the data access layer. The read to write ratio is about 1:1 for 1 on 1 chat apps. Selecting the correct storage system that supports all of our use cases is crucial. We recommend key-value stores for the following reasons: Key-value stores allow easy horizontal scaling. Key-value stores provide very low latency to access data. Relational databases do not handle long tail [3] of data well. When the indexes grow large, random access is expensive. Key-value stores are adopted by other proven reliable chat applications. For example, both Facebook messenger and Discord use key-value stores. Facebook messenger uses <span class="inline-code">HBase</span> [4], and Discord uses Cassandra [5]. Data models Just now, we talked about using key-value stores as our storage layer. The most important data is message data. Let us take a close look.</p>
+
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>Message table for 1 on 1 chat</p>
+<div class="figure-label">Figure 9 shows the message table for 1 on 1 chat. The primary key is message_id, which helps</div>
+<p>to decide message sequence. We cannot rely on <span class="inline-code">created_at</span> to decide the message sequence because two messages can be created at the same time.</p>
+<div class="figure-label">Figure 9</div>
+<p>Message table for group chat</p>
+<div class="figure-label">Figure 10 shows the message table for group chat. The composite primary key is (channel_id,</div>
+<p><span class="inline-code">message_id</span>). Channel and group represent the same meaning here. <span class="inline-code">channel_id</span> is the partition key because all queries in a group chat operate in a channel.</p>
+<div class="figure-label">Figure 10</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_187_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 188" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_187_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 188" /></div>
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p>Message <span class="inline-code">ID</span> How to generate <span class="inline-code">message_id</span> is an interesting topic worth exploring. <span class="inline-code">Message_id</span> carries the responsibility of ensuring the order of messages. To ascertain the order of messages, <span class="inline-code">message_id</span> must satisfy the following two requirements: <span class="inline-code">IDs</span> must be unique. <span class="inline-code">IDs</span> should be sortable by time, meaning new rows have higher <span class="inline-code">IDs</span> than old ones. How can we achieve those two guarantees? The first idea that comes to mind is the “<span class="inline-code">auto_increment</span>” keyword in <span class="inline-code">MySql</span>. However, <span class="inline-code">NoSQL</span> databases usually do not provide such a feature. The second approach is to use a global 64-bit sequence number generator like Snowflake [6]. This is discussed in the “Design a unique <span class="inline-code">ID</span> generator in a distributed system” chapter. The final approach is to use local sequence number generator. Local means <span class="inline-code">IDs</span> are only unique within a group. The reason why local <span class="inline-code">IDs</span> work is that maintaining message sequence within one-on-one channel or a group channel is sufficient. This approach is easier to implement in comparison to the global <span class="inline-code">ID</span> implementation.</p>
+<h3>Step 3 - Design deep dive</h3>
+<p>In a system design interview, usually you are expected to dive deep into some of the components in the high-level design. For the chat system, service discovery, messaging flows, and online/offline indicators worth deeper exploration. Service discovery The primary role of service discovery is to recommend the best chat server for a client based on the criteria like geographical location, server capacity, etc. Apache Zookeeper [7] is a popular open-source solution for service discovery. It registers all the available chat servers and picks the best chat server for a client based on predefined criteria.</p>
+<div class="figure-label">Figure 11 shows how service discovery (Zookeeper) works.</div>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<div class="figure-label">Figure 11</div>
+<ol><li>User A tries to log in to the app.</li><li>The load balancer sends the login request to API servers.</li><li>After the backend authenticates the user, service discovery finds the best chat server for</li></ol>
+<p>User A. In this example, server 2 is chosen and the server info is returned back to User A.</p>
+<ol><li>User A connects to chat server 2 through WebSocket.</li></ol>
+<p>Message flows It is interesting to understand the end-to-end flow of a chat system. In this section, we will explore 1 on 1 chat flow, message synchronization across multiple devices and group chat flow. 1 on 1 chat flow</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_189_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 190" /></div>
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<div class="figure-label">Figure 12 explains what happens when User A sends a message to User B.</div>
+<div class="figure-label">Figure 12</div>
+<ol><li>User A sends a chat message to Chat server 1.</li><li>Chat server 1 obtains a message ID from the ID generator.</li><li>Chat server 1 sends the message to the message sync queue.</li><li>The message is stored in a key-value store.</li></ol>
+<p>5.a. If User B is online, the message is forwarded to Chat server 2 where User B is connected. 5.b. If User B is offline, a push notification is sent from push notification (<span class="inline-code">PN</span>) servers.</p>
+<ol><li>Chat server 2 forwards the message to User B. There is a persistent WebSocket connection between User B and Chat server 2.</li></ol>
+<p>Message synchronization across multiple devices</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_190_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 191" /></div>
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<p>Many users have multiple devices. We will explain how to sync messages across multiple devices. Figure 13 shows an example of message synchronization.</p>
+<div class="figure-label">Figure 13</div>
+<p>In Figure 13, user A has two devices: a phone and a laptop. When User A logs in to the chat app with her phone, it establishes a <span class="inline-code">WebSocket</span> connection with Chat server 1. Similarly, there is a connection between the laptop and Chat server 1. Each device maintains a variable called <span class="inline-code">cur_max_message_id</span>, which keeps track of the latest message <span class="inline-code">ID</span> on the device. Messages that satisfy the following two conditions are considered</p>
+<h2>as news messages:</h2>
+<p>The recipient <span class="inline-code">ID</span> is equal to the currently logged-in user <span class="inline-code">ID</span>. Message <span class="inline-code">ID</span> in the key-value store is larger than <span class="inline-code">cur_max_message_id</span>. With distinct <span class="inline-code">cur_max_message_id</span> on each device, message synchronization is easy as each device can get new messages from the <span class="inline-code">KV</span> store. Small group chat flow In comparison to the one-on-one chat, the logic of group chat is more complicated. Figures 12- 14 and 12-15 explain the flow.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_191_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 192" /></div>
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<div class="figure-label">Figure 14</div>
+<div class="figure-label">Figure 14 explains what happens when User A sends a message in a group chat. Assume</div>
+<p>there are 3 members in the group (User A, User B and user C). First, the message from User A is copied to each group member’s message sync queue: one for User B and the second for User C. You can think of the message sync queue as an inbox for a recipient. This design choice is good for small group chat because: it simplifies message sync flow as each client only needs to check its own inbox to get new messages. when the group number is small, storing a copy in each recipient’s inbox is not too expensive. <span class="inline-code">WeChat</span> uses a similar approach, and it limits a group to 500 members [8]. However, for groups with a lot of users, storing a message copy for each member is not acceptable. On the recipient side, a recipient can receive messages from multiple users. Each recipient has an inbox (message sync queue) which contains messages from different senders. Figure 15 illustrates the design.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_192_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 193" /></div>
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<div class="figure-label">Figure 15</div>
+<p>Online presence An online presence indicator is an essential feature of many chat applications. Usually, you can see a green dot next to a user’s profile picture or username. This section explains what happens behind the scenes. In the high-level design, presence servers are responsible for managing online status and communicating with clients through <span class="inline-code">WebSocket</span>. There are a few flows that will trigger online status change. Let us examine each of them. User login The user login flow is explained in the “Service Discovery” section. After a <span class="inline-code">WebSocket</span> connection is built between the client and the real-time service, user A’s online status and <span class="inline-code">last_active_at</span> timestamp are saved in the <span class="inline-code">KV</span> store. Presence indicator shows the user is online after she logs in.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_193_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 194" /></div>
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<div class="figure-label">Figure 16</div>
+<p>User logout When a user logs out, it goes through the user logout flow as shown in Figure 17. The online status is changed to offline in the <span class="inline-code">KV</span> store. The presence indicator shows a user is offline.</p>
+<div class="figure-label">Figure 17</div>
+<p>User disconnection We all wish our internet connection is consistent and reliable. However, that is not always the case; thus, we must address this issue in our design. When a user disconnects from the internet, the persistent connection between the client and server is lost. A naive way to handle user disconnection is to mark the user as offline and change the status to online when the connection re-establishes. However, this approach has a major flaw. It is common for users to disconnect and reconnect to the internet frequently in a short time. For example, network connections can be on and off while a user goes through a tunnel. Updating online status on every disconnect/reconnect would make the presence indicator change too often, resulting in poor user experience. We introduce a heartbeat mechanism to solve this problem. Periodically, an online client sends a heartbeat event to presence servers. If presence servers receive a heartbeat event within a certain time, say x seconds from the client, a user is considered as online. Otherwise, it is offline. In Figure 18, the client sends a heartbeat event to the server every 5 seconds. After sending 3 heartbeat events, the client is disconnected and does not reconnect within x = 30 seconds</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_194_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 195" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_194_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 195" /></div>
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p>(This number is arbitrarily chosen to demonstrate the logic). The online status is changed to offline. Client Server heartbeat Heartbeat received. Status is online heartbeat Heartbeat received. Status is online heartbeat Heartbeat received. Status is online No heartbeat after 30 seconds.Change status to offline 5s 5s x = 30s</p>
+<div class="figure-label">Figure 18</div>
+<p>Online status fanout How do user A’s friends know about the status changes? Figure 19 explains how it works. Presence servers use a publish-subscribe model, in which each friend pair maintains a channel. When User A’s online status changes, it publishes the event to three channels, channel A-B, A-C, and A-D. Those three channels are subscribed by User B, C, and D, respectively. Thus, it is easy for friends to get online status updates. The communication between clients and servers is through real-time <span class="inline-code">WebSocket</span>.</p>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<div class="figure-label">Figure 19</div>
+<p>The above design is effective for a small user group. For instance, <span class="inline-code">WeChat</span> uses a similar approach because its user group is capped to 500. For larger groups, informing all members about online status is expensive and time consuming. Assume a group has 100,000 members. Each status change will generate 100,000 events. To solve the performance bottleneck, a possible solution is to fetch online status only when a user enters a group or manually refreshes the friend list.</p>
+<h3>Step 4 - Wrap up</h3>
+<p>In this chapter, we presented a chat system architecture that supports both 1-to-1 chat and small group chat. <span class="inline-code">WebSocket</span> is used for real-time communication between the client and server. The chat system contains the following components: chat servers for real-time messaging, presence servers for managing online presence, push notification servers for sending push notifications, key-value stores for chat history persistence and <span class="inline-code">API</span> servers for other functionalities. If you have extra time at the end of the interview, here are additional talking points: Extend the chat app to support media files such as photos and videos. Media files are significantly larger than text in size. Compression, cloud storage, and thumbnails are interesting topics to talk about. End-to-end encryption. Whatsapp supports end-to-end encryption for messages. Only the sender and the recipient can read messages. Interested readers should refer to the article in the reference materials [9].</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_196_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 197" /></div>
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<p>Caching messages on the client-side is effective to reduce the data transfer between the client and server. Improve load time. Slack built a geographically distributed network to cache users’ data, channels, etc. for better load time [10]. Error handling. The chat server error. There might be hundreds of thousands, or even more persistent connections to a chat server. If a chat server goes offline, service discovery (Zookeeper) will provide a new chat server for clients to establish new connections with. Message resent mechanism. Retry and queueing are common techniques for resending messages. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Reference materials</p>
+<h2>[1] Erlang at Facebook:</h2>
+<p>https://www.erlang-factory.com/upload/presentations/31/<span class="inline-code">EugeneLetuchy</span>-<span class="inline-code">ErlangatFacebook</span>.pdf [2] Messenger and <span class="inline-code">WhatsApp</span> process 60 billion messages a day: https://www.theverge.com/2016/4/12/11415198/facebook-messenger-whatsapp-number-messa ges-vs-sms-f8-2016 [3] Long tail: https://en.wikipedia.org/wiki/<span class="inline-code">Long_tail</span> [4] The Underlying Technology of Messages: https://www.facebook.com/notes/facebook-engineering/the-underlying-technology-of-message s/454991608919/ [5] How Discord Stores Billions of Messages: https://discord.com/blog/how-discord-stores-billions-of-messages [6] Announcing Snowflake: https://blog.twitter.com/engineering/<span class="inline-code">en_us</span>/a/2010/announcing-snow flake.html [7] Apache <span class="inline-code">ZooKeeper</span>: https://zookeeper.apache.org/ [8] From nothing: the evolution of <span class="inline-code">WeChat</span> background system (Article in Chinese): https://www.infoq.cn/article/the-road-of-the-growth-weixin-background [9] End-to-end encryption: https://faq.whatsapp.com/en/android/28030015/</p>
+
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<p>[10] Flannel: An Application-Level Edge Cache to Make Slack Scale: https://slack.engineering/flannel-an-application-level-edge-cache-to-make-slack-scale-b8a6400e2f6b Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

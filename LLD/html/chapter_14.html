@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 14</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-lld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 14</h2>
+<p>Design a Restaurant Management System In this chapter, we will explore the design of a Restaurant Management System. The goal is to create classes that represent the system’s essential components, such as menus, reservations, and tables. We will develop a system that supports critical functions like booking reservations, managing orders, and assigning tables, ensuring the design is both straightforward and flexible for future enhancements. Restaurant reservation Requirements Gathering The first step in designing a Restaurant Management System is to clarify the requirements and define the scope. Here’s an example of a typical prompt an interviewer might present: “Picture yourself planning a dinner outing on a Friday night. You call the restaurant to reserve a table for your group, check available times, and secure a spot. When you arrive, the staff assigns your party to the reserved table, takes your order, and later presents the bill. Behind the scenes, the system is smoothly handling table reservations, tracking orders, and calculating costs. Now, let’s design a Restaurant Management System that manages all of this.”</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_290_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 291" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Requirements clarification Here is an example of how a conversation between a candidate and an interviewer might</p>
+<h2>unfold:</h2>
+<p>Candidate: Let’s start by setting the scope. I assume the system manages reservations, menu, order tracking, and payments. For now, I focus on reservations and order management. Does that work? Interviewer: That’s a reasonable starting point Candidate: Does the system allow customers to make and manage their reservations? Interviewer: Yes, customers can book tables for a future date and time based on availability. Candidate: How does the system determine if a table is available for a reservation? Interviewer: It checks for a table that fits the party size and is free at the requested time. Each reservation reserves a table for exactly one hour, so it’s available if no other booking overlaps with that hour. Candidate: Does the system let customers cancel a reservation after making it? Interviewer: Yes, customers can cancel reservations. Candidate: When a party with a reservation arrives, do they automatically get their reserved table? Interviewer: Yes, they do. They arrive with their name, and the system uses it to find their reservation, which already has a table assigned to it. Candidate: What happens when a walk-in party arrives for dine-in without prior reservation? Interviewer: The system should assign walk-in parties to tables based on current availability and their party size. Candidate: Does the system allow orders to be altered or removed after they’re placed? Interviewer: Yes, you can remove items or adjust their quantities. Candidate: Does the system track the status of orders? Interviewer: Yes, it keeps track of their progress. Candidate: Are there rules for splitting the bill at checkout? Interviewer: For now, just present a single total bill amount. Requirements</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>Based on the questions and answers, we can now list the functional requirements for our restaurant management system. Reservations Customers can book tables for a future date and time based on availability. Each reservation reserves a table for exactly one hour. The system checks if a table is free at the requested time with no overlapping bookings. The system assigns a table to a reservation, and customers get it when they arrive using their name. Customers can cancel reservations. Walk-in seating The system assigns walk-in parties to tables based on current availability and party size. Order management The system allows orders to be altered or removed after they’re placed. The system tracks the progress of orders. Billing The system presents a single total bill amount at checkout. Below are the non-functional requirements: The system should handle increased traffic during busy periods (e.g., weekend evenings) without performance degradation, supporting concurrent users seamlessly. With these requirements, we are ready to model the objects for the core system. Identify Core Objects Let’s identify the core objects of the restaurant management system. Menu: Represents the restaurant’s menu, storing a collection of available items for ordering. <span class="inline-code">MenuItem</span>: This object models an individual item on the menu, encapsulating details such as its name and price. Each <span class="inline-code">MenuItem</span> is a building block of the Menu, used when staff place orders for a table. Layout: This object represents the restaurant’s physical arrangement, organizing all tables efficiently to support quick and effective assignment for both walk-ins and reservations.</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Table: This object models an individual table in the restaurant, holding details such as its capacity, current reservations, and active orders. Reservation: This object represents a single reservation, storing details like the party name, party size, and reserved time, along with the assigned table. <span class="inline-code">ReservationManager</span>:   This object oversees all restaurant reservations, managing their creation, lookup, and cancellation to ensure accurate and efficient booking. It checks table availability for free time slots and works with Layout to assign tables, keeping reservations well-scheduled and tracked. Restaurant: This acts as a facade, providing a central interface to manage the system’s key functionalities: reservations, table assignments, orders, and bill calculations. We keep its logic lightweight by delegating tasks like scheduling reservations to <span class="inline-code">ReservationManager</span>, assigning tables to Layout, and managing orders to Table, ensuring it coordinates actions without performing the underlying operations itself. Design Class Diagram You’re set to dive into the heart of the object-oriented design interview: crafting classes and interfaces, shaping data and state through attributes, wrapping logic in methods, and linking your classes with clear relationships. Below, we detail each class, its purpose, and its responsibilities, ensuring a clear separation of concerns. Menu The Menu class represents the restaurant’s menu, storing menu items in a map with names as keys to quickly retrieve them for ordering. It separates menu data from the Restaurant and</p>
+<div class="figure-label">Table classes, enabling Table to order items by holding a collection of MenuItem objects that</div>
+<p>list all available choices. Below is the representation of this class. <span class="inline-code">MenuItem</span></p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_293_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 294" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>The <span class="inline-code">MenuItem</span> defines each item on the menu, holding its name, description, price, and category for use in orders. The Menu class uses these items to provide the list of choices, and the Table class records them as ordered items for order management and updates. The Category enum assigns each item a type, such as main course, appetizer, or dessert, to group them on the menu. The <span class="inline-code">UML</span> diagram below illustrates this structure. <span class="inline-code">MenuItem</span> class and Category enum Table The Table class models restaurant tables. Some of the attributes, like capacity and <span class="inline-code">tableId</span>, rarely change. But other attributes, like reservations and <span class="inline-code">orderedItems</span>, associated with the table represent current-state data that changes over time. Its purpose is to oversee a table’s current use, tying into the Layout class for availability checks and the <span class="inline-code">OrderItem</span> class to handle what’s being served. It includes methods to add or remove orders, tally up bills, and check availability at specific times. Here is the representation of this class.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_294_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 295" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_294_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 295" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>Layout The Layout class oversees all restaurant tables, organizing them by <span class="inline-code">ID</span> and capacity to pinpoint the right one for each booking. Its purpose is to streamline table assignments, working with <span class="inline-code">ReservationManager</span> to match parties to available tables and relying on Table to confirm free slots. It handles this by finding a table that fits the party size and is available at the requested time, keeping the process efficient. Design choice: We isolate table organization in the Layout class to optimize assignment efficiency and separate it from menu and order logic managed by the Menu and Table classes. Alternatively, integrating table assignment into the Restaurant class could simplify the design but would overburden its facade role, mixing high-level coordination with low-level table management. Below is the representation of the Layout class. <span class="inline-code">OrderItem</span> The <span class="inline-code">OrderItem</span> class represents each item a customer orders, linking it to a specific <span class="inline-code">MenuItem</span> to provide details like price for the Table class. Its purpose is to track the status of ordered items, allowing the Table class to calculate costs accurately and add or remove items as requested. The class is created when customers place orders, using the Status enum, set to values like pending or delivered, to indicate the item’s current state. The <span class="inline-code">UML</span> diagram below illustrates this structure.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_295_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 296" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_295_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 296" /></div>
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p><span class="inline-code">OrderItem</span> class and Status enum <span class="inline-code">ReservationManager</span> The <span class="inline-code">ReservationManager</span> class handles reservation scheduling by finding available times, creating reservations, and processing cancellations. It stores all Reservation objects and uses a reference to the Layout class to manage table assignments. This reference enables the class to verify table availability and assign suitable tables for each reservation based on party size and time. Below is the representation of this class. Reservation The Reservation class represents a single booking managed by the <span class="inline-code">ReservationManager</span> class, storing the party name, number of people, reservation time, and assigned table. It serves to hold all details of a reservation, enabling the <span class="inline-code">ReservationManager</span> class to schedule and cancel bookings effectively.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_296_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 297" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_296_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 297" /></div>
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>The class is contained within <span class="inline-code">ReservationManager</span> as one of its entries, maintaining a structured and accessible set of reservation data. Restaurant The Restaurant class serves as the primary interface and facade for the restaurant management system. It coordinates core user-facing operations, such as managing reservations, assigning tables, processing orders, and handling checkout. It simplifies access to these features by delegating tasks to other classes: The class relies on <span class="inline-code">ReservationManager</span> to schedule and cancel reservations. The class uses Layout through <span class="inline-code">ReservationManager</span> to identify available tables for assignments. The class depends on Menu to supply items for orders. The class directs order and billing actions to the Table for processing. This delegation keeps the Restaurant class focused and manageable, organizing the system into distinct components that ensure clarity and ease of maintenance through a structured use of composition. Design choice: We structure the Restaurant as a facade to unify system operations, delegating tasks to maintain a clean interface and modularity. We can design the Restaurant class as a central controller managing all logic internally, but that would increase its complexity and reduce scalability by centralizing responsibilities. Below is the representation of this class.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_297_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 298" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_297_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 298" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>Next, we’ll connect these objects in a class diagram to visualize their relationships. Complete Class Diagram Below is the complete class diagram of our restaurant management system.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_298_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 299" /></div>
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>Class Diagram of Restaurant Management System</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_299_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 300" /></div>
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>With this structure in place, let’s move on to implement the code that brings this design to life. Code - Restaurant Management System In this section, we’ll implement the core functionalities of the Restaurant Management System, focusing on key areas such as managing menu items, scheduling and canceling reservations, assigning tables for bookings and walk-ins, and processing orders with billing through a table- based system. Menu The Menu class manages the restaurant’s menu by storing <span class="inline-code">MenuItem</span> objects in a <span class="inline-code">HashMap</span>, using each item’s name as the key to enable fast retrieval for order processing. It provides methods to add an item with <span class="inline-code">addItem</span>, retrieve a specific item using <span class="inline-code">getItem</span>, and access the full menu through <span class="inline-code">getMenuItems</span> as a read-only view. Implementation Choice: We selected <span class="inline-code">HashMap</span> to store <span class="inline-code">MenuItem</span> objects for its quick lookup performance through key-based access, ensuring efficient retrieval for the Table class during order processing, whereas a List alternative, while simpler for storage, requires a linear search that slows access time. The definition of the Menu class is given below.</p>
+<pre><code>public class Menu {
+    private final Map&lt;String, MenuItem&gt; menuItems = new HashMap&lt;&gt;
+    // Adds a new item to the menu
+    public void addItem(MenuItem item) {
+        menuItems.put(item.getName(), item);
+    }
+    public MenuItem getItem(String name) {
+        return menuItems.get(name);
+    }
+    public Map&lt;String, MenuItem&gt; getMenuItems() {
+        return Collections.unmodifiableMap(menuItems);
+    }
+}</code></pre>
+
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>With the Menu defined, let’s detail its individual items in <span class="inline-code">MenuItem</span>. <span class="inline-code">MenuItem</span> The <span class="inline-code">MenuItem</span> class represents an individual item on the menu, storing its name, description, price, and category as private final fields to ensure immutability. This class uses <span class="inline-code">BigDecimal</span> for the price field instead of a floating-point type like float or double. <span class="inline-code">BigDecimal</span> is better suited for financial data, as it provides precise control over decimal values and helps avoid rounding errors or precision issues that can arise with floating-point calculations. // Represents a single item available on the restaurant menu</p>
+<pre><code>public class MenuItem {
+    private final String name;
+    private final String description;
+    private final BigDecimal price;
+    private final Category category;
+    public MenuItem(String name, String description, BigDecimal p
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+    }
+    // Enumeration of possible menu item categories
+    public enum Category {
+        MAIN,
+        APPETIZER,
+        DESSERT</code></pre>
+<p>} // getter methods are omitted for brevity</p>
+<pre><code>}
+Having established the menu’s contents, let’s model the restaurant’s tables with Table.
+Table
+The Table class represents a restaurant table, storing its fixed properties, such as tableId and
+capacity, while maintaining its bookings and orders by updating reservations and orderedItems.
+Its purpose is to manage a table’s reservations and orders, using Layout to confirm available</code></pre>
+<p>time slots and <span class="inline-code">OrderItem</span> to provide price and status details.</p>
+
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p>Below is the implementation of this class. // Represents a table in the restaurant with its properties and c</p>
+<pre><code>public class Table {
+    // immutable properties
+    private final int tableId;
+    private final int capacity;
+    // current state
+    private final Map&lt;LocalDateTime, Reservation&gt; reservations = 
+    private final Map&lt;MenuItem, List&lt;OrderItem&gt;&gt; orderedItems = n
+    public Table(int tableId, int capacity) {
+        this.tableId = tableId;
+        this.capacity = capacity;
+    }
+    // Calculates the total bill amount for all ordered items at 
+    public BigDecimal calculateBillAmount() {
+        return orderedItems.values().stream()
+                .flatMap(List::stream)
+                .map(OrderItem::getItem)
+                .map(MenuItem::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    // Adds multiple orders of the same menu item to the table
+    public void addOrder(MenuItem item, int quantity) {
+        for (int i = 0; i &lt; quantity; i++) {
+            addOrder(item);
+        }
+    }
+    // Adds a single menu item to the table&#x27;s order
+    public void addOrder(MenuItem item) {
+        List&lt;OrderItem&gt; orderItems = orderedItems.get(item);
+        if (orderItems == null) {
+            orderItems = new ArrayList&lt;&gt;();
+            orderedItems.put(item, orderItems);
+            orderItems.add(new OrderItem(item));
+        } else {
+            orderItems.add(new OrderItem(item));
+        }
+    }
+    // Removes a menu item from the table&#x27;s order</code></pre>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<pre><code>    public void removeOrder(MenuItem item) {
+        List&lt;OrderItem&gt; orderItems = orderedItems.get(item);
+        if (orderItems != null) {
+            orderItems.remove(0);
+            if (orderItems.isEmpty()) {
+                orderedItems.remove(item);
+            }
+        }
+    }
+    // Checks if the table is available at a specific time
+    public boolean isAvailableAt(LocalDateTime reservationTime) {
+        return !reservations.containsKey(reservationTime);
+    }
+    // Adds a reservation to this table
+    public void addReservation(Reservation reservation) {
+        reservations.put(reservation.getTime(), reservation);
+    }
+    // Removes a reservation from this table for a specific time
+    public void removeReservation(LocalDateTime reservationTime) 
+        reservations.remove(reservationTime);
+    }
+    // getter methods are omitted for brevity
+}
+The class uses a Map with reservation times as keys to store reservations. This setup enables</code></pre>
+<p>quick availability checks through the <span class="inline-code">isAvailableAt</span> method. It also uses a separate Map with <span class="inline-code">MenuItem</span> keys to manage <span class="inline-code">orderedItems</span>. This structure supports the <span class="inline-code">addOrder</span> method to include items, the <span class="inline-code">removeOrder</span> method to remove them, and the <span class="inline-code">calculateBillAmount</span> method for billing. With tables in place, let’s organize them efficiently using Layout. Layout The Layout class represents the seating arrangement of the entire restaurant, managing all tables to support efficient assignments for reservations and walk-ins. It organizes tables using</p>
+<h2>two indexing methods:</h2>
+
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>Tables by <span class="inline-code">ID</span>: Stored in a Map (<span class="inline-code">tablesById</span>) with each table’s <span class="inline-code">ID</span> as the key. This method allows fast retrieval of a table by its unique identifier during operations. Tables by Capacity: Stored in a <span class="inline-code">SortedMap</span> (<span class="inline-code">tablesByCapacity</span>) where each capacity level maps to a set of tables with that capacity. This method enables the <span class="inline-code">findAvailableTable</span> method to locate the smallest available table that fits a party’s size quickly. Below is the implementation of this class. // Manages the collection of tables in the restaurant and their a</p>
+<pre><code>public class Layout {
+    private final Map&lt;Integer, Table&gt; tablesById = new HashMap&lt;&gt;(
+    // Groups tables by their capacity for efficient table assign
+    // largest capacity
+    private final SortedMap&lt;Integer, Set&lt;Table&gt;&gt; tablesByCapacity
+    public Layout(List&lt;Integer&gt; tableCapacities) {
+        for (int i = 0; i &lt; tableCapacities.size(); i++) {
+            int capacity = tableCapacities.get(i);
+            Table table = new Table(i, capacity);
+            tablesById.put(i, table);
+            tablesByCapacity.computeIfAbsent(capacity, k -&gt; new H
+        }
+    }
+    // Finds the smallest available table that can accommodate a 
+    // given time
+    public Table findAvailableTable(int partySize, LocalDateTime </code></pre>
+<p>for (Set&lt;Table&gt; tables : <span class="inline-code">tablesByCapacity</span>.<span class="inline-code">tailMap</span>(<span class="inline-code">partySi</span></p>
+<pre><code>            for (Table table : tables) {
+                if (table.isAvailableAt(reservationTime)) {
+                    return table;
+                }
+            }
+        }
+        return null;
+    }
+}</code></pre>
+<p>Implementation Choice: We chose <span class="inline-code">SortedMap</span> structures for <span class="inline-code">tablesByCapacity</span>. This structure provides sorted key access that supports efficient range searches by capacity. This efficiency is crucial for the <span class="inline-code">findAvailableTable</span> method to match tables to party sizes. A basic Map lacks</p>
+
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<p>sorting capability. It would require additional logic to identify the smallest suitable table, making it less efficient. Now that tables are arranged, let’s manage individual order items with <span class="inline-code">OrderItem</span>. <span class="inline-code">OrderItem</span> The <span class="inline-code">OrderItem</span> class defines each item ordered by a customer, storing a reference to a specific <span class="inline-code">MenuItem</span> and maintaining its current status to track its state during order processing. The class includes methods to update the order’s state: <span class="inline-code">sendToKitchen</span> changes the status from <span class="inline-code">PENDING</span> to <span class="inline-code">SENT_TO_KITCHEN</span> <span class="inline-code">deliverToCustomer</span> updates it from <span class="inline-code">SENT_TO_KITCHEN</span> to <span class="inline-code">DELIVERED</span> cancel sets it to <span class="inline-code">CANCELED</span> if not yet delivered // Represents a food item ordered by a customer with its current</p>
+<pre><code>public class OrderItem {
+    private final MenuItem item;
+    private Status status = Status.PENDING;
+    public OrderItem(MenuItem item) {
+        this.item = item;
+    }
+    // Updates the status to indicate the item has been sent to t
+    public void sendToKitchen() {</code></pre>
+<p>if (status == Status.<span class="inline-code">PENDING</span>) status = Status.<span class="inline-code">SENT_TO_KIT</span></p>
+<pre><code>    }
+    // Updates the status to indicate the item has been delivered
+    public void deliverToCustomer() {</code></pre>
+<p>if (status == Status.<span class="inline-code">SENT_TO_KITCHEN</span>) status = Status.<span class="inline-code">DEL</span></p>
+<pre><code>    }
+    // Updates the status to indicate the item has been canceled
+    public void cancel() {</code></pre>
+<p>if (status == Status.<span class="inline-code">PENDING</span> || status == Status.<span class="inline-code">SENT_TO_</span></p>
+<pre><code>            status = Status.CANCELED;
+        }
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<p>// getter methods are omitted for brevity</p>
+<pre><code>}
+With orders tracked, let’s oversee reservations through ReservationManager.
+ReservationManager
+The ReservationManager class oversees all reservations in the restaurant, managing their
+scheduling, creation, and cancellation to ensure tables are assigned accurately. It serves as a
+central coordinator, connecting to the Layout class to locate available tables and storing</code></pre>
+<p>Reservation objects to maintain booking details. Here is the implementation of this class. // Manages all reservations for the restaurant and handles table</p>
+<pre><code>public class ReservationManager {
+    private final Layout layout;
+    private final Set&lt;Reservation&gt; reservations = new HashSet&lt;&gt;()
+    // Constructor that takes the restaurant&#x27;s table layout
+    public ReservationManager(Layout layout) {
+        this.layout = layout;
+    }
+    // Finds potential time slots for a reservation within the gi
+    public LocalDateTime[] findAvailableTimeSlots(
+            LocalDateTime rangeStart, LocalDateTime rangeEnd, int
+        // checking every hour in the time range
+        LocalDateTime current = rangeStart;
+        List&lt;LocalDateTime&gt; possibleReservations = new ArrayList&lt;
+        while (!current.isAfter(rangeEnd)) {</code></pre>
+<div class="figure-label">Table availableTable = layout.findAvailableTable(part</div>
+<pre><code>            if (availableTable != null) {
+                possibleReservations.add(current);
+            }
+            current = current.plusHours(1);
+        }
+        return possibleReservations.toArray(new LocalDateTime[0])
+    }
+    // Creates a reservation for a specific time, party size and 
+    public Reservation createReservation(
+            String partyName, int partySize, LocalDateTime desire</code></pre>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<pre><code>        desiredTime = desiredTime.truncatedTo(ChronoUnit.HOURS);
+        Table table = layout.findAvailableTable(partySize, desire
+        Reservation reservation = new Reservation(partyName, part
+        table.addReservation(reservation);
+        reservations.add(reservation);
+        return reservation;
+    }
+    // Removes an existing reservation
+    public void removeReservation(
+            String partyName, int partySize, LocalDateTime reserv
+        // Find matching reservation before removing it
+        for (Reservation reservation : new HashSet&lt;&gt;(reservations</code></pre>
+<p>if (reservation.<span class="inline-code">getTime</span>().equals(<span class="inline-code">reservationTime</span>) &amp;&amp; reservation.<span class="inline-code">getPartySize</span>() == <span class="inline-code">partySize</span> &amp;&amp; reservation.<span class="inline-code">getPartyName</span>().equals(<span class="inline-code">partyNam</span> // Clear the reservation from the table first</p>
+<pre><code>                Table table = reservation.getAssignedTable();
+                table.removeReservation(reservationTime);
+                // Then remove from the reservation collection
+                reservations.remove(reservation);
+                return;
+            }
+        }
+    }
+    // getter methods are omitted for brevity
+}</code></pre>
+<p><span class="inline-code">findAvailableTimeSlots</span>: This method identifies available reservation times within a specified range. It examines each hour in the range, assuming a one-hour duration per reservation. <span class="inline-code">createReservation</span>: This method creates a reservation for a given time, party size, and party name. It uses Layout.<span class="inline-code">findAvailableTable</span> to confirm a table’s availability. If a table is found, it generates a new Reservation object, adds it to the reservations set, and updates the table’s booking status. <span class="inline-code">removeReservation</span>: This method cancels a reservation based on its time, party size, and party name. It searches the reservations set to locate the matching entry, removes it, and clears the table’s booking if found. Implementation Choice: We chose a Set to store Reservation objects because its unique entry enforcement prevents duplicate bookings, aligning with the need to manage reservations accurately. An alternative could use a List, which allows simpler iteration but risks duplicates unless additional checks are added, or a Map with time-based keys, which could speed up</p>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<p>lookups but complicate removal by requiring keys that combine multiple fields, like time, party size, and name, less suited for the system’s focus on reservation uniqueness. Next, let’s define the reservation entries with Reservation. Reservation The Reservation class is a simple, immutable entity class that stores essential reservation details, including the party name, number of people, reservation time, and assigned table. It serves as the foundational unit for the <span class="inline-code">ReservationManager</span> class, holding the data needed to manage bookings effectively. // Represents a reservation made at the restaurant for a specific</p>
+<pre><code>public class Reservation {
+    private final String partyName;
+    private final int partySize;
+    private final LocalDateTime time;
+    private final Table assignedTable;
+    public Reservation(
+            String partyName, int partySize, LocalDateTime time, 
+        this.partyName = partyName;
+        this.partySize = partySize;
+        this.time = time;
+        this.assignedTable = assignedTable;
+    }
+    // getter methods are omitted for brevity
+}
+Finally, let’s unify these components in the Restaurant.
+Restaurant
+The Restaurant class acts as the central interface for the restaurant management system,
+offering methods to book reservations, seat walk-in parties, place orders, and compute bills. It
+follows the facade design pattern to unify these features, delegating reservation and walk-in
+seating tasks to ReservationManager, which uses Layout to find available tables, order
+placement, and billing to Table, which uses Menu to access items.
+Below is the implementation of this class.</code></pre>
+
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p>// Main restaurant class that manages reservations, orders, and t</p>
+<pre><code>public class Restaurant {
+    private final String name;
+    private final Menu menu;
+    private final Layout layout;
+    private final ReservationManager reservationManager;
+    public Restaurant(String name, Menu menu, Layout layout) {
+        this.name = name;
+        this.menu = menu;
+        this.layout = layout;
+        this.reservationManager = new ReservationManager(layout)
+    }
+    // Finds possible reservation times within a time range for a
+    public LocalDateTime[] findAvailableTimeSlots(
+            LocalDateTime rangeStart, LocalDateTime rangeEnd, int
+        return reservationManager.findAvailableTimeSlots(rangeSta
+    }
+    // Creates a reservation for a party at the specified time
+    public Reservation createScheduledReservation(
+            String partyName, int partySize, LocalDateTime time) 
+        return reservationManager.createReservation(partyName, pa
+    }
+    // Removes an existing reservation
+    public void removeReservation(
+            String partyName, int partySize, LocalDateTime reserv
+        reservationManager.removeReservation(partyName, partySize
+    }
+    // Creates a reservation for a party without prior reservatio
+    public Reservation createWalkInReservation(String partyName, 
+        return reservationManager.createReservation(partyName, pa
+    }
+    // Adds an item to a table&#x27;s order
+    public void orderItem(Table table, MenuItem item) {
+        table.addOrder(item);
+    }
+    // Removes an item from a table&#x27;s order
+    public void cancelItem(Table table, MenuItem item) {
+        table.removeOrder(item);
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<p>// Calculates the bill amount for a table</p>
+<pre><code>    public BigDecimal calculateTableBill(Table table) {
+        return table.calculateBillAmount();
+    }
+    // getter methods are omitted for brevity
+}
+Reservation methods: The Restaurant class includes findAvailableTimeSlots to list
+available times, createScheduledReservation to book reservations, and
+removeReservation to cancel them, each delegating to ReservationManager for scheduling
+and management.
+Walk-in seating: The createWalkInReservation method assigns tables to walk-in parties,
+delegating to ReservationManager, which uses Layout to locate available tables.
+Order management: The orderItem method adds items to a table’s order, and cancelItem
+removes them, both delegating to Table methods addOrder and removeOrder for order
+processing.
+Checkout: The calculateTableBill method computes a table’s total cost, delegating to</code></pre>
+<p>Table.<span class="inline-code">calculateBillAmount</span> for billing calculations. Implementation Choice: We designed the Restaurant as a facade without its data structures. It delegates all operations to Menu, Layout, <span class="inline-code">ReservationManager</span>, and Table. This approach maintains a lightweight structure that simplifies system access. An alternative could have Restaurant store reservations or orders internally using a Map or List. That design would increase complexity and reduce modularity by centralizing responsibilities. Having built the core system, let’s explore an enhancement in the deep dive to extend its capabilities. Deep Dive Topics In this section, we’ll explore an enhancement to the Restaurant Management System by improving order handling during peak times. We’ll focus on adding a centralized order queue tracking mechanism to streamline kitchen coordination, ensure scalability, and maintain consistency with the system’s modular design. Order queue tracking</p>
+
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<p>Consider a high-traffic scenario, such as a busy Friday evening at the restaurant, where a significant volume of orders is received, staff work diligently to communicate these to the kitchen, and cancellations accumulate. In the existing system, the Table class directly governs the status of <span class="inline-code">OrderItem</span> instances (e.g., through methods like <span class="inline-code">sendToKitchen</span>() and <span class="inline-code">deliverToCustomer</span>()). However, this decentralized structure lacks a cohesive overview of order progression across all tables. Consequently, staff face challenges in prioritizing time-sensitive orders, monitoring kitchen delays, or verifying cancellations without individually inspecting each table’s state. This approach introduces risks of inconsistency and undermines effective coordination during periods of elevated demand. To address these limitations, we propose an enhancement by introducing a centralized <span class="inline-code">OrderManager</span> class responsible for queuing and processing order-related actions. Let’s take a closer look.</p>
+<h2>Implementation steps:</h2>
+<p>To implement this enhancement effectively, we’ll follow these steps:</p>
+<h3>Step 1: Define a Command Interface for Order Actions: The staff needs a consistent way to</h3>
+<p>issue actions like sending an order to the kitchen or canceling it, improving reliability over direct calls. We define an interface called <span class="inline-code">OrderCommand</span> with a single method, <span class="inline-code">execute()</span>, which concrete classes will implement to perform their tasks. Here’s the code for the <span class="inline-code">OrderCommand</span> interface:</p>
+<pre><code>public interface OrderCommand {
+    void execute();
+}</code></pre>
+<h3>Step 2: Implement Concrete Command Classes: To give staff a flexible way to manage</h3>
+<p>distinct order actions and prepare them for centralized queuing, we build specific classes for each task, unlike the original system, where Table directly updated <span class="inline-code">OrderItem</span> statuses. The <span class="inline-code">SendToKitchenCommand</span> class takes an <span class="inline-code">OrderItem</span> and, when executed, calls <span class="inline-code">sendToKitchen</span>() to update its status to <span class="inline-code">SENT_TO_KITCHEN</span>. The <span class="inline-code">DeliverCommand</span> class uses <span class="inline-code">deliverToCustomer</span>() to change the <span class="inline-code">OrderItem</span>’s status to <span class="inline-code">DELIVERED</span>, signaling completion. The <span class="inline-code">CancelCommand</span> class invokes <span class="inline-code">cancel()</span> to set the status to <span class="inline-code">CANCELED</span> if the item hasn’t been delivered, marking it as voided.</p>
+<h2>Here’s the code for the action classes:</h2>
+
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<p>// Command that handles sending order items to the Kitchen</p>
+<pre><code>public class SendToKitchenCommand implements OrderCommand {
+    private final OrderItem orderItem;
+    public SendToKitchenCommand(OrderItem orderItem) {
+        this.orderItem = orderItem;
+    }
+    @Override
+    public void execute() {
+        orderItem.sendToKitchen();
+    }</code></pre>
+<p>} // Command that handles delivery of order items</p>
+<pre><code>public class DeliverCommand implements OrderCommand {
+    private final OrderItem orderItem;
+    public DeliverCommand(OrderItem orderItem) {
+        this.orderItem = orderItem;
+    }
+    @Override
+    public void execute() {
+        orderItem.deliverToCustomer();
+    }</code></pre>
+<p>} // Command that handles cancellations of order items</p>
+<pre><code>public class CancelCommand implements OrderCommand {
+    private final OrderItem orderItem;
+    public CancelCommand(OrderItem orderItem) {
+        this.orderItem = orderItem;
+    }
+    @Override
+    public void execute() {
+        orderItem.cancel();
+    }
+}
+Step 3: Introduce the OrderManager Class: To handle these actions efficiently, we introduce
+an OrderManager class. This class maintains a list of OrderCommand objects, allowing us to</code></pre>
+<p>add commands with <span class="inline-code">addCommand</span>() as orders are placed. The <span class="inline-code">executeCommands</span>() method</p>
+
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<p>processes all queued commands in sequence and clears the list afterward, ensuring orders are managed in an organized way without directly altering the Table’s <span class="inline-code">OrderItems</span>. Here’s the code for the <span class="inline-code">OrderManager</span> class:</p>
+<pre><code>public class OrderManager {
+    private final List&lt;OrderCommand&gt; commandQueue = new ArrayList
+    // Adds a command to the queue for later execution
+    public void addCommand(OrderCommand command) {
+        commandQueue.add(command);
+    }
+    // Executes all commands in the queue and clears it
+    public void executeCommands() {
+        for (OrderCommand command : commandQueue) {
+            command.execute();
+        }
+        commandQueue.clear();
+    }
+}
+Step 4: Integrate with the Restaurant Class: To connect this system to staff actions, we
+update the Restaurant class to use OrderManager for order handling. When staff place an
+order, orderItem adds it to the table and queues a SendToKitchenCommand to send it to the
+kitchen. Similarly, cancelItem and deliverItem queue their respective commands, ensuring all</code></pre>
+<p>actions flow through the centralized system for consistent tracking and execution. Here’s the essential code for integrating <span class="inline-code">OrderManager</span> into the Restaurant:</p>
+<pre><code>public class Restaurant {
+    // ... fields unchanged ...
+    private final OrderManager orderManager;
+    public Restaurant(String name, Menu menu, Layout layout) {
+        // ... fields unchanged ...
+        this.orderManager = new OrderManager();
+    }
+    // Adds an item to a table&#x27;s order and sends it to the kitche
+    public void orderItem(Table table, MenuItem item) {
+        table.addOrder(item);</code></pre>
+
+</div>
+<div class="page-divider">Page 25</div>
+<div class="page-content" data-page="25">
+<p>// Get the last added order item List&lt;<span class="inline-code">OrderItem</span>&gt; <span class="inline-code">orderItems</span> = table.<span class="inline-code">getOrderedItems</span>().get(</p>
+<pre><code>        if (orderItems != null &amp;&amp; !orderItems.isEmpty()) {</code></pre>
+<p><span class="inline-code">OrderItem</span> <span class="inline-code">lastOrder</span> = <span class="inline-code">orderItems</span>.get(<span class="inline-code">orderItems</span>.size( <span class="inline-code">OrderCommand</span> <span class="inline-code">sendToKitchen</span> = new <span class="inline-code">SendToKitchenCommand</span></p>
+<pre><code>            orderManager.addCommand(sendToKitchen);
+            orderManager.executeCommands();
+        }
+    }
+    // Removes an item from a table&#x27;s order and cancels it
+    public void cancelItem(Table table, MenuItem item) {</code></pre>
+<p>List&lt;<span class="inline-code">OrderItem</span>&gt; <span class="inline-code">orderItems</span> = table.<span class="inline-code">getOrderedItems</span>().get(</p>
+<pre><code>        if (orderItems != null &amp;&amp; !orderItems.isEmpty()) {</code></pre>
+<p><span class="inline-code">OrderItem</span> <span class="inline-code">lastOrder</span> = <span class="inline-code">orderItems</span>.get(<span class="inline-code">orderItems</span>.size( <span class="inline-code">OrderCommand</span> <span class="inline-code">cancelOrder</span> = new <span class="inline-code">CancelCommand</span>(<span class="inline-code">lastOrde</span></p>
+<pre><code>            orderManager.addCommand(cancelOrder);
+            orderManager.executeCommands();
+            table.removeOrder(item);
+        }
+    }
+    // Delivers an item to the customer
+    public void deliverItem(Table table, MenuItem item) {</code></pre>
+<p>List&lt;<span class="inline-code">OrderItem</span>&gt; <span class="inline-code">orderItems</span> = table.<span class="inline-code">getOrderedItems</span>().get(</p>
+<pre><code>        if (orderItems != null &amp;&amp; !orderItems.isEmpty()) {</code></pre>
+<p><span class="inline-code">OrderItem</span> <span class="inline-code">lastOrder</span> = <span class="inline-code">orderItems</span>.get(<span class="inline-code">orderItems</span>.size( <span class="inline-code">OrderCommand</span> <span class="inline-code">deliverOrder</span> = new <span class="inline-code">DeliverCommand</span>(<span class="inline-code">lastOr</span></p>
+<pre><code>            orderManager.addCommand(deliverOrder);
+            orderManager.executeCommands();
+        }
+    }
+    // ... other methods unchanged ...
+}</code></pre>
+<p>What we’ve just implemented follows a well-known software design pattern called the Command Pattern.</p>
+
+</div>
+<div class="page-divider">Page 26</div>
+<div class="page-content" data-page="26">
+<p>Definition: The Command is a behavioral design pattern that encapsulates a request as an independent object, containing all the details needed to carry it out. This encapsulation allows you to treat requests as parameters for methods, delay or schedule their execution.</p>
+<h2>In this pattern:</h2>
+<p>Command: The <span class="inline-code">OrderCommand</span> interface and its implementations (<span class="inline-code">SendToKitchenCommand</span>, <span class="inline-code">DeliverCommand</span>, <span class="inline-code">CancelCommand</span>) define each action as an object, executed via <span class="inline-code">execute()</span>. Invoker: The <span class="inline-code">OrderManager</span> class queues these command objects and triggers their execution, decoupling the Table from direct state changes. Receiver: The <span class="inline-code">OrderItem</span> class, with its existing Status enum and methods like <span class="inline-code">sendToKitchen</span>, receives and processes the commands, updating its state to reflect actions like preparation or delivery. The <span class="inline-code">UML</span> diagram below illustrates this structure. Command pattern</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_315_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 316" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_315_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 316" /></div>
+</div>
+<div class="page-divider">Page 27</div>
+<div class="page-content" data-page="27">
+<p>With our restaurant management system designed and implemented, let’s wrap up with key takeaways. Wrap Up In this chapter, we gathered requirements for the Restaurant Management System through a series of detailed questions and answers. We then identified the core objects involved, designed the class structure, and implemented the key components of the system. A key takeaway from this design is the importance of modularity and adherence to the single responsibility principle. Each component, such as the Menu, <span class="inline-code">ReservationManager</span>, Layout, and</p>
+<div class="figure-label">Table classes, manages a distinct responsibility, ensuring the system remains maintainable and</div>
+<p>adaptable for future enhancements. Our design choices, such as delegating operations in the Restaurant to act as a facade or using immutable <span class="inline-code">MenuItem</span> objects, prioritize flexibility and consistency. An alternative, like implementing reservation and order logic directly in the Restaurant class, may simplify the design but could increase complexity and reduce scalability by centralizing responsibilities. In an interview, revisiting these decisions and explaining their rationale demonstrates your ability to think critically about system design. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DesignMaster - LLD & HLD Interview Study Tracker</title>
+  <meta name="description" content="An interactive, premium-designed study tracker for Low Level Design (LLD) and High Level Design (HLD) interviews. Track progress, take notes, and read chapters directly.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">DM</div>
+      <div class="brand-text">DesignMaster</div>
+    </div>
+    
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="lld-basics" id="tab-lld-basics">
+        <span>🧩 LLD Basics</span>
+        <span class="tab-badge">0/3</span>
+      </button>
+      <button class="tab-btn" data-tab="lld-questions" id="tab-lld-questions">
+        <span>🏗️ LLD Questions</span>
+        <span class="tab-badge">0/11</span>
+      </button>
+      <button class="tab-btn" data-tab="hld-basics" id="tab-hld-basics">
+        <span>🌐 HLD Basics</span>
+        <span class="tab-badge">0/5</span>
+      </button>
+      <button class="tab-btn" data-tab="hld-questions" id="tab-hld-questions">
+        <span>🚀 HLD Questions</span>
+        <span class="tab-badge">0/25</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="global-progress-card">
+        <div class="progress-header">
+          <span>Overall Progress</span>
+          <span id="global-progress-txt">0%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="global-progress-fill"></div>
+        </div>
+      </div>
+      <button class="util-btn" onclick="resetAllProgress()" id="btn-reset-all" title="Reset all tracker data">
+        ⚠️ Reset Progress
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content" id="main-content">
+    
+    <!-- Top Header Title -->
+    <header class="content-header">
+      <h1 class="page-title" id="page-header-title">LLD Basics</h1>
+      <p class="page-subtitle" id="page-header-subtitle">Foundational object-oriented design patterns, principles, and guidelines.</p>
+    </header>
+
+    <!-- Interactive Statistics Cards -->
+    <section class="stats-grid" aria-label="Study Statistics">
+      <div class="stat-card">
+        <div class="stat-icon total">📚</div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-total-val">0</div>
+          <div class="stat-label">Total Topics</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon progress">⚡</div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-progress-val">0</div>
+          <div class="stat-label">In Progress</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon completed">✅</div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-completed-val">0</div>
+          <div class="stat-label">Completed</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon revision">🔄</div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-revision-val">0</div>
+          <div class="stat-label">Needs Revision</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls Panel (Search & Filtering) -->
+    <section class="controls-panel" aria-label="Controls Panel">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="search-input" 
+          class="search-input" 
+          placeholder="Search by topic title, chapter, or key focus..."
+          aria-label="Search topics"
+        >
+      </div>
+      <div class="filter-group">
+        <select id="status-filter" class="filter-select" aria-label="Filter by Status">
+          <option value="all">All Statuses</option>
+          <option value="not-started">Not Started</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="revision">Needs Revision</option>
+        </select>
+        <select id="difficulty-filter" class="filter-select" aria-label="Filter by Difficulty">
+          <option value="all">All Difficulties</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <button id="starred-toggle-btn" class="view-btn" title="Filter to starred only" aria-label="Filter to starred only">
+          ★ Starred
+        </button>
+      </div>
+    </section>
+
+    <!-- Main Topics Grid/List -->
+    <section class="topics-container" id="topics-container" aria-label="Topics List">
+      <!-- Dynamically filled by app.js -->
+    </section>
+
+  </main>
+
+
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

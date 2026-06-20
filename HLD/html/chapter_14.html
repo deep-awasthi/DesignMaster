@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 14</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 14</h2>
+<p>Design A Search Autocomplete System When searching on Google or shopping at Amazon, as you type in the search box, one or more matches for the search term are presented to you. This feature is referred to as autocomplete, typeahead, search-as-you-type, or incremental search. Figure 1 presents an example of a Google search showing a list of autocompleted results when “dinner” is typed into the search box. Search autocomplete is an important feature of many products. This leads us to the interview question: design a search autocomplete system, also called “design top k” or “design top k most searched queries”.</p>
+<div class="figure-label">Figure 1</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_199_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 200" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<h3>Step 1 - Understand the problem</h3>
+<p>and establish design scope The first step to tackle any system design interview question is to ask enough questions to clarify requirements. Here is an example of candidate-interviewer interaction: Candidate: Is the matching only supported at the beginning of a search query or in the middle as well? Interviewer: Only at the beginning of a search query. Candidate: How many autocomplete suggestions should the system return? Interviewer: 5 Candidate: How does the system know which 5 suggestions to return? Interviewer: This is determined by popularity, decided by the historical query frequency. Candidate: Does the system support spell check? Interviewer: No, spell check or autocorrect is not supported. Candidate: Are search queries in English? Interviewer: Yes. If time allows at the end, we can discuss multi-language support. Candidate: Do we allow capitalization and special characters? Interviewer: No, we assume all search queries have lowercase alphabetic characters. Candidate: How many users use the product? Interviewer: 10 million <span class="inline-code">DAU</span>. Requirements</p>
+<h2>Here is a summary of the requirements:</h2>
+<p>Fast response time: As a user types a search query, autocomplete suggestions must show up fast enough. An article about Facebook’s autocomplete system [1] reveals that the system needs to return results within 100 milliseconds. Otherwise it will cause stuttering. Relevant: Autocomplete suggestions should be relevant to the search term. Sorted: Results returned by the system must be sorted by popularity or other ranking models. Scalable: The system can handle high traffic volume. Highly available: The system should remain available and accessible when part of the system is offline, slows down, or experiences unexpected network errors.</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>Back of the envelope estimation Assume 10 million daily active users (<span class="inline-code">DAU</span>). An average person performs 10 searches per day.</p>
+<h2>20 bytes of data per query string:</h2>
+<p>Assume we use <span class="inline-code">ASCII</span> character encoding. 1 character = 1 byte Assume a query contains 4 words, and each word contains 5 characters on average. That is 4 x 5 = 20 bytes per query. For every character entered into the search box, a client sends a request to the backend for autocomplete suggestions. On average, 20 requests are sent for each search query. For example, the following 6 requests are sent to the backend by the time you finish typing “dinner”. search?q=d search?q=di search?q=din search?q=dinn search?q=dinne search?q=dinner ~24,000 query per second (<span class="inline-code">QPS</span>) = 10,000,000 users * 10 queries / day * 20 characters / 24 hours / 3600 seconds. Peak <span class="inline-code">QPS</span> = <span class="inline-code">QPS</span> * 2 = ~48,000 Assume 20% of the daily queries are new. 10 million * 10 queries / day * 20 byte per query</p>
+<ul><li>20% = 0.4 GB. This means 0.4GB of new data is added to storage daily.</li></ul>
+<h3>Step 2 - Propose high-</h3>
+<p>level design and get buy-in At the high-level, the system is broken down into two: Data gathering service: It gathers user input queries and aggregates them in real-time. Real-time processing is not practical for large data sets; however, it is a good starting point. We will explore a more realistic solution in deep dive. Query service: Given a search query or prefix, return 5 most frequently searched terms. Data gathering service</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Let us use a simplified example to see how data gathering service works. Assume we have a frequency table that stores the query string and its frequency as shown in Figure 2. In the beginning, the frequency table is empty. Later, users enter queries “twitch”, “twitter”, “twitter,” and “twillo” sequentially. Figure 2 shows how the frequency table is updated. <span class="inline-code">QueryFrequency</span> twitch 1 <span class="inline-code">QueryFrequency</span> twitch 1 twitter 1 <span class="inline-code">QueryFrequency</span> twitch 1 twitter 2 <span class="inline-code">QueryFrequency</span> twitch 1 twitter 2 twillo 1 <span class="inline-code">QueryFrequency</span> query: twitch query: twitter query: twitter query: twillo</p>
+<div class="figure-label">Figure 2</div>
+<p>Query service Assume we have a frequency table as shown in Table 1. It has two fields. Query: it stores the query string. Frequency: it represents the number of times a query has been searched. Query Frequency twitter 35 twitch 29 twilight 25 twin peak 21 twitch prime18 twitter search14 twillo 10 twin peak sf 8</p>
+<div class="figure-label">Table 1</div>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>When a user types “tw” in the search box, the following top 5 searched queries are displayed (Figure 3), assuming the frequency table is based on Table 1.</p>
+<div class="figure-label">Figure 3</div>
+<p>To get top 5 frequently searched queries, execute the following <span class="inline-code">SQL</span> query:</p>
+<div class="figure-label">Figure 4</div>
+<p>This is an acceptable solution when the data set is small. When it is large, accessing the database becomes a bottleneck. We will explore optimizations in deep dive.</p>
+<h3>Step 3 - Design deep dive</h3>
+<p>In the high-level design, we discussed data gathering service and query service. The high-level design is not optimal, but it serves as a good starting point. In this section, we will dive deep into a few components and explore optimizations as follows: Trie data structure Data gathering service Query service Scale the storage Trie operations</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_203_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 204" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_203_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 204" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>Trie data structure Relational databases are used for storage in the high-level design. However, fetching the top 5 search queries from a relational database is inefficient. The data structure trie (prefix tree) is used to overcome the problem. As trie data structure is crucial for the system, we will dedicate significant time to design a customized trie. Please note that some of the ideas are from articles [2] and [3]. Understanding the basic trie data structure is essential for this interview question. However, this is more of a data structure question than a system design question. Besides, many online materials explain this concept. In this chapter, we will only discuss an overview of the trie data structure and focus on how to optimize the basic trie to improve response time. Trie (pronounced “try”) is a tree-like data structure that can compactly store strings. The name comes from the word retrieval, which indicates it is designed for string retrieval operations. The main idea of trie consists of the following: A trie is a tree-like data structure. The root represents an empty string. Each node stores a character and has 26 children, one for each possible character. To save space, we do not draw empty links. Each tree node represents a single word or a prefix string.</p>
+<div class="figure-label">Figure 5 shows a trie with search queries “tree”, “try”, “true”, “toy”, “wish”, “win”. Search queries</div>
+<p>are highlighted with a thicker border.</p>
+
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>t w tr tre tree trytru true to toy wi wis wish win root</p>
+<div class="figure-label">Figure 5</div>
+<p>Basic trie data structure stores characters in nodes. To support sorting by frequency, frequency info needs to be included in nodes. Assume we have the following frequency table. Query Frequency tree 10 try 29 true 35 toy 14 wish 25 win 50</p>
+<div class="figure-label">Table 2</div>
+<p>After adding frequency info to nodes, updated trie data structure is shown in Figure 6.</p>
+
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>t w tr tre tree: 10 try: 29tru true: 35 to toy: 14 wi wis wish: 25 win: 50 root</p>
+<div class="figure-label">Figure 6</div>
+<p>How does autocomplete work with trie? Before diving into the algorithm, let us define some terms. p: length of a prefix n: total number of nodes in a trie c: number of children of a given node Steps to get top k most searched queries are listed below:</p>
+<ol><li>Find the prefix. Time complexity: O(p).</li><li>Traverse the subtree from the prefix node to get all valid children. A child is valid if it can form</li></ol>
+<p>a valid query string. Time complexity: O(c)</p>
+<ol><li>Sort the children and get top k. Time complexity: O(clogc)</li></ol>
+<p>Let us use an example as shown in Figure 7 to explain the algorithm. Assume k equals to 2 and a user types “tr” in the search box. The algorithm works as follows:</p>
+<h3>Step 1: Find the prefix node “tr”.</h3>
+<h3>Step 2: Traverse the subtree to get all valid children. In this case, nodes [tree: 10], [true:</h3>
+<p>35], [try: 29] are valid.</p>
+<h3>Step 3: Sort the children and get top 2. [true: 35] and [try: 29] are the top 2 queries with</h3>
+<p>prefix “tr”.</p>
+
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>t w tr tre tree: 10 try: 29tru true: 35 to toy: 14 wi wis wish: 25 win: 50 root Top 2: [true: 35, try: 29] 1 1 2 3</p>
+<div class="figure-label">Figure 7</div>
+<p>The time complexity of this algorithm is the sum of time spent on each step mentioned above: O(p) + O(c) + O(clogc) The above algorithm is straightforward. However, it is too slow because we need to traverse the entire trie to get top k results in the worst-case scenario. Below are two optimizations:</p>
+<ol><li>Limit the max length of a prefix</li><li>Cache top search queries at each node</li></ol>
+<p>Let us look at these optimizations one by one. Limit the max length of a prefix Users rarely type a long search query into the search box. Thus, it is safe to say p is a small integer number, say 50. If we limit the length of a prefix, the time complexity for “Find the prefix” can be reduced from O(p) to O(small constant), aka O(1). Cache top search queries at each node</p>
+
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>To avoid traversing the whole trie, we store top k most frequently used queries at each node. Since 5 to 10 autocomplete suggestions are enough for users, k is a relatively small number. In our specific case, only the top 5 search queries are cached. By caching top search queries at every node, we significantly reduce the time complexity to retrieve the top 5 queries. However, this design requires a lot of space to store top queries at every node. Trading space for time is well worth it as fast response time is very important.</p>
+<div class="figure-label">Figure 8 shows the updated trie data structure. Top 5 queries are stored on each node. For</div>
+<p>example, the node with prefix “be” stores the following: [best: 35, bet: 29, bee: 20, be: 15, beer: 10]. b w be: 15 bee: 20 beer: 10 bet: 29bes best: 35 bu buy: 14 wi win: 11 root [best: 35, bet: 29, bee:20, be: 15, beer: 10] [bee: 20, beer, 10] [best: 35] [best: 35, bet: 29, bee: 20,be: 15, buy: 14] [buy: 14] [win: 11] [win: 11]</p>
+<div class="figure-label">Figure 8</div>
+<p>Let us revisit the time complexity of the algorithm after applying those two optimizations:</p>
+<ol><li>Find the prefix node. Time complexity: O(1)</li><li>Return top k. Since top k queries are cached, the time complexity for this step is O(1).</li></ol>
+<p>As the time complexity for each of the steps is reduced to O(1), our algorithm takes only O(1) to fetch top k queries. Data gathering service In our previous design, whenever a user types a search query, data is updated in real-time. This approach is not practical for the following two reasons:</p>
+
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>Users may enter billions of queries per day. Updating the trie on every query significantly slows down the query service. Top suggestions may not change much once the trie is built. Thus, it is unnecessary to update the trie frequently. To design a scalable data gathering service, we examine where data comes from and how data is used. Real-time applications like Twitter require up to date autocomplete suggestions. However, autocomplete suggestions for many Google keywords might not change much on a daily basis. Despite the differences in use cases, the underlying foundation for data gathering service remains the same because data used to build the trie is usually from analytics or logging services.</p>
+<div class="figure-label">Figure 9 shows the redesigned data gathering service. Each component is examined one by</div>
+<p>one. <span class="inline-code">AggregatorsAggregated</span> <span class="inline-code">DataWorkers</span> Update weekly Trie <span class="inline-code">DB</span> Trie Cache Weekly snapshot of <span class="inline-code">DB</span> Analytics Logs</p>
+<div class="figure-label">Figure 9</div>
+<p>Analytics Logs. It stores raw data about search queries. Logs are append-only and are not indexed. Table 3 shows an example of the log file. query time tree 2019-10-01 22:01:01 try 2019-10-01 22:01:05 tree 2019-10-01 22:01:30 toy 2019-10-01 22:02:22</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_209_img_0.png" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 210" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>tree 2019-10-02 22:02:42 try 2019-10-03 22:03:03</p>
+<div class="figure-label">Table 3</div>
+<p>Aggregators. The size of analytics logs is usually very large, and data is not in the right format. We need to aggregate data so it can be easily processed by our system. Depending on the use case, we may aggregate data differently. For real-time applications such as Twitter, we aggregate data in a shorter time interval as real-time results are important. On the other hand, aggregating data less frequently, say once per week, might be good enough for many use cases. During an interview session, verify whether real-time results are important. We assume trie is rebuilt weekly. Aggregated Data.</p>
+<div class="figure-label">Table 4 shows an example of aggregated weekly data. “time” field represents the start time of a</div>
+<p>week. “frequency” field is the sum of the occurrences for the corresponding query in that week. query time frequency tree 2019-10-0112000 tree 2019-10-0815000 tree 2019-10-159000 toy 2019-10-018500 toy 2019-10-086256 toy 2019-10-158866</p>
+<div class="figure-label">Table 4</div>
+<p>Workers. Workers are a set of servers that perform asynchronous jobs at regular intervals. They build the trie data structure and store it in Trie <span class="inline-code">DB</span>. Trie Cache. Trie Cache is a distributed cache system that keeps trie in memory for fast read. It takes a weekly snapshot of the <span class="inline-code">DB</span>.</p>
+
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p>Trie <span class="inline-code">DB</span>. Trie <span class="inline-code">DB</span> is the persistent storage. Two options are available to store the data:</p>
+<ol><li>Document store: Since a new trie is built weekly, we can periodically take a snapshot of it,</li></ol>
+<p>serialize it, and store the serialized data in the database. Document stores like <span class="inline-code">MongoDB</span> [4] are good fits for serialized data.</p>
+<ol><li>Key-value store: A trie can be represented in a hash table form [4] by applying the following logic:</li></ol>
+<p>Every prefix in the trie is mapped to a key in a hash table. Data on each trie node is mapped to a value in a hash table.</p>
+<div class="figure-label">Figure 10 shows the mapping between the trie and hash table.</div>
+<p>b be: 15 bee: 20 beer: 10 bes best: 35 [be: 15, bee: 20, beer: 10, best: 35] [bee: 20, beer, 10] [best: 35] [be: 15, bee: 20, beer: 10, best: 35] root Key Value b [be: 15, bee: 20, beer: 10, best: 35] be [be: 15, bee: 20, beer: 10, best: 35] bee [bee: 20, beer: 10] bes [best: 35] beer [beer: 10] best [best: 35]</p>
+<div class="figure-label">Figure 10</div>
+<p>In Figure 10, each trie node on the left is mapped to the &lt;key, value&gt; pair on the right. If you are unclear how key-value stores work, refer to the &quot;Design a key-value store&quot; chapter. Query service In the high-level design, query service calls the database directly to fetch the top 5 results.</p>
+<div class="figure-label">Figure 11 shows the improved design as previous design is inefficient.</div>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<div class="figure-label">Figure 11</div>
+<ol><li>A search query is sent to the load balancer.</li><li>The load balancer routes the request to API servers.</li><li>API servers get trie data from Trie Cache and construct autocomplete suggestions for the client.</li><li>In case the data is not in Trie Cache, we replenish data back to the cache. This way, all</li></ol>
+<p>subsequent requests for the same prefix are returned from the cache. A cache miss can happen when a cache server is out of memory or offline. Query service requires lightning-fast speed. We propose the following optimizations: <span class="inline-code">AJAX</span> request. For web applications, browsers usually send <span class="inline-code">AJAX</span> requests to fetch autocomplete results. The main benefit of <span class="inline-code">AJAX</span> is that sending/receiving a request/response does not refresh the whole web page.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_212_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 213" /></div>
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>Browser caching. For many applications, autocomplete search suggestions may not change much within a short time. Thus, autocomplete suggestions can be saved in browser cache to allow subsequent requests to get results from the cache directly. Google search engine uses the same cache mechanism. Figure 12 shows the response header when you type “system design interview” on the Google search engine. As you can see, Google caches the results in the browser for 1 hour. Please note: “private” in cache-control means results are intended for a single user and must not be cached by a shared cache. “max-age=3600” means the cache is valid for 3600 seconds, aka, an hour.</p>
+<div class="figure-label">Figure 12</div>
+<p>Data sampling: For a large-scale system, logging every search query requires a lot of processing power and storage. Data sampling is important. For instance, only 1 out of every N requests is logged by the system. Trie operations Trie is a core component of the autocomplete system. Let us look at how trie operations (create, update, and delete) work. Create Trie is created by workers using aggregated data. The source of data is from Analytics Log/<span class="inline-code">DB</span>. Update There are two ways to update the trie.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_213_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 214" /></div>
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<p>Option 1: Update the trie weekly. Once a new trie is created, the new trie replaces the old one. Option 2: Update individual trie node directly. We try to avoid this operation because it is slow. However, if the size of the trie is small, it is an acceptable solution. When we update a trie node, its ancestors all the way up to the root must be updated because ancestors store top queries of children. Figure 13 shows an example of how the update operation works. On the left side, the search query “beer” has the original value 10. On the right side, it is updated to 30. As you can see, the node and its ancestors have the “beer” value updated to 30. b be: 15 bee: 20 beer: 10 bes best: 35 [best: 35, bee: 20, be: 15, beer: 10] [bee: 20, beer, 10] [best: 35] [best: 35, bee: 20, be: 15, beer: 10] root b be: 15 bee: 20 beer: 30 bes best: 35 [best: 35, beer: 30, bee: 20, be: 15] [beer, 30, bee: 20] [best: 35] [best: 35, beer: 30, bee: 20, be: 15] root</p>
+<div class="figure-label">Figure 13</div>
+<p>Delete We have to remove hateful, violent, sexually explicit, or dangerous autocomplete suggestions. We add a filter layer (Figure 14) in front of the Trie Cache to filter out unwanted suggestions. Having a filter layer gives us the flexibility of removing results based on different filter rules. Unwanted suggestions are removed physically from the database asynchronically so the correct data set will be used to build trie in the next update cycle.</p>
+<div class="figure-label">Figure 14</div>
+<p>Scale the storage</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_214_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 215" /></div>
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<p>Now that we have developed a system to bring autocomplete queries to users, it is time to solve the scalability issue when the trie grows too large to fit in one server. Since English is the only supported language, a naive way to shard is based on the first character. Here are some examples. If we need two servers for storage, we can store queries starting with ‘a’ to ‘m’ on the first server, and ‘n’ to ‘z’ on the second server. If we need three servers, we can split queries into ‘a’ to ‘i’, ‘j’ to ‘r’ and ‘s’ to ‘z’. Following this logic, we can split queries up to 26 servers because there are 26 alphabetic characters in English. Let us define sharding based on the first character as first level sharding. To store data beyond 26 servers, we can shard on the second or even at the third level. For example, data queries that start with ‘a’ can be split into 4 servers: ‘aa-ag’, ‘ah-an’, ‘ao-au’, and ‘av-az’. At the first glance this approach seems reasonable, until you realize that there are a lot more words that start with the letter ‘c’ than ‘x’. This creates uneven distribution. To mitigate the data imbalance problem, we analyze historical data distribution pattern and apply smarter sharding logic as shown in Figure 15. The shard map manager maintains a lookup database for identifying where rows should be stored. For example, if there are a similar number of historical queries for ‘s’ and for ‘u’, ‘v’, ‘w’, ‘x’, ‘y’ and ‘z’ combined, we can maintain two shards: one for ‘s’ and one for ‘u’ to ‘z’. Web servers Databases Shard 1 Shard ...Shard 2 Shard map manager Retrieve data from shard2 What shard is it?1</p>
+<div class="figure-label">Figure 15</div>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<h3>Step 4 - Wrap up</h3>
+<p>After you finish the deep dive, your interviewer might ask you some follow up questions. Interviewer: How do you extend your design to support multiple languages? To support other non-English queries, we store Unicode characters in trie nodes. If you are not familiar with Unicode, here is the definition: “an encoding standard covers all the characters for all the writing systems of the world, modern and ancient” [5]. Interviewer: What if top search queries in one country are different from others? In this case, we might build different tries for different countries. To improve the response time, we can store tries in <span class="inline-code">CDNs</span>. Interviewer: How can we support the trending (real-time) search queries? Assuming a news event breaks out, a search query suddenly becomes popular. Our original</p>
+<h2>design will not work because:</h2>
+<p>Offline workers are not scheduled to update the trie yet because this is scheduled to run on weekly basis. Even if it is scheduled, it takes too long to build the trie. Building a real-time search autocomplete is complicated and is beyond the scope of this course</p>
+<h2>so we will only give a few ideas:</h2>
+<p>Reduce the working data set by sharding. Change the ranking model and assign more weight to recent search queries. Data may come as streams, so we do not have access to all the data at once. Streaming data means data is generated continuously. Stream processing requires a different set of systems: Apache Hadoop <span class="inline-code">MapReduce</span> [6], Apache Spark Streaming [7], Apache Storm [8], Apache Kafka [9], etc. Because all those topics require specific domain knowledge, we are not going into detail here. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Reference materials</p>
+<h2>[1] The Life of a Typeahead Query:</h2>
+<p>https://www.facebook.com/notes/facebook-engineering/the-life-of-a-typeahead-query/38910524 8919/</p>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<p>[2] How We Built Prefixy: A Scalable Prefix Search Service for Powering Autocomplete: https://medium.com/@prefixyteam/how-we-built-prefixy-a-scalable-prefix-search-service-for-po wering-autocomplete-c20f98e2eff1 [3] Prefix Hash Tree An Indexing Data Structure over Distributed Hash Tables: https://people.eecs.berkeley.edu/~sylvia/papers/pht.pdf [4] <span class="inline-code">MongoDB</span> wikipedia: https://en.wikipedia.org/wiki/<span class="inline-code">MongoDB</span> [5] Unicode frequently asked questions: https://www.unicode.org/faq/<span class="inline-code">basic_q</span>.html [6] Apache hadoop: https://hadoop.apache.org/ [7] Spark streaming: https://spark.apache.org/streaming/ [8] Apache storm: https://storm.apache.org/ [9] Apache kafka: https://kafka.apache.org/documentation/ Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 13</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-lld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 13</h2>
+<p>Design an <span class="inline-code">ATM</span> System In this chapter, we will explore the object-oriented design of an <span class="inline-code">ATM</span> system. The primary purpose of an <span class="inline-code">ATM</span> is to automate banking tasks for users, allowing them to check balances, withdraw cash, and transfer funds. This design aims to make these operations seamless by designing classes that model key components, such as the <span class="inline-code">ATM</span> machine, bank accounts, hardware interfaces, and transaction states. Automated Teller Machine (<span class="inline-code">ATM</span>) Let’s gather the specific requirements through a simulated interview scenario. Requirements Gathering Here is an example of a typical prompt an interviewer might give: “Picture yourself approaching an <span class="inline-code">ATM</span> on a busy afternoon to manage your banking needs. You insert your card, enter your <span class="inline-code">PIN</span>, and then choose from options such as checking your balance, withdrawing cash, or depositing funds. Within seconds, the system verifies your credentials and processes your request. Behind the scenes, the <span class="inline-code">ATM</span> coordinates with the bank, manages</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_265_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 266" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>account transactions, and interacts with hardware like the card reader and cash dispenser. Now, let’s design an <span class="inline-code">ATM</span> system that handles these operations smoothly and reliably.” Requirements clarification The first step in designing the <span class="inline-code">ATM</span> system is to understand precisely what the interviewer wants you to design. Here is an example of how a conversation between a candidate and an</p>
+<h2>interviewer might unfold:</h2>
+<p>Candidate: For user interactions, I think the <span class="inline-code">ATM</span> should have a card reader to process debit cards, a keypad for entering the <span class="inline-code">PIN</span> and selecting options, a screen to display instructions and menus, a cash dispenser for withdrawals, and a deposit slot for accepting cash. Does this cover the main components, or are there additional ones I should consider? Interviewer: That’s a solid list. Candidate: I envision the <span class="inline-code">ATM</span> guiding users through a clear flow: the user inserts their card, enters a <span class="inline-code">PIN</span> for authentication, and then sees a menu with options like checking balance, withdrawing cash, or depositing funds. After completing a task, the <span class="inline-code">ATM</span> offers the choice to continue or exit, ejecting the card at the end. Does this flow align with your vision, or should I adjust any steps? Interviewer: Your flow is accurate. It starts with card insertion, <span class="inline-code">PIN</span> entry, and a menu for tasks. After each task, the user can continue or exit, with the card ejected at the end. Candidate: For authentication, I assume the <span class="inline-code">ATM</span> validates the card and <span class="inline-code">PIN</span> combination. If either is invalid, it displays an error. Interviewer: Yes, the <span class="inline-code">ATM</span> validates the card and <span class="inline-code">PIN</span>, showing an error for invalid inputs. Including a limit of three <span class="inline-code">PIN</span> attempts before locking the card is a good security measure. Let’s keep that in scope. Candidate: Regarding accounts, I propose that the <span class="inline-code">ATM</span> supports multiple accounts per user, such as Checking and Savings, linked to their card. Users can select an account for transactions. Does this match your requirements? Interviewer: That’s correct. The <span class="inline-code">ATM</span> should support Checking and Savings accounts, with users able to select one for transactions. No additional account types are needed for now. Candidate: For transactions, I think the <span class="inline-code">ATM</span> should handle Withdraw and Deposit operations. For example, withdrawals check for sufficient funds, and deposits update the balance. Should we include other transactions like transfers, or focus on these two? Interviewer: Let’s focus on Withdraw and Deposit for simplicity. Transfers are out of scope for now. Ensure withdrawals validate funds and deposits process cash accurately.</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>Candidate: To handle errors, I suggest the <span class="inline-code">ATM</span> displays clear messages for issues like insufficient funds, invalid <span class="inline-code">PINs</span>, or hardware failures. Interviewer: I agree that clear error messages are essential. Requirements Based on the requirements gathering dialogue, the following functional requirements are</p>
+<h2>identified for the ATM system:</h2>
+<p>Authenticate users via a debit card and <span class="inline-code">PIN</span>. Support multiple accounts per user, including Checking and Savings account types, with the ability to select an account for transactions. The machine should include a Card Reader, Keypad, Screen, Cash Dispenser, Deposit Slot, and an optional Printer for receipts. Support Withdraw and Deposit transactions, ensuring withdrawals validate sufficient funds and deposits update the account balance. Handle exceptions, such as insufficient funds or incorrect inputs, by displaying clear error messages and retaining the card after repeated invalid attempts. Below are the non-functional requirements: The <span class="inline-code">ATM</span> must protect user data with strong security measures and retain cards after repeated invalid <span class="inline-code">PIN</span> attempts to ensure user trust. The <span class="inline-code">ATM</span> must operate reliably, minimizing disruptions and safely ejecting cards during failures to maintain user confidence. Use Case Diagram In the <span class="inline-code">ATM</span> system, a use case diagram illustrates how customers interact with the system to perform banking tasks, clarifying essential actions such as card insertion, <span class="inline-code">PIN</span> entry with up to three attempts, account selection, transaction processing, and error handling. Below is the use case diagram of the <span class="inline-code">ATM</span> system.</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Use Case Diagram of <span class="inline-code">ATM</span> The Customer actor has the following main use cases: Insert Card: The customer initiates a session by inserting their card into the <span class="inline-code">ATM</span>. Enter <span class="inline-code">PIN</span>: After inserting the card, the customer then enters their <span class="inline-code">PIN</span> for authentication. Select Transaction: The customer chooses a transaction type, such as withdrawing cash or depositing funds, from the menu. Select Account: The customer selects an account (e.g., Checking or Savings) for the transaction. Withdraw Cash: The customer requests a cash withdrawal and specifies the desired amount. Deposit Funds: The customer deposits cash into the <span class="inline-code">ATM</span>. Eject Card: The customer requests card ejection (e.g., by canceling or ending the session), the <span class="inline-code">ATM</span> ejects the card, and the session terminates. The System actor&#x27;s use cases are listed below. Note that actors may not always be human. Validate Card and <span class="inline-code">PIN</span>: The system verifies the customer’s card and <span class="inline-code">PIN</span> to grant access to banking options.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_268_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 269" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Withdraw Cash: The system processes the withdrawal request, confirms sufficient funds, and dispenses cash. Deposit Funds: The system accepts the deposited cash and updates the customer’s account balance accordingly. Eject Card: The <span class="inline-code">ATM</span> ejects the card, and the session ends. Identify Core Objects To design a modular and maintainable <span class="inline-code">ATM</span> system, we identify core objects that encapsulate distinct responsibilities, aligning with the functional requirements and user flow. These objects model the system’s key entities and interactions, ensuring clear separation of concerns and extensibility. Bank: Stores and manages accounts. Account: Represents a customer’s bank account. Manages a customer’s account details, including balance, account number, card number, <span class="inline-code">PIN</span> (hashed for security), and account type (Checking or Savings). <span class="inline-code">ATMMachine</span>: Acts as the main coordinator, managing user interaction and connecting with hardware elements like the card reader, keypad, screen, cash dispenser, and deposit slot. Design choice: We consolidate hardware access and management within the <span class="inline-code">ATMMachine</span> object to ensure consistent behavior across components, enabling a seamless user flow from card insertion to transaction completion. Transaction: Manages financial transactions like cash withdrawals and deposits, including validation checks (e.g., sufficient balance for withdrawals) and transaction execution. Design Class Diagram With the core objects and their roles defined, we now design their classes, attributes, and methods to construct a modular and extensible <span class="inline-code">ATM</span> system that meets the specified requirements. Account</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_269_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 270" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>This class represents a customer’s bank account as a distinct entity within the <span class="inline-code">ATM</span> system, encapsulating the essential data and operations needed to support user authentication and financial transactions. The Account class manages critical information, including the account balance, account number, associated card number, and <span class="inline-code">PIN</span>, while using an <span class="inline-code">AccountType</span> enum to distinguish between account types like Checking and Savings. It enables authentication by validating the <span class="inline-code">PIN</span> and supports transactions by updating the balance for withdrawals and deposits, ensuring the account’s state reflects the user’s financial activities accurately and efficiently. Below are representations of those classes. Account class and <span class="inline-code">AccountType</span> enum Important discussion: Rather than maintaining a transaction ledger for auditability and deriving the balance from it, as is typical in real-world banking, we simplify the system by directly updating the account balance during each transaction. This approach prioritizes the <span class="inline-code">ATM</span>’s core functionality and effective scope management. Bank In object-oriented design questions, systems are usually self-contained and don&#x27;t use real databases or web service <span class="inline-code">API</span> calls. The Bank class is designed to be a separate component</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_270_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 271" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_270_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 271" /></div>
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>that handles the main data and operations needed for the <span class="inline-code">ATM</span> to work. The Bank class stores Account objects and links them to cards for fast retrieval, enabling efficient card and <span class="inline-code">PIN</span> validation for authentication, account access for transactions, and funds availability checks for withdrawals. To ensure flexibility and scalability, we define a <span class="inline-code">BankInterface</span> to decouple the Bank implementation from the <span class="inline-code">ATM</span>. This allows the local Bank object to be easily replaced with a networked implementation, such as an <span class="inline-code">API</span> client adapter, if the system were to be extended for production use, without modifying the <span class="inline-code">ATM</span>’s core logic. The <span class="inline-code">UML</span> diagram below illustrates this structure. <span class="inline-code">BankInterface</span> interface and concrete class Alternative approach: We could integrate the Bank’s functionality directly into the <span class="inline-code">ATMMachine</span>. However, this would tightly couple account management with the <span class="inline-code">ATM</span>’s operations, reducing modularity and making it harder to adapt the system for networked banking or other extensions in the future. Transaction The purpose of designing the Transaction class is to provide a unified framework for handling financial operations in the <span class="inline-code">ATM</span> system, enabling the system to process withdrawals and deposits consistently and reliably.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_271_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 272" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_271_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 272" /></div>
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>The Transaction class, as an interface, defines a contract for all transaction types, supported by a <span class="inline-code">TransactionType</span> enum that specifies Withdraw and Deposit operations. It validates transactions, such as checking funds for withdrawals, and updates the account balance, using concrete classes like <span class="inline-code">WithdrawTransaction</span> and <span class="inline-code">DepositTransaction</span> for reliable processing. Design choice: By abstracting Transaction as a separate object, we can represent different transaction types (e.g., Withdraw, Deposit) with shared behavior, making it easier to introduce new types in the future without modifying the core logic. The <span class="inline-code">UML</span> diagram below illustrates this structure. Transaction interface and concrete classes <span class="inline-code">ATMState</span> The purpose of designing the <span class="inline-code">ATMState</span> interface is to provide a framework for handling the distinct stages of the <span class="inline-code">ATM</span>’s interaction process, ensuring the <span class="inline-code">ATMMachine</span> can manage each user step systematically. The <span class="inline-code">ATMState</span> interface defines the operations for each stage of the <span class="inline-code">ATM</span>’s flow, such as card insertion, <span class="inline-code">PIN</span> entry, transaction selection, and cash handling. Concrete state classes like</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_272_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 273" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_272_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 273" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p><span class="inline-code">IdleState</span>, <span class="inline-code">PinEntryState</span>, <span class="inline-code">TransactionSelectionState</span>, <span class="inline-code">WithdrawAmountEntryState</span>, and <span class="inline-code">DepositCollectionState</span> implement the specific behavior for each stage. The following diagram shows the class hierarchy of <span class="inline-code">ATMState</span> and its concrete states: <span class="inline-code">ATMState</span> interface and concrete classes The following state transition diagram visualizes this design.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_273_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 274" /></div>
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>State transition diagram <span class="inline-code">IdleState</span>: Awaits card insertion, transitions to <span class="inline-code">PinEntryState</span> on valid card. <span class="inline-code">PinEntryState</span>: Processes <span class="inline-code">PIN</span> entry, transitions to <span class="inline-code">TransactionSelectionState</span> on valid <span class="inline-code">PIN</span>. <span class="inline-code">TransactionSelectionState</span>: Processes transaction selection, transitions to <span class="inline-code">WithdrawAmountEntryState</span> or <span class="inline-code">DepositCollectionState</span>. <span class="inline-code">WithdrawAmountEntryState</span>: Handles withdrawal amount entry, executes transaction, returns to <span class="inline-code">TransactionSelectionState</span> or <span class="inline-code">IdleState</span>. <span class="inline-code">DepositCollectionState</span>: Processes deposit amount, executes transaction, returns to <span class="inline-code">TransactionSelectionState</span> or <span class="inline-code">IdleState</span>. Note: To learn more about the State pattern and its everyday use cases, refer to the Vending Machine chapter of the book. Hardware component interfaces The purpose of designing the hardware component interfaces is to provide a set of interfaces that handle user interactions and physical operations within the <span class="inline-code">ATM</span> system, ensuring the <span class="inline-code">ATMMachine</span> can operate independently of specific hardware implementations. The hardware components, including <span class="inline-code">CardProcessor</span>, Keypad, Display, <span class="inline-code">CashDispenser</span>, and <span class="inline-code">DepositBox</span>, define the operations needed for interacting with the user and managing physical tasks, such as reading cards, accepting <span class="inline-code">PIN</span> entries, displaying messages, dispensing cash,</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_274_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 275" /></div>
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>and collecting deposits. They enable the <span class="inline-code">ATMMachine</span> to perform these tasks through well- defined interfaces, ensuring flexibility and ease of testing with simulated implementations. <span class="inline-code">CardProcessor</span> The <span class="inline-code">CardProcessor</span> interface enables the <span class="inline-code">ATMMachine</span> to read a card during insertion and release it after the user’s session, managing card-related operations for starting and ending transactions. Keypad The Keypad interface captures user inputs such as <span class="inline-code">PINs</span>, transaction choices, and amounts. <span class="inline-code">DepositBox</span> The <span class="inline-code">DepositBox</span> interface collects the deposited amount during a deposit transaction, enabling the <span class="inline-code">ATMMachine</span> to handle cash deposits from users. <span class="inline-code">CashDispenser</span> The <span class="inline-code">CashDispenser</span> interface delivers the requested cash to the user during a withdrawal transaction. Display The Display interface shows messages and prompts to guide the user. The following diagram shows the hardware component interfaces and their relationship with the</p>
+<h2>ATMMachine:</h2>
+<p>Hardware component interfaces <span class="inline-code">ATMMachine</span></p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_275_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 276" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>The <span class="inline-code">ATMMachine</span> class acts as a facade for the <span class="inline-code">ATM</span> system, orchestrating user interactions, coordinating hardware components while relying on a Bank instance to access Account data and process Transactions. It uses the <span class="inline-code">ATMState</span> class to manage the sequence of steps in a user’s session, ensuring a clear and reliable experience from card insertion to session end. Below is the representation of this class. Design choice: We employ the State pattern with <span class="inline-code">ATMState</span> classes to manage the <span class="inline-code">ATM</span>’s sequential workflow, such as transitioning from card insertion to <span class="inline-code">PIN</span> entry, ensuring each stage is encapsulated and clearly defined. Additionally, we use interface-based hardware components (e.g., <span class="inline-code">CardProcessor</span>, Keypad) to abstract physical interactions. This separation of concerns enhances modularity, simplifies maintenance, and enables testing with mock hardware implementations. With all classes defined, let’s review how they fit together in the complete class diagram. Complete Class Diagram Take a moment to review the complete class structure and the relationships between them. The detailed methods and attributes are skipped to make the diagram more readable.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_276_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 277" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_276_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 277" /></div>
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p>Summarized Class Diagram of <span class="inline-code">ATM</span> System Code - <span class="inline-code">ATM</span> System In this section, we will implement the core functionalities of the <span class="inline-code">ATM</span> System, focusing on key areas such as defining different account types and transactions, managing accounts and banking operations, handling user interactions through hardware components, and implementing the <span class="inline-code">ATM</span>’s interaction flow using a state machine. Account The Account class represents a bank account in our <span class="inline-code">ATM</span> system, encapsulating core banking attributes like balance, account number, card details, and account type. It maintains security through <span class="inline-code">PIN</span> hashing and is designed with a mix of immutable (<span class="inline-code">accountNumber</span>, <span class="inline-code">cardNumber</span>, <span class="inline-code">accountType</span>, and <span class="inline-code">cardPinHash</span>) and mutable (balance) fields. This ensures account identity remains constant while allowing balance updates for deposits and withdrawals.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_277_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 278" /></div>
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<p>Tied to this, the <span class="inline-code">AccountType</span> enum defines the type of account a customer can hold, currently supporting <span class="inline-code">CHECKING</span> and <span class="inline-code">SAVING</span> types. This simple enum design enables type-safe account categorization while allowing for future expansion of account types. Below is the code implementation of the Account class and <span class="inline-code">AccountType</span> enum: // Represents a bank account with balance, card details, and <span class="inline-code">PIN</span></p>
+<pre><code>public class Account {
+    private BigDecimal balance;
+    private final String accountNumber;
+    private final String cardNumber;
+    private final byte[] cardPinHash;
+    private final AccountType accountType;
+    // Creates a new account with initial zero balance and hashed
+    public Account(
+            final String accountNumber,
+            final AccountType type,
+            final String cardNumber,
+            final String pin) {
+        this.accountNumber = accountNumber;
+        this.accountType = type;
+        this.cardNumber = cardNumber;
+        this.cardPinHash = calculateMd5(pin); // PIN is hashed fo
+        this.balance = BigDecimal.ZERO;
+    }
+    // Validates the entered PIN against stored hash
+    public boolean validatePin(String pinNumber) {
+        byte[] entryPinHash = calculateMd5(pinNumber);
+        return Arrays.equals(cardPinHash, entryPinHash);
+    }
+    // Updates account balance by adding the specified amount
+    public void updateBalanceWithTransaction(final BigDecimal bal
+        this.balance = this.balance.add(balanceChange);
+    }
+    // getter methods omitted for brevity
+}
+// Defines the type of bank account
+public enum AccountType {</code></pre>
+
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>// Regular checking account for daily transactions</p>
+<h2>CHECKING,</h2>
+<p>// Interest-bearing savings account</p>
+<h2>SAVING</h2>
+<pre><code>}</code></pre>
+<p>The <span class="inline-code">validatePin</span> method ensures secure authentication by comparing the hashed input <span class="inline-code">PIN</span> with the stored hash. The <span class="inline-code">updateBalanceWithTransaction</span> handles both deposits and withdrawals through a single method that adds the transaction amount (positive for deposits, negative for withdrawals) to the current balance. Implementation choice: We have used <span class="inline-code">BigDecimal</span> for balance to ensure precise financial calculations, while the immutable fields for account identity (<span class="inline-code">accountNumber</span>, <span class="inline-code">cardNumber</span>) maintain data consistency throughout the account&#x27;s lifecycle. Bank The <span class="inline-code">BankInterface</span> defines the contract for banking operations in the <span class="inline-code">ATM</span> system. Its concrete implementation, the Bank class, provides a local implementation to manage accounts and handle operations like card validation and fund withdrawals. This separation allows the system to remain flexible, supporting potential future extensions such as replacing the Bank with a networked implementation.</p>
+<h2>Here’s how it’s structured:</h2>
+<pre><code>public interface BankInterface {
+    void addAccount(String accountNumber, AccountType type, Strin
+    boolean validateCard(String cardNumber);
+    boolean checkPin(String cardNumber, String pinNumber);
+    Account getAccountByAccountNumber(String accountNumber);
+    Account getAccountByCard(String cardNumber);
+    boolean withdrawFunds(Account account, BigDecimal amount);
+}
+// Manages bank accounts and provides banking operations like val
+public class Bank implements BankInterface {</code></pre>
+
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<pre><code>    private final Map&lt;String, Account&gt; accounts = new HashMap&lt;&gt;()
+    private final Map&lt;String, Account&gt; accountByCard = new HashMa
+    // Creates a new account and stores it in both account and ca
+    @Override
+    public void addAccount(
+            final String accountNumber,
+            final AccountType type,
+            final String cardNumber,
+            final String pin) {
+        final Account newAccount = new Account(accountNumber, typ
+        accounts.put(newAccount.getAccountNumber(), newAccount);
+        accountByCard.put(newAccount.getCardNumber(), newAccount)
+    }
+    // Checks if a card number exists in the bank&#x27;s records
+    @Override
+    public boolean validateCard(final String cardNumber) {
+        return getAccountByCard(cardNumber) != null;
+    }
+    // Verifies if the provided PIN matches the card&#x27;s stored PIN
+    @Override
+    public boolean checkPin(String cardNumber, String pinNumber) 
+        Account account = getAccountByCard(cardNumber);
+        if (account != null) {
+            return account.validatePin(pinNumber);
+        }
+        return false;
+    }
+    // Retrieves account by account number
+    @Override
+    public Account getAccountByAccountNumber(String accountNumber
+        return accounts.get(accountNumber);
+    }
+    // Retrieves account by card number
+    @Override
+    public Account getAccountByCard(String cardNumber) {
+        return accountByCard.get(cardNumber);
+    }
+    // Attempts to withdraw specified amount from account if suff
+    @Override
+    public boolean withdrawFunds(Account account, BigDecimal amou
+        if (account.getBalance().compareTo(amount) &gt;= 0) {</code></pre>
+
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<p>account.<span class="inline-code">updateBalanceWithTransaction</span>(amount.<span class="inline-code">negate()</span>)</p>
+<pre><code>            return true;
+        }
+        return false;
+    }
+}
+The Bank class implements efficient account management through:</code></pre>
+<h2>Two HashMaps for O(1) lookup time:</h2>
+<p>accounts: Maps account numbers to Account objects <span class="inline-code">accountByCard</span>: Maps card numbers to Account objects for quick access by card number during authentication and transactions.</p>
+<h2>Account operations:</h2>
+<p><span class="inline-code">addAccount</span>: Creates new accounts. <span class="inline-code">validateCard</span>: Checks if the card number is associated with an account, used during card insertion. <span class="inline-code">checkPin</span>: Verifies the <span class="inline-code">PIN</span> for the given card, enabling user authentication. <span class="inline-code">withdrawFunds</span>: Processes withdrawals with balance checks. Implementation choice: We chose <span class="inline-code">HashMap</span> for both accounts (mapping account numbers to Account objects) and <span class="inline-code">accountByCard</span> (mapping card numbers to Account objects) because it provides average-case O(1) time complexity for lookups, ensuring fast performance for real- time operations like card validation and account retrieval during a user session. Transaction The Transaction interface establishes a consistent framework for handling all financial transactions within the <span class="inline-code">ATM</span> system. It ensures that different transaction types, such as withdrawals and deposits, adhere to a uniform process for validation and execution. The <span class="inline-code">WithdrawTransaction</span> and <span class="inline-code">DepositTransaction</span> classes implement this interface to manage their respective operations. This abstraction promotes extensibility, making it easy to introduce new transaction types, like transfers, without altering existing code. Here is the implementation of the interface and its concrete classes.</p>
+<pre><code>public interface Transaction {
+    TransactionType getType();</code></pre>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<pre><code>    boolean validateTransaction();
+    void executeTransaction();
+}
+// Handles the withdrawal transaction process for removing funds 
+public class WithdrawTransaction implements Transaction {
+    Account account;
+    BigDecimal amount;
+    // Returns the transaction type as WITHDRAW
+    @Override
+    public TransactionType getType() {
+        return TransactionType.WITHDRAW;
+    }
+    // Validates if the account has sufficient funds for withdraw
+    @Override
+    public boolean validateTransaction() {
+        assert account != null;
+        return account.getBalance().compareTo(amount) &gt; 0;
+    }
+    // Creates a new withdrawal transaction, throws exception if 
+    public WithdrawTransaction(Account account, BigDecimal amount
+        if (!validateTransaction()) {
+            throw new IllegalStateException(</code></pre>
+<p>&quot;Cannot complete withdrawal: Insufficient fun</p>
+<pre><code>        }
+        this.account = account;
+        this.amount = amount;
+    }
+    // Executes the withdrawal by subtracting the amount from acc
+    @Override
+    public void executeTransaction() {
+        account.updateBalanceWithTransaction(amount.negate());
+    }
+}
+// Handles the deposit transaction process for adding funds to an
+public class DepositTransaction implements Transaction {
+    final Account account;
+    final BigDecimal amount;
+    // Returns the transaction type as DEPOSIT</code></pre>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<p>@Override</p>
+<pre><code>    public TransactionType getType() {
+        return TransactionType.DEPOSIT;
+    }
+    // Deposit transactions are always valid
+    @Override
+    public boolean validateTransaction() {
+        return true;
+    }
+    public DepositTransaction(Account account, BigDecimal amount)
+        this.account = account;
+        this.amount = amount;
+    }
+    // Executes the deposit by adding the amount to the account b
+    @Override
+    public void executeTransaction() {
+        account.updateBalanceWithTransaction(amount);
+    }
+}</code></pre>
+<p>The Transaction interface includes essential methods to manage transactions: <span class="inline-code">getType</span>(): Returns the transaction type (e.g., <span class="inline-code">WITHDRAW</span> or <span class="inline-code">DEPOSIT</span>). <span class="inline-code">validateTransaction</span>(): Validates the transaction’s feasibility, such as checking funds availability for withdrawals. <span class="inline-code">executeTransaction</span>(): Executes transaction by updating the account balance. <span class="inline-code">ATMState</span> The <span class="inline-code">ATMState</span> abstract class forms the foundation of our <span class="inline-code">ATM</span>&#x27;s state machine, ensuring that each stage of the user flow, from card insertion to transaction completion, follows a consistent process. Its seven concrete implementations manage distinct stages, enabling the <span class="inline-code">ATMMachine</span> to execute the user flow by transitioning between states as the user progresses through their session. The <span class="inline-code">ATMState</span> interface includes essential methods to manage each stage: <span class="inline-code">processCardInsertion</span>(String <span class="inline-code">cardNumber</span>): Handles card insertion, used at the start of a session. <span class="inline-code">processCardEjection</span>(): Handles card ejection, which is used to end a session.</p>
+
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p><span class="inline-code">processPinEntry</span>(String <span class="inline-code">pinNumber</span>): Processes <span class="inline-code">PIN</span> entry for authentication. <span class="inline-code">processWithdrawalRequest</span>(): Initiates a withdrawal transaction. <span class="inline-code">processDepositRequest</span>(): Initiates a deposit transaction. <span class="inline-code">processAmountEntry</span>(<span class="inline-code">BigDecimal</span> amount): Processes the amount for withdrawals. <span class="inline-code">processDepositCollection</span>(<span class="inline-code">BigDecimal</span> amount): Processes the amount for deposits. Below is the implementation for the <span class="inline-code">ATMState</span> interface, showing its default behavior, followed by implementations of <span class="inline-code">IdleState</span> and <span class="inline-code">WithdrawAmountEntryState</span>:</p>
+<pre><code>public class ATMState {
+    // Displays an invalid action message on the ATM screen
+    private static void renderDefaultAction(ATMMachine atmMachine
+        atmMachine.getDisplay().showMessage(&quot;Invalid action, plea
+    }
+    // Default implementation for card insertion
+    public void processCardInsertion(ATMMachine atmMachine, Strin
+        renderDefaultAction(atmMachine);
+    }
+    // Default implementation for card ejection
+    public void processCardEjection(ATMMachine atmMachine) {
+        renderDefaultAction(atmMachine);
+    }
+    // Default implementation for PIN entry
+    public void processPinEntry(ATMMachine atmMachine, String pin
+        renderDefaultAction(atmMachine);
+    }
+    // Default implementation for withdrawal request
+    public void processWithdrawalRequest(ATMMachine atmMachine) {
+        renderDefaultAction(atmMachine);
+    }
+    // Default implementation for deposit request
+    public void processDepositRequest(ATMMachine atmMachine) {
+        renderDefaultAction(atmMachine);
+    }
+    // Default implementation for amount entry
+    public void processAmountEntry(ATMMachine atmMachine, BigDeci
+        renderDefaultAction(atmMachine);
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<p>// Default implementation for deposit collection</p>
+<pre><code>    public void processDepositCollection(ATMMachine atmMachine, B
+        renderDefaultAction(atmMachine);
+    }
+}
+The IdleState waits for the user to insert a card and start the session, supporting only card
+insertion. If the card is valid, it transitions to PinEntryState. Otherwise, it displays an error.
+public class IdleState extends ATMState {
+    /**</code></pre>
+<ul><li>This method is called when a card is inserted into the ATM</li><li>PinEntryState if the card is valid. */ @Override</li></ul>
+<pre><code>    public void processCardInsertion(ATMMachine atmMachine, Strin</code></pre>
+<p>if (<span class="inline-code">atmMachine</span>.<span class="inline-code">getBankInterface</span>().<span class="inline-code">validateCard</span>(<span class="inline-code">cardNumber</span> <span class="inline-code">atmMachine</span>.<span class="inline-code">getDisplay</span>().<span class="inline-code">showMessage</span>(&quot;Please enter you</p>
+<pre><code>            atmMachine.transitionToState(new PinEntryState());
+        } else {</code></pre>
+<p><span class="inline-code">atmMachine</span>.<span class="inline-code">getDisplay</span>().<span class="inline-code">showMessage</span>(&quot;Invalid card. Pl</p>
+<pre><code>        }
+    }
+}</code></pre>
+<p>The <span class="inline-code">EnterWithdrawalAmountState</span> manages the step where the user enters a withdrawal amount, coordinating with the <span class="inline-code">ATMMachine</span> to execute the withdrawal via the Bank, using a <span class="inline-code">WithdrawTransaction</span> to validate funds and update the account balance.</p>
+<pre><code>public class WithdrawAmountEntryState extends ATMState {
+    // Handles card ejection by canceling transaction and returni
+    @Override
+    public void processCardEjection(ATMMachine atmMachine) {</code></pre>
+<p><span class="inline-code">atmMachine</span>.<span class="inline-code">getDisplay</span>().<span class="inline-code">showMessage</span>(&quot;Transaction cancelle</p>
+<pre><code>        atmMachine.transitionToState(new IdleState());
+    }
+    // Processes withdrawal request by checking balance and dispe
+    @Override
+    public void processAmountEntry(ATMMachine atmMachine, BigDeci</code></pre>
+
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<p>String <span class="inline-code">cardNumber</span> = <span class="inline-code">atmMachine</span>.<span class="inline-code">getCardProcessor</span>().<span class="inline-code">getCard</span> Account account = <span class="inline-code">atmMachine</span>.<span class="inline-code">getBankInterface</span>().<span class="inline-code">getAccoun</span> boolean <span class="inline-code">isSuccess</span> = <span class="inline-code">atmMachine</span>.<span class="inline-code">getBankInterface</span>().withdra</p>
+<pre><code>        if (isSuccess) {
+            atmMachine.getCashDispenser().dispenseCash(amount);</code></pre>
+<p><span class="inline-code">atmMachine</span>.<span class="inline-code">getDisplay</span>().<span class="inline-code">showMessage</span>(&quot;Please take your</p>
+<pre><code>        } else {</code></pre>
+<p><span class="inline-code">atmMachine</span>.<span class="inline-code">getDisplay</span>().<span class="inline-code">showMessage</span>(&quot;Insufficient fun</p>
+<pre><code>        }
+        atmMachine.transitionToState(new TransactionSelectionStat
+    }
+}
+For brevity, we have omitted the code for the PinEntryState, TransactionSelectionState, and
+DepositCollectionState classes. The complete code for all state classes is available in the</code></pre>
+<p>accompanying materials of this book. <span class="inline-code">ATMMachine</span> The <span class="inline-code">ATMMachine</span> class acts as the central controller of the <span class="inline-code">ATM</span> system, applying the Facade pattern to offer a simplified interface to the underlying complexities. It manages the <span class="inline-code">ATM</span>’s hardware components, delegates state-specific behavior to corresponding <span class="inline-code">ATMState</span> classes such as <span class="inline-code">IdleState</span> and <span class="inline-code">DepositCollectionState</span>, and utilizes the <span class="inline-code">BankInterface</span> to perform banking operations. Here is the implementation of this class. // Main <span class="inline-code">ATM</span> machine class that manages the state and hardware com</p>
+<pre><code>public class ATMMachine {
+    private ATMState state;
+    private final CardProcessor cardProcessor;
+    private final DepositBox depositBox;
+    private final CashDispenser cashDispenser;
+    private final Keypad keypad;
+    private final Display display;
+    private final Bank bank;
+    // Initializes ATM with all required hardware components and </code></pre>
+
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<pre><code>    public ATMMachine(
+            Bank bank,
+            CardProcessor cardProcessor,
+            DepositBox depositBox,
+            CashDispenser cashDispenser,
+            Keypad keypad,
+            Display display) {
+        this.bank = bank;
+        this.cardProcessor = cardProcessor;
+        this.depositBox = depositBox;
+        this.cashDispenser = cashDispenser;
+        this.keypad = keypad;
+        this.display = display;
+        this.state = new IdleState();
+    }
+    // Forwards card insertion to current state for processing
+    public void insertCard(String cardNumber) {
+        state.processCardInsertion(this, cardNumber);
+    }
+    // Forwards card ejection to current state for processing
+    public void ejectCard() {
+        state.processCardEjection(this);
+    }
+    // Forwards PIN entry to current state for validation
+    public void enterPin(String pin) {
+        state.processPinEntry(this, pin);
+    }
+    // Forwards withdrawal request to current state for processin
+    public void withdrawRequest() {
+        state.processWithdrawalRequest(this);
+    }
+    // Forwards deposit request to current state for processing
+    public void depositRequest() {
+        state.processDepositRequest(this);
+    }
+    // Forwards amount entry to current state for processing
+    public void enterAmount(BigDecimal amount) {
+        state.processAmountEntry(this, amount);
+    }
+    // Forwards deposit collection to current state for processin</code></pre>
+
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<pre><code>    public void collectDeposit(BigDecimal amount) {
+        state.processDepositCollection(this, amount);
+    }
+    // Returns the display component for showing messages
+    public Display getDisplay() {
+        return display;
+    }
+    // Returns the cash dispenser component for handling withdraw
+    public CashDispenser getCashDispenser() {
+        return cashDispenser;
+    }
+    // Returns the bank interface for account operations
+    public BankInterface getBankInterface() {
+        return bank;
+    }
+    // Returns the card processor component for handling card ope
+    public CardProcessor getCardProcessor() {
+        return cardProcessor;
+    }
+    // Returns the keypad component for user input
+    public Keypad getKeypad() {
+        return keypad;
+    }
+    // Updates the current state of the ATM
+    public void transitionToState(ATMState nextState) {
+        this.state = nextState;
+    }
+    // Returns the current state of the ATM
+    public ATMState getCurrentState() {
+        return state;
+    }
+    // Returns the deposit box component for handling deposits
+    public DepositBox getDepositBox() {
+        return depositBox;
+    }
+}</code></pre>
+
+</div>
+<div class="page-divider">Page 25</div>
+<div class="page-content" data-page="25">
+<h2>Hardware Management:</h2>
+<p>The <span class="inline-code">ATMMachine</span> class manages all hardware components, including the card processor, cash dispenser, deposit box, keypad, and display, to enable user interactions. It provides access to these hardware components through getter methods like <span class="inline-code">getCardProcessor</span> and <span class="inline-code">getDisplay</span> for use by state classes.</p>
+<h2>State Management:</h2>
+<p>The <span class="inline-code">ATMMachine</span> class maintains the current state of the <span class="inline-code">ATM</span> using a state field to track the active stage of the user flow. It provides state transition functionality through the <span class="inline-code">setState</span> method, allowing the <span class="inline-code">ATM</span> to move between stages like <span class="inline-code">IdleState</span> and <span class="inline-code">PinEntryState</span>. Wrap Up With the <span class="inline-code">ATM</span> system fully implemented, it’s time to step back and consider what we’ve achieved. This chapter began by gathering requirements through a structured dialogue, then progressed to defining core objects like accounts and transactions, designing their class structure, and coding the essential components, including the state machine and hardware interactions. The system&#x27;s maintainability and extensibility are ensured by the clear division of responsibilities among the classes: Account and Bank manage account data and banking operations, Transaction handles financial operations, <span class="inline-code">ATMState</span> and its state classes (<span class="inline-code">IdleState</span>, <span class="inline-code">PinEntryState</span>, etc.) manage the user flow stages, hardware interfaces (Keypad, <span class="inline-code">CardProcessor</span>, etc.) handle user interactions, and <span class="inline-code">ATMMachine</span> orchestrates the entire flow as a facade. Our choices, such as using the state pattern with <span class="inline-code">ATMState</span> and separating hardware interactions into interfaces, improve modularity and allow future extensions, like adding new transaction types or hardware components. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

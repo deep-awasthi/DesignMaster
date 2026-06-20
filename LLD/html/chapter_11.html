@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 11</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-lld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 11</h2>
+<p>Design a Blackjack Game In this chapter, we will discuss the object-oriented design of the Blackjack game (also called “21”). Blackjack is a popular card game where the goal is to get a hand of cards that adds up to 21, or as close as possible, without going over. The game is a mix of strategy (deciding when to hit or stand) and luck (the cards you get), making it a captivating and iconic casino game. Let’s gather the game’s requirements through a typical interview-style conversation. Blackjack Game Requirements Gathering Here’s an example of a typical prompt an interviewer might present: “Picture yourself at a casino table, ready to play a round of Blackjack, also known as ‘21.’ At the start, you and other players place bets, and the dealer distributes two cards to each player, including themselves. You evaluate your hand, aiming to get as close to 21 as possible without going over, and decide whether to hit or stand. After all players make their moves, the dealer reveals their hand and hits until reaching at least 17, then stands. Behind the scenes, the game</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_211_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 212" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>manages a deck of cards, tracks player actions, ensures fair dealing, and updates balances. Let’s design a Blackjack game system that handles all this.” Note: Blackjack has various rules (e.g., soft 17, double down, splitting). This document focuses on the technical design and object-oriented implementation of a simplified standard Blackjack game. Requirements clarification Here is an example of how a conversation between a candidate and an interviewer might</p>
+<h2>unfold:</h2>
+<p>Candidate: Should I design the game to support multiple players or just one player competing against the dealer? Interviewer: The game should support multiple players. Candidate: What happens after a player takes their turn? Interviewer: After each player takes their turn (“hit” or “stand”), the game should check if all players have either stood or busted (hand value exceeding 21). When this happens, the game should determine the winner by comparing each player&#x27;s hand value and settle the bets. Candidate: Should the dealer follow any specific rules for when to hit or stand? Interviewer: Yes, the dealer should continue to &quot;hit&quot; until their hand totals at least 17. Once they reach 17 or higher, they must &quot;stand.&quot; Candidate: How are bets handled in the game, and how are players paid? Interviewer: Players place their bets before the initial cards are dealt. Players who win receive a payout equal to their bet (e.g., a $10 bet wins $10, plus their original bet returned), while players who bust lose their bet. Requirements Based on the conversation, here are the key functional requirements we’ve identified. The game should support multiple players and a dealer. Players should be dealt two cards at the beginning of the game. Players should have the option to &quot;hit&quot; (request an additional card) or &quot;stand&quot; (keep their current hand). Aces should be valued as 1 or 11, with the value chosen to optimize the player’s hand.</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>After each player’s turn, the game checks if all players have stood or busted.   Once all players have completed their turns, the dealer takes their turn, hitting until their hand totals at least 17, then standing. The game then determines the winner and settles the bets. Players who win receive a payout equal to their bet (1:1), while players who bust lose their bet. Below are the non-functional requirements: The user interface must be intuitive, with clear prompts and visual feedback on game state to accommodate users with minimal Blackjack experience. With these requirements in hand, let’s map out the game’s flow using an activity diagram to visualize how it all comes together. Activity Diagram Understanding the flow of a game like Blackjack is crucial when designing its object-oriented structure, especially given the game’s mix of sequential steps and decision points. This is where an activity diagram comes into play. An activity diagram visually maps out the workflow of the game, capturing each action, decision, and transition in a clear, step-by-step manner. In the context of Blackjack, this means outlining everything from dealing cards to determining winners, ensuring we account for all possible paths, such as a player busting or the dealer hitting until 17. Let’s look at the activity diagram for Blackjack, which captures this process in detail.</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Activity Diagram of Blackjack Game</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_214_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 215" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Now that we’ve got a clear picture of the game’s flow, let’s break down the core objects we’ll need to bring this design to life. Identify Core Objects As we have done in earlier chapters, let’s enumerate the core objects. <span class="inline-code">BlackJackGame</span>: The <span class="inline-code">BlackJackGame</span> class acts as the central entity of the game, managing the overall flow from start to finish. It is responsible for dealing cards, tracking player actions (“hit”, or “stand”), and determining the winner. Player: The Player interface represents each participant in the game, with concrete implementations as <span class="inline-code">RealPlayer</span> for humans tracking bets and balance, and <span class="inline-code">DealerPlayer</span> for the dealer, who does not place bets and must hit until reaching a hand value of 17 or higher, as per Blackjack rules. Hand: Each player is associated with a Hand class, which manages the cards they receive during the game. This class calculates all possible hand values based on the cards held. This is especially important when handling Aces, which can count to 1 or 11, depending on which value keeps the player’s hand value closer to 21 without exceeding it. Deck: The Deck class is responsible for managing the collection of cards used in the game. It shuffles the cards when a new round begins and provides a new card when a player requests a hit. Card: Each individual card is represented by the Card class, which is defined by its Rank and Suit enums. The Rank determines the card’s value in the game, while the Suit provides its identity, such as “Hearts” or “Spades”. Design Class Diagram Now that we know the core objects and their roles, the next step is to create classes and methods to build the Blackjack game. Card The Card class is a straightforward, immutable building block that holds a rank and a suit. It acts as a data-only entity with no behavior. This ensures immutability to prevent accidental changes and maintain game consistency. Note: Immutability means that once a card is created, its rank and suit cannot be changed. Below is the representation of this class.</p>
+
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>The Card class is kept simple, it uses <span class="inline-code">getRankValues</span>() to fetch values from Rank. It leaves the heavy lifting of value calculations to the Hand class, sticking to a clean separation of duties. Note that the return value is a list of integers rather than a single value because Ace has two possible values (1 or 11). Design choice: The Card class is designed as a standalone entity to represent individual cards, enabling reuse across multiple decks or game variants. Since Card relies on Rank and Suit to define its value and identity, let’s explore those next. Rank and Suit enumerations When modeling Rank and Suit, enums are the ideal choice as they’re type-safe, readable, and easy to maintain. Rank captures card values: numbers 2 through 10 are worth face value, Jack, Queen, and King are each worth 10, and an Ace can be either 1 or 11, depending on what benefits the hand most. Suit lists the standard four options: Hearts, Diamonds, Clubs, and Spades.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_216_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 217" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_216_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 217" /></div>
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>Suit and Rank Enums Design choice: Why enums over other approaches? Consider using strings instead. You’d have a lot of flexibility, but that comes at a cost: extra validation to avoid invalid inputs, messy conversions when calculating hand values, and potentially higher memory usage. Integers might seem like a better alternative because they allow simple numeric representation (e.g., 1 for Ace, 10 for Jack), but they’re error- prone, developers might accidentally assign invalid values like 0 or 15, and their lack of inherent meaning requires additional checks, reducing the clarity that enums provide with named constants. For a card game like Blackjack, where precise values and clear representations are key, enums make the design both robust and easy to follow. With cards defined, let’s see how they come together in the Deck class. Deck The Deck class serves as the backbone of Blackjack’s card management, handling a standard 52-card deck. It uses a List&lt;Card&gt; to mimic a physical deck’s order, providing essential methods like shuffling to randomize the cards, drawing cards for players, counting the remaining cards, checking if the deck is empty, and resetting for a new round. This reset process shuffles the deck to ensure fair dealing.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_217_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 218" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_217_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 218" /></div>
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>Below is the representation of this class: Now that we’ve got a deck to draw from, let’s define the players who’ll use it. Player The Player interface serves as the blueprint for all participants in Blackjack, laying the foundation for both human players and the dealer. For human players, the <span class="inline-code">RealPlayer</span> class tracks essential details like a player’s name, hand, current bet, and balance, while providing methods for placing bets, receiving payouts, and retrieving key information. <span class="inline-code">DealerPlayer</span>, on the other hand, represents the house (no betting or balance here), just hitting until reaching 17 or higher, per Blackjack rules. Here is the representation of this interface with concrete classes:</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_218_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 219" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>Player interface with concrete classes Design choice: An interface-based design for Player is chosen to abstract common behaviors across human players and the dealer, promoting extensibility. Now that our players are set, let’s look at how they’ll manage their cards with the Hand class. Hand The Hand class manages the cards for a player or dealer in Blackjack, keeping track of a list of cards and calculating all possible hand values. It smartly handles Aces as either 1 or 11 to keep the hand as close to 21 as possible without going over. To support this, the class offers methods to add cards, access the card list, retrieve the possible values (stored as a sorted set to avoid duplicates), clear the hand for a new round, and determine if the hand is bust using <span class="inline-code">isBust</span>().</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_219_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 220" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_219_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 220" /></div>
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>Design choice: Keeping Hand separate from Player keeps the design clean and modular by splitting responsibilities: Hand focuses solely on managing the cards and their values, while Player handles other player-specific details like bets and balance. With hands managing cards and totals, let’s see how the <span class="inline-code">BlackjackGame</span> class ties it all together. <span class="inline-code">BlackJackGame</span> The <span class="inline-code">BlackJackGame</span> class is the central entity in our Blackjack game, orchestrating the action from the initial card dealing to the end of each round. It oversees the game’s deck, the players, and the dealer, handling card distribution, tracking turns, and wrapping up rounds by deciding winners and settling bets. To keep things fair, it ensures the dealer keeps hitting until reaching 17, then holds, while players get to choose whether to hit or stand. Here is the representation of this class.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_220_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 221" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_220_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 221" /></div>
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>Now that we’ve detailed our key classes, let’s put them together in a complete class diagram to see the full picture. Complete Class Diagram Below is the complete class diagram of the Blackjack game:</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_221_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 222" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>Class Diagram of Blackjack Let’s turn this design into working code. Code - Blackjack</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_222_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 223" /></div>
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p>In this section, we will implement the core functionality of the Blackjack game, emphasizing critical components such as deck management for card distribution, turn coordination for players and the dealer, bet resolution, and winner determination through hand value comparison. Card The Card class is a straightforward representation of a playing card, combining a Rank and a Suit. It’s designed to be immutable. Its attributes stay fixed once created. The <span class="inline-code">getRankValues</span>() method retrieves the card&#x27;s possible values from Rank (e.g., 1 or 11 for an Ace). Below is the code implementation of this class:</p>
+<pre><code>public class Card {
+    public final Rank rank;
+    public final Suit suit;
+    public Card(Rank rank, Suit suit) {
+        this.rank = rank;
+        this.suit = suit;
+    }
+    public int[] getRankValues() {
+        return rank.getRankValues();
+    }
+}
+Rank is an enum that defines card values: Aces can be 1 or 11, numbered cards retain their
+face value, and face cards (Jack, Queen, King) are all worth 10. It stores these values in an</code></pre>
+<p>array and provides them through <span class="inline-code">getRankValues</span>().</p>
+<pre><code>public enum Rank {
+    ACE(new int[] `{1, 11}`),
+    TWO(new int[] `{2}`),
+    THREE(new int[] `{3}`),
+    FOUR(new int[] `{4}`),
+    FIVE(new int[] `{5}`),
+    SIX(new int[] `{6}`),
+    SEVEN(new int[] `{7}`),
+    EIGHT(new int[] `{8}`),
+    NINE(new int[] `{9}`),</code></pre>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<p><span class="inline-code">TEN</span>(new int[] `{10}`), <span class="inline-code">JACK</span>(new int[] `{10}`), <span class="inline-code">QUEEN</span>(new int[] `{10}`),</p>
+<pre><code>    KING(new int[] `{10}`);
+    private final int[] rankValues;
+    Rank(int[] rankValues) {
+        this.rankValues = rankValues;
+    }
+    // Returns the possible values for the rank
+    public int[] getRankValues() {
+        return this.rankValues;
+    }
+}
+For Rank, we define Ace with [1, 11] from the start, rather than defaulting to 11 and adjusting
+later if the hand busts. This allows the Hand class to calculate all possible totals upfront, which</code></pre>
+<p>is useful for handling multiple Aces. Suit is a simple enum representing the four standard suits, Hearts, Spades, Clubs, and Diamonds. It acts purely as a label, giving each card its suit without additional logic.</p>
+<pre><code>public enum Suit {
+    HEARTS,
+    SPADES,
+    CLUBS,
+    DIAMONDS
+}
+With cards ready, let’s bundle them into a Deck for gameplay.
+Deck
+The Deck class represents a full deck of playing cards and provides essential operations such
+as shuffling, drawing, and resetting. It maintains a structured collection of Card objects and</code></pre>
+<p>ensures that cards are drawn in the correct sequence. Here is the implementation of this class:</p>
+
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<pre><code>public class Deck {
+    int nextCardIndex = 0;
+    List&lt;Card&gt; cards;
+    // Constructor initializes the deck
+    public Deck() {
+        initializeDeck();
+    }
+    // Initializes the deck with all cards
+    private void initializeDeck() {
+        cards = new ArrayList&lt;&gt;();
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                cards.add(new Card(rank, suit));
+            }
+        }</code></pre>
+<p><span class="inline-code">nextCardIndex</span> = 0; // Reset to start drawing from the fir</p>
+<pre><code>    }
+    // Shuffles the deck using current time as seed
+    public void shuffle() {
+        Collections.shuffle(cards, new Random(System.currentTimeM
+    }
+    // Draws the next card from the deck
+    public Card draw() {
+        if (isEmpty() || nextCardIndex &gt;= cards.size()) {
+            throw new IllegalStateException(&quot;No more cards in dec
+        }
+        Card drawCard = cards.get(nextCardIndex);
+        nextCardIndex++;
+        return drawCard;
+    }
+    // Returns the number of remaining cards in the deck
+    public int getRemainingCardCount() {
+        return cards.size() - nextCardIndex;
+    }
+    // Checks if the deck is empty
+    public boolean isEmpty() {
+        return getRemainingCardCount() == 0;
+    }
+    // Resets the deck to start drawing from the beginning</code></pre>
+
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<pre><code>    public void reset() {
+        nextCardIndex = 0;
+    }
+    // getter methods are omitted for brevity
+}
+The deck is initialized by pairing each Suit with every Rank, creating a complete set of 52
+cards. These cards are stored in a List&lt;Card&gt;, which provides an efficient way to manage
+them.
+Implementation choice: Instead of removing cards when drawn, the deck tracks the next
+available card using nextCardIndex. This avoids the costly list operation of removing elements
+from an ArrayList, which requires shifting all remaining elements (O(n) complexity. By simply
+incrementing an index, drawing a card becomes an O(1) operation, improving performance.
+Now that we’ve got cards flowing from the deck, let’s see how they land in a player’s Hand.
+Hand
+The Hand class is responsible for managing a player&#x27;s cards and computing possible hand
+totals, particularly when dealing with Aces, which can be worth 1 or 11. To achieve this, it</code></pre>
+<p>maintains a List&lt;Card&gt; for tracking the cards in the hand and a <span class="inline-code">SortedSet</span>&lt;Integer&gt; to store all possible hand values dynamically. When a new card is added via <span class="inline-code">addCard</span>(), it updates both the list of cards and the possible hand values. Handling Aces correctly is crucial: If the card is an Ace, both 1 and 11 are introduced as potential hand values. If it&#x27;s a non-Ace, its value is added to every existing total, generating all possible hand values. This approach precomputes all valid hand scores upfront, avoiding unnecessary recalculations during gameplay and ensuring that multiple Aces are handled efficiently.</p>
+<pre><code>public class Hand {
+    final List&lt;Card&gt; handCards = new ArrayList&lt;&gt;();
+    // Sorted set of all possible hand values, accounting for Ace
+    final SortedSet&lt;Integer&gt; possibleValues = new TreeSet&lt;&gt;();
+    public Hand() {}</code></pre>
+
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<p>// Adds a card to the hand and updates the set of possible to // For Aces (1 or 11), computes all combinations with existin // their value to each total.</p>
+<pre><code>    public void addCard(Card card) {
+        if (card == null) {
+            throw new IllegalArgumentException(&quot;Cannot add null c
+        }
+        handCards.add(card);
+        // card.getRankValues() returns [1, 11] for Aces or a sin
+        if (possibleValues.isEmpty()) {
+            // Initialize with the card&#x27;s values
+            for (int value : card.getRankValues()) {
+                possibleValues.add(value);
+            }
+        } else {
+            // Add all possible card values to each existing tota
+            SortedSet&lt;Integer&gt; newPossibleValue = new TreeSet&lt;&gt;()
+            for (int value : possibleValues) {
+                for (int cardValue : card.getRankValues()) {
+                    newPossibleValue.add(value + cardValue);
+                }
+            }
+            possibleValues.clear();
+            possibleValues.addAll(newPossibleValue);
+        }
+    }
+    // Returns an unmodifiable list of cards in the hand
+    public List&lt;Card&gt; getCards() {
+        return Collections.unmodifiableList(handCards);
+    }
+    // Returns an unmodifiable sorted set of possible hand values
+    public SortedSet&lt;Integer&gt; getPossibleValues() {
+        return Collections.unmodifiableSortedSet(possibleValues)
+    }
+    // Clears the hand and possible values
+    public void clear() {
+        handCards.clear();
+        possibleValues.clear();
+    }
+    // Checks if the hand is bust (all possible values &gt; 21)
+    public boolean isBust() {</code></pre>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<p>// check if all possible value of the player&#x27;s hand is bu</p>
+<pre><code>        if (possibleValues.isEmpty()) {
+            return false;
+        } else {
+            return possibleValues.first() &gt; 21;
+        }
+    }
+}</code></pre>
+<p>The <span class="inline-code">isBust</span>() method determines whether a player has exceeded 21. It evaluates the lowest value in <span class="inline-code">possibleValue</span>, and if all options are above 21, the hand is considered bust. This is a critical check that immediately signals when a player is out of the game. Implementation strategy: Handling Aces efficiently is the biggest challenge in Blackjack hand management. Instead of recalculating Ace values dynamically each time a hand is evaluated, the Hand class precomputes all possible totals upfront. This allows for faster, more efficient scoring and ensures that Blackjack’s unique Ace logic is handled seamlessly without requiring mid-game adjustments. Data structure choice: A <span class="inline-code">SortedSet</span> (implemented as <span class="inline-code">TreeSet</span>) is used for <span class="inline-code">possibleValues</span> to maintain sorted hand values, enabling O(log n) insertion and O(1) access to the lowest value for <span class="inline-code">isBust</span>(). Alternatively, a <span class="inline-code">HashSet</span> offers O(1) insertion but lacks sorting, requiring O(n) to find the minimum. Similarly, a List could store values but would need O(n) for sorting or searching, which is less efficient for frequent checks in Blackjack’s fast-paced gameplay. With hands tracking cards and totals, let’s define the Players who’ll hold them. Player In Blackjack, players fall into two distinct categories: human players, who place bets and manage their funds, and the dealer, who follows fixed rules and does not participate in betting. The Player interface and its concrete implementations, <span class="inline-code">RealPlayer</span> and <span class="inline-code">DealerPlayer</span>, provide a structured way to model these roles. Below is the implementation of this interface.</p>
+<pre><code>public interface Player {
+    void bet(int bet);
+    void loseBet();</code></pre>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<pre><code>    void returnBet();
+    void payout();
+    boolean isBust();
+    Hand getHand();
+    int getBalance();
+    String getName();
+    int getBet();
+}
+The RealPlayer class models a human player who engages in betting and managing their
+funds. It implements the Player interface, ensuring that bet handling is managed separately
+from the core game logic. When placing a bet, the bet() method ensures that the bet does not</code></pre>
+<p>exceed the player&#x27;s available balance before deducting the amount. To maintain a clear separation of concerns, <span class="inline-code">RealPlayer</span> does not handle card evaluation directly. Instead, it delegates all card-related operations to the Hand class. This ensures that the player&#x27;s bet handling and card logic remain separate, making the class more modular and maintainable.</p>
+<pre><code>public class RealPlayer implements Player {
+    private final String name;
+    private final Hand hand;
+    private final int bet;
+    private final int balance;
+    public RealPlayer(String name, int startBalance) {
+        this.name = name;
+        this.hand = new Hand();
+        this.bet = 0;
+        this.balance = startBalance;
+    }
+    // Places a bet for the player
+    @Override
+    public void bet(int bet) {
+        if (bet &gt; balance) {
+            throw new IllegalArgumentException(&quot;Bet is greater th</code></pre>
+
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<pre><code>        }
+        this.bet = bet;
+        this.balance -= bet;
+    }
+    // Handles the player losing a bet
+    @Override
+    public void loseBet() {
+        this.bet = 0;
+    }
+    // Handles returning the player&#x27;s bet
+    @Override
+    public void returnBet() {
+        this.balance += bet;
+        this.bet = 0;
+    }
+    // Handles the player winning a payout
+    @Override
+    public void payout() {
+        this.balance += bet * 2; // Return bet plus equal amount
+        this.bet = 0;
+    }
+    // getter methods are omitted for brevity
+}
+The DealerPlayer class represents the house and follows predefined rules that differ from those
+of human players. Since the dealer does not participate in betting, the bet-handling methods,
+bet(), and loseBet() are implemented as empty functions, as they are never invoked in
+gameplay. Similarly, getBalance() and getBet() always return 0, reflecting the fact that the</code></pre>
+<p>dealer does not manage a balance or place bets.</p>
+<pre><code>public class DealerPlayer implements Player {
+    private final String name = &quot;Dealer&quot;;
+    private final Hand hand;
+    public DealerPlayer() {
+        this.hand = new Hand();
+    }
+    // Bet-handling methods for Dealer (bet, loseBet, returnBet) </code></pre>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<p>@Override</p>
+<pre><code>    public void payout() {
+        // Dealer does not get a payout, so this method only prin
+    }
+    // getter methods are omitted for brevity
+}
+With players and their hands set, let’s orchestrate the whole game in BlackJackGame.
+BlackjackGame
+The BlackJackGame class serves as the central orchestrator of the game, handling players,
+the dealer, the deck, turn management, and enforcing the game rules. It ensures that the game
+follows a structured flow, with each player&#x27;s actions and the final outcome being resolved</code></pre>
+<p>according to the rules of Blackjack. Below is the implementation of this class.</p>
+<pre><code>public class BlackJackGame {
+    private final Deck deck = new Deck();
+    private final List&lt;Player&gt; players = new ArrayList&lt;&gt;();
+    protected final Player dealer = new DealerPlayer();
+    private Player currentPlayer = null;
+    // Tracks the current status of each player&#x27;s turn (e.g., HIT
+    Map&lt;Player, Action&gt; playerTurnStatusMap = new HashMap&lt;&gt;();
+    GamePhase currentPhase = GamePhase.STARTED;
+    public BlackJackGame(List&lt;Player&gt; players) {
+        for (Player player : players) {
+            if (player == null) throw new IllegalArgumentExceptio
+            this.players.add(player);
+            this.playerTurnStatusMap.put(player, null);
+        }
+        this.playerTurnStatusMap.put(dealer, null);</code></pre>
+<p>deck.<span class="inline-code">shuffle()</span>; // Shuffle the deck when game starts</p>
+<pre><code>    }
+    // Determines the next player who can take an action (i.e., h
+    // current player is the dealer, it triggers the dealer&#x27;s tur
+    public Player getNextEligiblePlayer() {</code></pre>
+
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<p>// If current player hasn&#x27;t stood or bust, they can conti if (<span class="inline-code">currentPlayer</span> != null &amp;&amp; !Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(c</p>
+<pre><code>                &amp;&amp; !currentPlayer.isBust()) {
+            return currentPlayer;
+        }
+        // Find the first player who hasn&#x27;t stood or bust
+        if (currentPlayer == null) {
+            for (Player player : players) {</code></pre>
+<p>if (!Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(</p>
+<pre><code>                    currentPlayer = player;
+                    return currentPlayer;
+                }
+            }
+        }
+        // else, find the next player after the current one who h
+        int currentPlayerIndex = players.indexOf(currentPlayer);
+        for (int i = currentPlayerIndex + 1; i &lt; players.size(); 
+            Player player = players.get(i);</code></pre>
+<p>if (!Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(play</p>
+<pre><code>                if (currentPlayer == dealer) {</code></pre>
+<p>if (!Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span></p>
+<pre><code>                    return currentPlayer;
+                }
+                currentPlayer = player;
+                return currentPlayer;
+            }
+        }
+        // If no players are left to act, return null
+        return null;
+    }
+    protected void dealerTurn() {
+        // Dealer hits if below 17</code></pre>
+<p>while (dealer.<span class="inline-code">getHand</span>().<span class="inline-code">getPossibleValues</span>().<span class="inline-code">last()</span> &lt; 17)</p>
+<pre><code>            Card newDraw = deck.draw();
+            dealer.getHand().addCard(newDraw);
+        }
+        playerTurnStatusMap.put(dealer, Action.STAND);
+        checkGameEndCondition();
+    }
+    public void startNewRound() {
+        deck.reset();</code></pre>
+
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<pre><code>        for (Player player : playerTurnStatusMap.keySet()) {</code></pre>
+<p>player.<span class="inline-code">getHand</span>().<span class="inline-code">clear()</span>; // Clear player&#x27;s hand</p>
+<pre><code>        }</code></pre>
+<p>dealer.<span class="inline-code">getHand</span>().<span class="inline-code">clear()</span>; // Clear dealer&#x27;s hand // Reset all turn statuses to null</p>
+<pre><code>        playerTurnStatusMap.replaceAll((p, v) -&gt; null);</code></pre>
+<p><span class="inline-code">currentPlayer</span> = null; // Reset current player</p>
+<pre><code>        currentPhase = GamePhase.STARTED;
+    }
+    public void dealInitialCards() {
+        if (!GamePhase.BET_PLACED.equals(currentPhase)) {
+            throw new IllegalStateException(&quot;All players must bet
+        }
+        // Deal first card to each real player in order
+        for (Player player : players) {
+            player.getHand().addCard(deck.draw());
+        }
+        // Deal first card to dealer
+        dealer.getHand().addCard(deck.draw());
+        // Deal second card to each real player in order
+        for (Player player : players) {
+            player.getHand().addCard(deck.draw());
+        }
+        // Deal second card to dealer
+        dealer.getHand().addCard(deck.draw());
+        currentPhase = GamePhase.INITIAL_CARD_DRAWN;
+    }
+    public void bet(Player player, int bet) {
+        if (!GamePhase.STARTED.equals(currentPhase)) {
+            throw new IllegalStateException(&quot;Bets must be placed 
+        }
+        player.bet(bet);
+        // Transition to BET_PLACED once all players have bet
+        if (players.stream()</code></pre>
+<p>.filter(p -&gt; !(p instanceof <span class="inline-code">DealerPlayer</span>))</p>
+<pre><code>                .allMatch(p -&gt; p.getBet() &gt; 0)) {
+            currentPhase = GamePhase.BET_PLACED;
+        }
+    }
+    public void hit(Player player) {</code></pre>
+<p>if (Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(player))) throw new <span class="inline-code">IllegalStateException</span>(&quot;Player has already s</p>
+<pre><code>        }
+        if (player.isBust()) {</code></pre>
+
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<p>throw new <span class="inline-code">IllegalStateException</span>(&quot;Player is already bu</p>
+<pre><code>        }
+        Card drawnCard = deck.draw();
+        player.getHand().addCard(drawnCard);
+        playerTurnStatusMap.put(player, Action.HIT);
+    }
+    public void stand(Player player) {</code></pre>
+<p>if (Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(player))) throw new <span class="inline-code">IllegalStateException</span>(&quot;Player has already s</p>
+<pre><code>        }
+        if (player.isBust()) {
+            throw new IllegalStateException(&quot;Player is already bu
+        }
+        playerTurnStatusMap.put(player, Action.STAND);
+    }
+    // Checks if the game has ended (all players done), then reso
+    // player&#x27;s hand to the dealer&#x27;s.
+    private void checkGameEndCondition() {</code></pre>
+<p>boolean <span class="inline-code">allPlayersDone</span> = players.<span class="inline-code">stream()</span> .<span class="inline-code">allMatch</span>( p -&gt; Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTu</span></p>
+<pre><code>        if (!allPlayersDone) {
+            return;
+        }</code></pre>
+<p>int <span class="inline-code">dealerValue</span> = dealer.<span class="inline-code">getHand</span>().<span class="inline-code">getPossibleValues</span>().la</p>
+<pre><code>        boolean dealerBusts = dealer.isBust();
+        for (Player player : players) {
+            if (player.isBust()) {
+                player.loseBet();
+            } else {</code></pre>
+<p>int <span class="inline-code">playerValue</span> = player.<span class="inline-code">getHand</span>().<span class="inline-code">getPossibleVal</span></p>
+<pre><code>                if (dealerBusts || playerValue &gt; dealerValue) {
+                    player.payout();
+                } else if (playerValue == dealerValue) {
+                    player.returnBet();
+                } else {
+                    player.loseBet();
+                }
+            }
+        }
+        currentPhase = GamePhase.END;</code></pre>
+
+</div>
+<div class="page-divider">Page 25</div>
+<div class="page-content" data-page="25">
+<pre><code>    }
+    // getter methods are omitted for brevity
+}
+Each round begins with startNewRound(), which resets the deck, ensuring that players</code></pre>
+<p>start with a clean slate. Once the round starts, players place their bets using the <span class="inline-code">bet()</span> method, then <span class="inline-code">dealInitialCards</span>() distributes two cards per player, including the dealer. This guarantees a fair and structured start before betting and player actions begin. The game progresses through player turns using <span class="inline-code">getNextEligiblePlayer</span>(), which selects the next active player who has not yet stood or busted. Once all players have finished their turns, control shifts to the dealer via <span class="inline-code">dealerTurn</span>(). The dealer follows strict, predefined rules: The dealer must hit until their total reaches at least 17. Once at 17 or higher, the dealer must stand. Players can take two primary actions during their turn: <span class="inline-code">hit()</span>: Draws a card and updates the player&#x27;s hand. If the player exceeds 21, they are marked as bust, eliminating them from further action. <span class="inline-code">stand()</span>: Locks in the player&#x27;s hand, preventing further draws. The <span class="inline-code">checkGameEndCondition</span>() method finalizes the round once all players have stood or busted. It compares each player’s hand individually against the dealer’s: If the dealer busts (hand exceeds 21), non-bust players win and receive a payout. For non-bust players, if their hand value exceeds the dealer’s (but is ≤ 21), they win and are paid out. If it’s lower, they lose their bet. In the case of a tie, return the bet to the player. Now that we’ve built a working game, let’s explore how we can make it more flexible for future changes Deep Dive Topic At this point, you’ve nailed the core requirements of the Blackjack game. This section will dive deeper into a potential extension to make the design more adaptable.</p>
+
+</div>
+<div class="page-divider">Page 26</div>
+<div class="page-content" data-page="26">
+<p>Decoupling player and dealer decision logic In the current design, <span class="inline-code">BlackJackGame</span> directly controls player actions, calling <span class="inline-code">hit()</span> or <span class="inline-code">stand()</span> based on predefined conditions in the game logic. Similarly, the dealer’s &quot;hit until 17&quot; rule is hardcoded into <span class="inline-code">dealerTurn</span>(). This approach tightly couples decision-making with the game class, leaving little room for custom moves. Any rule modification, such as allowing a cautious player to stand at 12 or adjusting the dealer’s hit threshold, requires modifying <span class="inline-code">BlackJackGame</span>, leading to complex maintenance and potential bugs. To resolve this, we introduce a decision-making abstraction that shifts control to individual players. This keeps <span class="inline-code">BlackJackGame</span> focused on coordinating turns, while each player determines their moves independently.</p>
+<h3>Step 1: Define a decision-making interface</h3>
+<p>To give each player control over their moves, we create a <span class="inline-code">PlayerDecisionLogic</span> interface with one method, <span class="inline-code">decideAction</span>(Hand), that picks ‘Hit’ or ‘Stand’ based on the hand.</p>
+<pre><code>public interface PlayerDecisionLogic {
+    // Decides the next action for a player based on their hand
+    Action decideAction(Hand hand);
+}</code></pre>
+<h3>Step 2: Tailor decisions for humans and dealers</h3>
+<p>With the interface in place, we implement two concrete decision classes: <span class="inline-code">RealPlayerDecisionLogic</span>: This captures a human player’s approach, say, hitting if the hand’s below 16. <span class="inline-code">DealerDecisionLogic</span>: This locks in the dealer’s rule, hit if under 17.</p>
+<h2>Here’s the code:</h2>
+<pre><code>public class RealPlayerDecisionLogic implements PlayerDecisionLog
+    @Override
+    public Action decideAction(Hand hand) {
+        return hand.getPossibleValues().last() &lt; 16 ? Action.HIT 
+    }
+}
+public class DealerDecisionLogic implements PlayerDecisionLogic {</code></pre>
+
+</div>
+<div class="page-divider">Page 27</div>
+<div class="page-content" data-page="27">
+<p>@Override</p>
+<pre><code>    public Action decideAction(Hand hand) {
+        return hand.getPossibleValues().last() &lt; 17 ? Action.HIT 
+    }
+}</code></pre>
+<h3>Step 3: Integrate decisions into players</h3>
+<p>We update the Player interface with a <span class="inline-code">getDecisionLogic</span>() method, letting each player define its decision style. <span class="inline-code">RealPlayer</span> defaults to <span class="inline-code">RealPlayerDecisionLogic</span>, while <span class="inline-code">DealerPlayer</span> uses</p>
+<h2>DealerDecisionLogic:</h2>
+<pre><code>public interface Player {
+    // Returns the decision logic for the player</code></pre>
+<p><span class="inline-code">PlayerDecisionLogic</span> <span class="inline-code">getDecisionLogic</span>(); // ... other methods</p>
+<pre><code>}
+public class RealPlayer implements Player {
+    private final PlayerDecisionLogic decisionLogic;
+    public RealPlayer(String name, int startBalance) {
+        this.name = name;
+        this.hand = new Hand();
+        this.bet = 0;
+        this.balance = startBalance;
+        this.decisionLogic = new RealPlayerDecisionLogic();
+    }
+    // Returns the decision logic for the player
+    @Override
+    public PlayerDecisionLogic getDecisionLogic() {
+        return decisionLogic;
+    }
+    // ... other methods ...
+}
+public class DealerPlayer implements Player {
+    private final PlayerDecisionLogic decisionLogic;
+    public DealerPlayer() {
+        this.hand = new Hand();
+        this.decisionLogic = new DealerDecisionLogic();
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 28</div>
+<div class="page-content" data-page="28">
+<p>// Returns the decision logic for the dealer @Override</p>
+<pre><code>    public PlayerDecisionLogic getDecisionLogic() {
+        return decisionLogic;
+    }
+    // ... other methods ...
+}</code></pre>
+<h3>Step 4: Adjust the game flow</h3>
+<p>In this step, we refactor the <span class="inline-code">BlackJackGame</span> code to use decision logic for both players and the dealer, streamlining the turn sequence. We introduce the <span class="inline-code">performPlayerAction</span>() method, which queries each player’s decision logic (<span class="inline-code">RealPlayerDecisionLogic</span> or <span class="inline-code">DealerDecisionLogic</span>) to decide whether to hit or stand. This replaces the hardcoded <span class="inline-code">dealerTurn</span>() method, integrating the dealer into the same flow as the players. We also add the <span class="inline-code">playNextTurn</span>() method to coordinate turns, relying on <span class="inline-code">getNextEligbilePlayer</span>() to determine who acts next.</p>
+<h2>Here’s the updated code:</h2>
+<pre><code>public class BlackJackGame {
+    // ... fields unchanged ...
+    // Find the next player who can take an action
+    public Player getNextEligiblePlayer() {
+        // No current player: find first eligible player from the
+        if (currentPlayer == null) {
+            for (Player player : players) {</code></pre>
+<p>if (!Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(</p>
+<pre><code>                    currentPlayer = player;
+                    return currentPlayer;
+                }
+            }
+            // Instead of calling dealerTurn(), check if the deal</code></pre>
+<p>if (!Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(deal</p>
+<pre><code>                currentPlayer = dealer;
+                return dealer;
+            }
+        } else {
+            int currentIndex = players.indexOf(currentPlayer);</code></pre>
+<p>for (int i = <span class="inline-code">currentIndex</span> + 1; i &lt; players.<span class="inline-code">size()</span>; i+</p>
+<pre><code>                Player player = players.get(i);</code></pre>
+
+</div>
+<div class="page-divider">Page 29</div>
+<div class="page-content" data-page="29">
+<p>if (!Action.<span class="inline-code">STAND</span>.equals(<span class="inline-code">playerTurnStatusMap</span>.get(</p>
+<pre><code>                    currentPlayer = player;
+                    return currentPlayer;
+                }
+            }
+            // If all players are done, check if the dealer can a</code></pre>
+<p>if (<span class="inline-code">currentPlayer</span> != dealer &amp;&amp; !Action.<span class="inline-code">STAND</span>.equals(p</p>
+<pre><code>                currentPlayer = dealer;
+                return dealer;
+            }
+        }
+        return null; // All turns are complete, including the dea
+    }
+    // Executes the next turn by acting for the next player or de
+    public void playNextTurn() {
+        Player nextPlayer = getNextEligiblePlayer();
+        if (nextPlayer != null) {
+            performPlayerAction(nextPlayer);
+        }
+    }
+    // Performs the action decided by the player&#x27;s decision logic
+    public void performPlayerAction(Player player) {</code></pre>
+<p>Action action = player.<span class="inline-code">getDecisionLogic</span>().<span class="inline-code">decideAction</span>(pl</p>
+<pre><code>        if (action == Action.HIT) {
+            hit(player);
+        } else if (action == Action.STAND) {
+            stand(player);
+        }
+    }
+    // ... other methods unchanged, dealerTurn() removed ...
+}
+The getNextEligiblePlayer() method now handles the full turn sequence: it returns the next
+player who hasn’t stood or busted, then the dealer once all players are done, and finally null
+when the dealer has stood, ending the turns. While dealerTurn() is removed, its logic lives on in
+DealerDecisionLogic, ensuring the dealer hits until 17 or higher.
+This design shifts decision-making to the players, letting BlackJackGame coordinate turns
+while each player’s logic lives separately. If you’ve heard of the Strategy Pattern, you might
+notice this follows it, defining a set of decision rules that can swap in and out. Here:</code></pre>
+
+</div>
+<div class="page-divider">Page 30</div>
+<div class="page-content" data-page="30">
+<p><span class="inline-code">PlayerDecisionLogic</span> sets the decision contract. <span class="inline-code">RealPlayerDecisionLogic</span> and <span class="inline-code">DealerDecisionLogic</span> are the specific behaviors. <span class="inline-code">BlackJackGame</span> uses them without needing to handle decisions internally. Note: To learn more about the Strategy Pattern and its common use cases, refer to the Parking Lot chapter. Wrap Up In this chapter, we have built a solid Blackjack game from the ground up, with the key takeaway being how we structured responsibilities across Card, Deck, Hand, Player, and <span class="inline-code">BlackJackGame</span> into a clear, well-organized design. Each piece does its job, for instance, Card holds the essentials, Deck shuffles and deals, Hand tracks totals, and <span class="inline-code">BlackJackGame</span> runs the show. This approach keeps the game logical, easy to follow, and scalable. We also took things further by decoupling decision-making with <span class="inline-code">PlayerDecisionLogic</span>, making it easy to swap strategies for players and the dealer. If you’re familiar with the Strategy pattern, you’ll recognize how it is applied here, giving the game flexibility without rewrites. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

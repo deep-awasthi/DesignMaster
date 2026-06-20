@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 28</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 28</h2>
+<p>Digital Wallet Payment platforms usually provide a digital wallet service to clients, so they can store money in the wallet and spend it later. For example, you can add money to your digital wallet from your bank card and when you buy products online, you are given the option to pay using the money in your wallet. Figure 1 shows this process.</p>
+<div class="figure-label">Figure 1 Digital wallet</div>
+<p>Spending money is not the only feature that the digital wallet provides. For a payment platform like <span class="inline-code">PayPal</span>, we can directly transfer money to somebody else’s wallet on the same payment platform. Compared with the bank-to-bank transfer, direct transfer between digital wallets is faster, and most importantly, it usually does not charge an extra fee. Figure 2 shows a cross- wallet balance transfer operation.</p>
+<div class="figure-label">Figure 2 Cross-wallet balance transfer</div>
+<p>Suppose we are asked to design the backend of a digital wallet application that supports the cross-wallet balance transfer operation. At the beginning of the interview, we will ask clarification questions to nail down the requirements.</p>
+<h3>Step 1 - Understand the Problem</h3>
+<p>and Establish Design Scope Candidate: Should we only focus on balance transfer operations between two digital wallets? Do we need to worry about other features?</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_639_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 640" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_639_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 640" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Interviewer: Let’s focus on balance transfer operations only. Candidate: How many transactions per second (<span class="inline-code">TPS</span>) does the system need to support? Interviewer: Let’s assume 1,000,000 <span class="inline-code">TPS</span>. Candidate: A digital wallet has strict requirements for correctness. Can we assume transactional guarantees [1] are sufficient? Interviewer: That sounds good. Candidate: Do we need to prove correctness? Interviewer: This is a good question. Correctness is usually only verifiable after a transaction is complete. One way to verify is to compare our internal records with statements from banks. The limitation of reconciliation is that it only shows discrepancies and cannot tell how a difference was generated. Therefore, we would like to design a system with reproducibility, meaning we could always reconstruct historical balance by replaying the data from the very beginning. Candidate: Can we assume the availability requirement is 99.99% Interviewer: Sounds good. Candidate: Do we need to take foreign exchange into consideration? Interviewer: No, it’s out of scope. In summary, our digital wallet needs to support the following: Support balance transfer operation between two digital wallets. Support 1,000,000 <span class="inline-code">TPS</span>. Reliability is at least 99.99%. Support transactions. Support reproducibility. Back-of-the-envelope estimation When we talk about <span class="inline-code">TPS</span>, we imply a transactional database will be used. Today, a relational database running on a typical data center node can support a few thousand transactions per second. For example, reference [2] contains the performance benchmark of some of the popular transactional database servers. Let’s assume a database node can support 1,000 <span class="inline-code">TPS</span>. In order to reach 1 million <span class="inline-code">TPS</span>, we need 1,000 database nodes.</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>However, this calculation is slightly inaccurate. Each transfer command requires two operations: deducting money from one account and depositing money to the other account. To support 1 million transfers per second, the system actually needs to handle up to 2 million <span class="inline-code">TPS</span>, which means we need 2,000 nodes.</p>
+<div class="figure-label">Table 1 shows the total number of nodes required when the “per-node TPS” (the TPS a single</div>
+<p>node can handle) changes. Assuming hardware remains the same, the more transactions a single node can handle per second, the lower the total number of nodes required, indicating lower hardware cost. So one of our design goals is to increase the number of transactions a single node can handle. Per-node <span class="inline-code">TPS</span> Node Number 100 20,000 1,000 2,000 10,000 200</p>
+<div class="figure-label">Table 1 Mapping between pre-node TPS and node number</div>
+<h3>Step 2 - Propose High-</h3>
+<p>Level Design and Get Buy-In In this section, we will discuss the following: <span class="inline-code">API</span> design Three high-level designs</p>
+<ol><li>Simple in-memory solution</li><li>Database-based distributed transaction solution</li><li>Event sourcing solution with reproducibility</li></ol>
+<p><span class="inline-code">API</span> Design We will use the <span class="inline-code">RESTful</span> <span class="inline-code">API</span> convention. For this interview, we only need to support one <span class="inline-code">API</span>: <span class="inline-code">API</span> Detail <span class="inline-code">POST</span> /v1/wallet/<span class="inline-code">balance_transferTransfer</span> balance from one wallet to another</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<h2>Request parameters are:</h2>
+<h2>Sample response body:</h2>
+<pre><code>{
+&quot;Status&quot;: &quot;success&quot;</code></pre>
+<p>&quot;<span class="inline-code">Transaction_id</span>&quot;: &quot;01589980-2664-11ec-9621-0242ac130002&quot;</p>
+<pre><code>}
+One thing worth mentioning is that the data type of the “amount” field is “string,” rather than</code></pre>
+<p>“double”. We explained the reasoning in the Payment System chapter. In practice, many people still choose float or double representation of numbers because it is supported by almost every programming language and database. It is a proper choice as long as we understand the potential risk of losing precision. In-memory sharding solution The wallet application maintains an account balance for every user account. A good data structure to represent this &lt;user,balance&gt; relationship is a map, which is also called a hash table (map) or key-value store. For in-memory stores, one popular choice is Redis. One Redis node is not enough to handle 1 million <span class="inline-code">TPS</span>. We need to set up a cluster of Redis nodes and evenly distribute user accounts among them. This process is called partitioning or sharding. To distribute the key-value data among N partitions, we could calculate the hash value of the key and divide it by N. The remainder is the destination of the partition. The pseudocode below</p>
+<h2>shows the sharding process:</h2>
+<p>Field Description Type <span class="inline-code">from_accountThe</span> debit account string <span class="inline-code">to_account</span> The credit account string amount The amount of moneystring currency The currency type string (<span class="inline-code">ISO</span> 4217 [3]) <span class="inline-code">transaction_idID</span> used for deduplicationuuid</p>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<pre><code>String accountID = &quot;A&quot;;
+Int partitionNumber = 7;
+Int myPartition = accountID.hashCode() % partitionNumber;</code></pre>
+<p>The number of partitions and addresses of all Redis nodes can be stored in a centralized place. We could use Zookeeper [4] as a highly-available configuration storage solution. The final component of this solution is a service that handles the transfer commands. We call it the wallet service and it has several key responsibilities.</p>
+<ol><li>Receives the transfer command</li><li>Validates the transfer command</li><li>If the command is valid, it updates the account balances for the two users involved in the</li></ol>
+<p>transfer. In a cluster, the account balances are likely to be in different Redis nodes The wallet service is stateless. It is easy to scale horizontally. Figure 3 shows the in-memory solution.</p>
+<div class="figure-label">Figure 3 In-memory solution</div>
+<p>In this example, we have 3 Redis nodes. There are three clients, A, B, and C. Their account balances are evenly spread across these three Redis nodes. There are two wallet service nodes in this example that handle the balance transfer requests. When one of the wallet service nodes receives the transfer command which is to move $1 from client A to client B, it issues two commands to two Redis nodes. For the Redis node that contains client A’s account,</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_643_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 644" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>the wallet service deducts $1 from the account. For client B, the wallet service adds $1 to the account. Candidate: In this design, account balances are spread across multiple Redis nodes. Zookeeper is used to maintain the sharding information. The stateless wallet service uses the sharding information to locate the Redis nodes for the clients and updates the account balances accordingly. Interviewer: This design works, but it does not meet our correctness requirement. The wallet service updates two Redis nodes for each transfer. There is no guarantee that both updates would succeed. If, for example, the wallet service node crashes after the first update has gone through but before the second update is done, it would result in an incomplete transfer. The two updates need to be in a single atomic transaction. Distributed transactions Database sharding How do we make the updates to two different storage nodes atomic? The first step is to replace each Redis node with a transactional relational database node. Figure 4 shows the architecture. This time, clients A, B, and C are partitioned into 3 relational databases, rather than in 3 Redis nodes.</p>
+
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<div class="figure-label">Figure 4 Relational database</div>
+<p>Using transactional databases only solves part of the problem. As mentioned in the last section, it is very likely that one transfer command will need to update two accounts in two different databases. There is no guarantee that two update operations will be handled at exactly the same time. If the wallet service restarted right after it updated the first account balance, how can we make sure the second account will be updated as well? Distributed transaction: two-phase commit In a distributed system, a transaction may involve multiple processes on multiple nodes. To make a transaction atomic, the distributed transaction might be the answer. There are two ways to implement a distributed transaction: a low-level solution and a high-level solution. We will examine each of them. The low-level solution relies on the database itself. The most commonly used algorithm is called two-phase commit (2PC). As the name implies, it has two phases, as in Figure 5.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_645_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 646" /></div>
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<div class="figure-label">Figure 5 Two-phase commit (source [5])</div>
+<ol><li>The coordinator, which in our case is the wallet service, performs read and write operations</li></ol>
+<p>on multiple databases as normal. As shown in Figure 5, both databases A and C are locked.</p>
+<ol><li>When the application is about to commit the transaction, the coordinator asks all databases to prepare the transaction.</li><li>In the second phase, the coordinator collects replies from all databases and performs the following:</li><li>If all databases reply with a “yes”, the coordinator asks all databases to commit the transaction they have received.</li><li>If any database replies with a “no”, the coordinator asks all databases to abort the transaction.</li></ol>
+<p>It is a low-level solution because the prepare step requires a special modification to the database transaction. For example, there is an X/Open <span class="inline-code">XA</span> [6] standard that coordinates heterogeneous databases to achieve 2PC. The biggest problem with 2PC is that it’s not performant, as locks can be held for a very long time while waiting for a message from the other nodes. Another issue with 2PC is that the coordinator can be a single point of failure, as shown in Figure 6.</p>
+<div class="figure-label">Figure 6 Coordinator crashes</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_646_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 647" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_646_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 647" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>Distributed transaction: Try-Confirm/Cancel (<span class="inline-code">TC</span>/C) <span class="inline-code">TC</span>/C is a type of compensating transaction [7] that has two steps:</p>
+<ol><li>In the first phase, the coordinator asks all databases to reserve resources for the transaction.</li><li>In the second phase, the coordinator collects replies from all databases:</li><li>If all databases reply with “yes”, the coordinator asks all databases to confirm the</li></ol>
+<p>operation, which is the Try-Confirm process.</p>
+<ol><li>If any database replies with “no”, the coordinator asks all databases to cancel the</li></ol>
+<p>operation, which is the Try-Cancel process. It’s important to note that the two phases in 2PC are wrapped in the same transaction, but in <span class="inline-code">TC</span>/C each phase is a separate transaction. <span class="inline-code">TC</span>/C example It would be much easier to explain how <span class="inline-code">TC</span>/C works with a real-world example. Suppose we want to transfer $1 from account A to account C. Table 2 gives a summary of how <span class="inline-code">TC</span>/C is executed in each phase.</p>
+<div class="figure-label">Table 2 TC/C example</div>
+<p>Let’s assume the wallet service is the coordinator of the <span class="inline-code">TC</span>/C. At the beginning of the distributed transaction, account A has $1 in its balance, and account C has $0. First phase: Try In the Try phase, the wallet service, which acts as the coordinator, sends two transaction</p>
+<h2>commands to two databases:</h2>
+<ol><li>For the database that contains account A, the coordinator starts a local transaction that reduces the balance of A by $1.</li></ol>
+<p>Phase <span class="inline-code">OperationA</span> C 1 Try Balance change: -$1Do nothing 2 Confirm Do nothing Balance change: +$1 Cancel Balance change: +$1Do Nothing</p>
+
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<ol><li>For the database that contains account C, the coordinator gives it a NOP (no operation.) To</li></ol>
+<p>make the example adaptable for other scenarios, let’s assume the coordinator sends to this database a <span class="inline-code">NOP</span> command. The database does nothing for <span class="inline-code">NOP</span> commands and always replies to the coordinator with a success message. The Try phase is shown in Figure 7. The thick line indicates that a lock is held by the transaction.</p>
+<div class="figure-label">Figure 7 Try phase</div>
+<p>Second phase: Confirm If both databases reply “yes”, the wallet service starts the next Confirm phase. Account A’s balance has already been updated in the first phase. The wallet service does not need to change its balance. However, account C has not yet received its $1 from account A in the first phase. In the Confirm phase, the wallet service has to add $1 to account C’s balance. The Confirm process is shown in Figure 8.</p>
+<div class="figure-label">Figure 8 Confirm phase</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_648_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 649" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_648_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 649" /></div>
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>Second phase: Cancel What if the first Try phase fails? In the example above we have assumed the <span class="inline-code">NOP</span> operation on account C always succeeds, although in practice it may fail. For example, account C might be an illegal account, and the regulator has mandated that no money can flow into or out of this account. In this case, the distributed transaction must be canceled and we have to clean up. Because the balance of account A has already been updated in the transaction in the Try phase, it is impossible for the wallet service to cancel a completed transaction. What it can do is to start another transaction that reverts the effect of the transaction in the Try phase, which is to add $1 back to account A. Because account C was not updated in the Try phase, the wallet service just needs to send a <span class="inline-code">NOP</span> operation to account C’s database. The Cancel process is shown in Figure 9.</p>
+<div class="figure-label">Figure 9 Cancel phase</div>
+<p>Comparison between 2PC and <span class="inline-code">TC</span>/C</p>
+<div class="figure-label">Table 3 shows that there are many similarities between 2PC and TC/C, but there are also</div>
+<p>differences. In 2PC, all local transactions are not done (still locked) when the second phase starts, while in <span class="inline-code">TC</span>/C, all local transactions are done (unlocked) when the second phase starts. In other words, the second phase of 2PC is about completing an unfinished transaction, such as an abort or commit, while in <span class="inline-code">TC</span>/C, the second phase is about using a reverse operation to offset the previous transaction result when an error occurs. The following table summarizes their differences.</p>
+<h2>First Phase Second Phase:</h2>
+<p>success Second Phase: fail 2PC Local transactions are not done yet Commit all local transactions Cancel all Cancel all local transactions</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_649_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 650" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<div class="figure-label">Table 3 2PC vs TC/C</div>
+<p><span class="inline-code">TC</span>/C is also called a distributed transaction by compensation. It is a high-level solution because the compensation, also called the “undo,” is implemented in the business logic. The advantage of this approach is that it is database-agnostic. As long as a database supports transactions, <span class="inline-code">TC</span>/C will work. The disadvantage is that we have to manage the details and handle the complexity of the distributed transactions in the business logic at the application layer. Phase status table We still have not yet answered the question asked earlier; what if the wallet service restarts in the middle of <span class="inline-code">TC</span>/C? When it restarts, all previous operation history might be lost, and the system may not know how to recover. The solution is simple. We can store the progress of a <span class="inline-code">TC</span>/C as phase status in a transactional database. The phase status includes at least the following information. The <span class="inline-code">ID</span> and content of a distributed transaction. The status of the Try phase for each database. The status could be “not sent yet”, “has been sent”, and “response received”. The name of the second phase. It could be “Confirm” or “Cancel.” It could be calculated using the result of the Try phase. The status of the second phase. An out-of-order flag (explained soon in the section “Out-of-Order Execution”). Where should we put the phase status tables? Usually, we store the phase status in the database that contains the wallet account from which money is deducted. The updated architecture diagram is shown in Figure 10. local transactions</p>
+<h2>TC/C</h2>
+<p>All local transactions are completed, either committed or canceled Execute new local transactions if needed Reverse the side effect of the already committed transaction, or called “undo”</p>
+
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<div class="figure-label">Figure 10 Phase status table</div>
+<p>Unbalanced state Have you noticed that by the end of the Try phase, $1 is missing (Figure 11)? Assuming everything goes well, by the end of the Try phase, $1 is deducted from account A and account C remains unchanged. The sum of account balances in A and C will be $0, which is less than at the beginning of the <span class="inline-code">TC</span>/C. It violates a fundamental rule of accounting that the sum should remain the same after a transaction. The good news is that the transactional guarantee is still maintained by <span class="inline-code">TC</span>/C. <span class="inline-code">TC</span>/C comprises several independent local transactions. Because <span class="inline-code">TC</span>/C is driven by application, the application itself is able to see the intermediate result between these local transactions. On the other hand, the database transaction or 2PC version of the distributed transaction was maintained by databases that are invisible to high-level applications. There are always data discrepancies during the execution of distributed transactions. The discrepancies might be transparent to us because lower-level systems such as databases already fixed the discrepancies. If not, we have to handle it ourselves (for example, <span class="inline-code">TC</span>/C). The unbalanced state is shown in Figure 11.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_651_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 652" /></div>
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<div class="figure-label">Figure 11 Unbalanced state</div>
+<p>Valid operation orders There are three choices for the Try phase: Try phase <span class="inline-code">choicesAccount</span> A Account C Choice 1 -$1 <span class="inline-code">NOP</span> Choice 2 <span class="inline-code">NOP</span> +$1 Choice 3 -$1 +$1</p>
+<div class="figure-label">Table 4 Try phase choices</div>
+<p>All three choices look plausible, but some are not valid. For choice 2, if the Try phase on account C is successful, but has failed on account A (<span class="inline-code">NOP</span>), the wallet service needs to enter the Cancel phase. There is a chance that somebody else may jump in and move the $1 away from account C. Later when the wallet service tries to deduct $1 from account C, it finds nothing is left, which violates the transactional guarantee of a distributed transaction. For choice 3, if $1 is deducted from account A and added to account C concurrently, it introduces lots of complications. For example, $1 is added to account C, but it fails to deduct the money from account A. What should we do in this case? Therefore, choice 2 and choice 3 are flawed choices and only choice 1 is valid. Out-of-order execution</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_652_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 653" /></div>
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>One side effect of <span class="inline-code">TC</span>/C is the out-of-order execution. It will be much easier to explain using an example. We reuse the above example which transfers $1 from account A to account C. As Figure 12 shows, in the Try phase, the operation against account A fails and it returns a failure to the wallet service, which then enters the Cancel phase and sends the cancel operation to both account A and account C. Let’s assume that the database that handles account C has some network issues and it receives the Cancel instruction before the Try instruction. In this case, there is nothing to cancel. The out-of-order execution is shown in Figure 12.</p>
+<div class="figure-label">Figure 12 Out-of-order execution</div>
+<p>To handle out-of-order operations, each node is allowed to Cancel a <span class="inline-code">TC</span>/C without receiving a Try instruction, by enhancing the existing logic with the following updates: The out-of-order Cancel operation leaves a flag in the database indicating that it has seen a Cancel operation, but it has not seen a Try operation yet. The Try operation is enhanced so it always checks whether there is an out-of-order flag, and it returns a failure if there is. This is why we added an out-of-order flag to the phase status table in the “Phase Status Table” section. Distributed transaction: Saga Linear order execution</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_653_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 654" /></div>
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<p>There is another popular distributed transaction solution called Saga [8]. Saga is the de-facto standard in a microservice architecture. The idea of Saga is simple:</p>
+<ol><li>All operations are ordered in a sequence. Each operation is an independent transaction on its own database.</li><li>Operations are executed from the first to the last. When one operation has finished, the next operation is triggered.</li><li>When an operation has failed, the entire process starts to roll back from the current</li></ol>
+<p>operation to the first operation in reverse order, using compensating transactions. So if a distributed transaction has n operations, we need to prepare 2n operations: n for the normal case and another n for the compensating transaction during rollback. It is easier to understand this by using an example. Figure 13 shows the Saga workflow to transfer $1 from account A to account C. The top horizontal line shows the normal order of execution. The two vertical lines show what the system should do when there is an error. When it encounters an error, the transfer operations are rolled back and the client receives an error message. As we mentioned in the “Valid operation orders” section, we have to put the deduction operation before the addition operation.</p>
+<div class="figure-label">Figure 13 Saga workflow</div>
+<p>How do we coordinate the operations? There are two ways to do it:</p>
+<ol><li>Choreography. In a microservice architecture, all the services involved in the Saga</li></ol>
+<p>distributed transaction do their jobs by subscribing to other services’ events. So it is fully decentralized coordination.</p>
+<ol><li>Orchestration. A single coordinator instructs all services to do their jobs in the correct order.</li></ol>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_654_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 655" /></div>
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<p>The choice of which coordination model to use is determined by the business needs and goals. The challenge of the choreography solution is that services communicate in a fully asynchronous way, so each service has to maintain an internal state machine in order to understand what to do when other services emit an event. It can become hard to manage when there are many services. The orchestration solution handles complexity well, so it is usually the preferred solution in a digital wallet system. Comparison between <span class="inline-code">TC</span>/C and Saga <span class="inline-code">TC</span>/C and Saga are both application-level distributed transactions. Table 5 summarizes their similarities and differences.</p>
+<div class="figure-label">Table 5 TC/C vs Saga</div>
+<p>Which one should we use in practice? The answer depends on the latency requirement. As</p>
+<div class="figure-label">Table 5 shows, operations in Saga have to be executed in linear order, but it is possible to</div>
+<p>execute them in parallel in <span class="inline-code">TC</span>/C. So the decision depends on a few factors:</p>
+<ol><li>If there is no latency requirement, or there are very few services, such as our money</li></ol>
+<p>transfer example, we can choose either of them. If we want to go with the trend in microservice architecture, choose Saga.</p>
+<ol><li>If the system is latency-sensitive and contains many services/operations, TC/C might be a better option.</li></ol>
+<p><span class="inline-code">TC</span>/C Saga Compensating action In Cancel phase In rollback phase Central coordination Yes Yes (orchestration mode) Operation execution order any linear Parallel execution possibility Yes No (linear execution) Could see the partial inconsistent status Yes Yes Application or database logic Application Application</p>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<p>Candidate: To make the balance transfer transactional, we replace Redis with a relational database, and use <span class="inline-code">TC</span>/C or Saga to implement distributed transactions. Interviewer: Great work! The distributed transaction solution works, but there might be cases where it doesn’t work well. For example, users might enter the wrong operations at the application level. In this case, the money we specified might be incorrect. We need a way to trace back the root cause of the issue and audit all account operations. How can we do this? Event sourcing Background In real life, a digital wallet provider may be audited. These external auditors might ask some</p>
+<h2>challenging questions, for example:</h2>
+<ol><li>Do we know the account balance at any given time?</li><li>How do we know the historical and current account balances are correct?</li><li>How do we prove that the system logic is correct after a code change?</li></ol>
+<p>One design philosophy that systematically answers those questions is event sourcing, which is a technique developed in Domain-Driven Design (<span class="inline-code">DDD</span>) [9]. Definition There are four important terms in event sourcing.</p>
+<ol><li>Command</li><li>Event</li><li>State</li><li>State machine</li></ol>
+<p>Command A command is the intended action from the outside world. For example, if we want to transfer $1 from client A to client C, this money transfer request is a command. In event sourcing, it is very important that everything has an order. So commands are usually put into a <span class="inline-code">FIFO</span> (first in, first out) queue. Event</p>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<p>Command is an intention and not a fact because some commands may be invalid and cannot be fulfilled. For example, the transfer operation will fail if the account balance becomes negative after the transfer. A command must be validated before we do anything about it. Once the command passes the validation, it is valid and must be fulfilled. The result of the fulfillment is called an event. There are two major differences between command and event.</p>
+<ol><li>Events must be executed because they represent a validated fact. In practice, we usually</li></ol>
+<p>use the past tense for an event. If the command is “transfer $1 from A to C”, the corresponding event would be “transferred $1 from A to C”.</p>
+<ol><li>Commands may contain randomness or I/O, but events must be deterministic. Events represent historical facts.</li></ol>
+<p>There are two important properties of the event generation process.</p>
+<ol><li>One command may generate any number of events. It could generate zero or more events.</li><li>Event generation may contain randomness, meaning it is not guaranteed that a command</li></ol>
+<p>always generates the same event(s). The event generation may contain external I/O or random numbers. We will revisit this property in more detail near the end of the chapter. The order of events must follow the order of commands. So events are stored in a <span class="inline-code">FIFO</span> queue, as well. State State is what will be changed when an event is applied. In the wallet system, state is the balances of all client accounts, which can be represented with a map data structure. The key is the account name or <span class="inline-code">ID</span>, and the value is the account balance. Key-value stores are usually used to store the map data structure. The relational database can also be viewed as a key- value store, where keys are primary keys and values are table rows. State machine A state machine drives the event sourcing process. It has two major functions.</p>
+<ol><li>Validate commands and generate events.</li><li>Apply event to update state.</li></ol>
+<p>Event sourcing requires the behavior of the state machine to be deterministic. Therefore, the state machine itself should never contain any randomness. For example, it should never read</p>
+
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p>anything random from the outside using I/O, or use any random numbers. When it applies an event to a state, it should always generate the same result.</p>
+<div class="figure-label">Figure 14 shows the static view of event sourcing architecture. The state machine is</div>
+<p>responsible for converting the command to an event and for applying the event. Because state machine has two primary functions, we usually draw two state machines, one for validating commands and the other for applying events.</p>
+<div class="figure-label">Figure 14 Static view of event sourcing</div>
+<p>If we add the time dimension, Figure 15 shows the dynamic view of event sourcing. The system keeps receiving commands and processing them, one by one.</p>
+<div class="figure-label">Figure 15 Dynamic view of event sourcing</div>
+<p>Wallet service example For the wallet service, the commands are balance transfer requests. These commands are put into a <span class="inline-code">FIFO</span> queue. One popular choice for the command queue is Kafka [10]. The command queue is shown in Figure 16.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_658_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 659" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_658_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 659" /></div>
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<div class="figure-label">Figure 16 Command queue</div>
+<p>Let us assume the state (the account balance) is stored in a relational database. The state machine examines each command one by one in <span class="inline-code">FIFO</span> order. For each command, it checks whether the account has a sufficient balance. If yes, the state machine generates an event for each account. For example, if the command is “A-&gt;$1-&gt;C”, the state machine generates two events: “A:-$1” and “C:+$1”.</p>
+<div class="figure-label">Figure 17 shows how the state machine works in 5 steps.</div>
+<ol><li>Read commands from the command queue.</li><li>Read balance state from the database.</li><li>Validate the command. If it is valid, generate two events for each of the accounts.</li><li>Read the next Event.</li><li>Apply the Event by updating the balance in the database.</li></ol>
+<div class="figure-label">Figure 17 How state machine works</div>
+<p>Reproducibility</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_659_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 660" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_659_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 660" /></div>
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<p>The most important advantage that event sourcing has over other architectures is reproducibility. In the distributed transaction solutions mentioned earlier, a wallet service saves the updated account balance (the state) into the database. It is difficult to know why the account balance was changed. Meanwhile, historical balance information is lost during the update operation. In the event sourcing design, all changes are saved first as immutable history. The database is only used as an updated view of what balance looks like at any given point in time. We could always reconstruct historical balance states by replaying the events from the very beginning. Because the event list is immutable and the state machine logic is deterministic, it is guaranteed that the historical states generated from each replay are the same.</p>
+<div class="figure-label">Figure 18 shows how to reproduce the states of the wallet service by replaying the events.</div>
+<div class="figure-label">Figure 18 Reproduce states</div>
+<p>Reproducibility helps us answer the difficult questions that the auditors ask at the beginning of the section. We repeat the questions here.</p>
+<ol><li>Do we know the account balance at any given time?</li><li>How do we know the historical and current account balances are correct?</li><li>How do we prove the system logic is correct after a code change?</li></ol>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_660_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 661" /></div>
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<p>For the first question, we could answer it by replaying events from the start, up to the point in time where we would like to know the account balance. For the second question, we could verify the correctness of the account balance by recalculating it from the event list. For the third question, we can run different versions of the code against the events and verify that their results are identical. Because of the audit capability, event sourcing is often chosen as the de facto solution for the wallet service. Command-query responsibility segregation (<span class="inline-code">CQRS</span>) So far, we have designed the wallet service to move money from one account to another efficiently. However, the client still does not know what the account balance is. There needs to be a way to publish state (balance information) so the client, which is outside of the event sourcing framework, can know what the state is. Intuitively, we can create a read-only copy of the database (historical state) and share it with the outside world. Event sourcing answers this question in a slightly different way. Rather than publishing the state (balance information), event sourcing publishes all the events. The external world could rebuild any customized state itself. This design philosophy is called</p>
+<h2>CQRS [11].</h2>
+<p>In <span class="inline-code">CQRS</span>, there is one state machine responsible for the write part of the state, but there can be many read-only state machines, which are responsible for building views of the states. Those views could be used for queries. These read-only state machines can derive different state representations from the event queue. For example, clients may want to know their balances and a read-only state machine could save state in a database to serve the balance query. Another state machine could build state for a specific time period to help investigate issues like possible double charges. The state information is an audit trail that could help to reconcile the financial records. The read-only state machines lag behind to some extent, but will always catch up. The architecture design is eventually consistent.</p>
+<div class="figure-label">Figure 19 shows a classic CQRS architecture.</div>
+
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<div class="figure-label">Figure 19 CQRS architecture</div>
+<p>Candidate: In this design, we use event sourcing architecture to make the whole system reproducible. All valid business records are saved in an immutable Event queue which could be used for correctness verification. Interviewer: That’s great. But the event sourcing architecture you proposed only handles one event at a time and it needs to communicate with several external systems. Can we make it faster?</p>
+<h3>Step 3 - Design Deep Dive</h3>
+<p>In this section, we dive deep into techniques for achieving high performance, reliability, and scalability. High-performance event sourcing</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_662_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 663" /></div>
+</div>
+<div class="page-divider">Page 25</div>
+<div class="page-content" data-page="25">
+<p>In the earlier example, we used Kafka as the command and event store, and the database as a state store. Let’s explore some optimizations. File-based command and event list The first optimization is to save commands and events to a local disk, rather than to a remote store like Kafka. This avoids transit time across the network. The event list uses an append- only data structure. Appending is a sequential write operation, which is generally very fast. It works well even for magnetic hard drives because the operating system is heavily optimized for sequential reads and writes. According to this <span class="inline-code">ACM</span> Queue article [12], sequential disk access can be faster than random memory access in some cases. The second optimization is to cache recent commands and events in memory. As we explained before, we process commands and events right after they are persisted. We may cache them in memory to save the time of loading them back from the local disk. We are going to explore some implementation details. A technique called mmap [13] is great for implementing the optimizations mentioned previously. Mmap can write to a local disk and cache recent content in memory at the same time. It maps a disk file to memory as an array. The operating system caches certain sections of the file in memory to accelerate the read and write operations. For append-only file operations, it is almost guaranteed that all data are saved in memory, which is very fast.</p>
+<div class="figure-label">Figure 20 shows the file-based command and event storage.</div>
+
+</div>
+<div class="page-divider">Page 26</div>
+<div class="page-content" data-page="26">
+<div class="figure-label">Figure 20 File-based command and event storage</div>
+<p>File-based state In the previous design, state (balance information) is stored in a relational database. In a production environment, a database usually runs in a stand-alone server that can only be accessed through networks. Similar to the optimizations we did for command and event, state information can be saved to the local disk, as well. More specifically, we can use <span class="inline-code">SQLite</span> [14], which is a file-based local relational database or use <span class="inline-code">RocksDB</span> [15], which is a local file-based key-value store. <span class="inline-code">RocksDB</span> is chosen because it uses a log-structured merge-tree (<span class="inline-code">LSM</span>), which is optimized for write operations. To improve read performance, the most recent data is cached.</p>
+<div class="figure-label">Figure 21 shows the file-based solution for command, event, and state.</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_664_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 665" /></div>
+</div>
+<div class="page-divider">Page 27</div>
+<div class="page-content" data-page="27">
+<div class="figure-label">Figure 21 File-based solution for command, event, and state</div>
+<p>Snapshot Once everything is file-based, let us consider how to accelerate the reproducibility process. When we first introduced reproducibility, the state machine had to process events from the very beginning, every time. What we could optimize is to periodically stop the state machine and save the current state into a file. This is called a snapshot. A snapshot is an immutable view of a historical state. Once a snapshot is saved, the state machine does not have to restart from the very beginning anymore. It can read data from a snapshot, verify where it left off, and resume processing from there. For financial applications such as wallet service, the finance team often requires a snapshot to be taken at 00:00 so they can verify all transactions that happened during that day. When we first introduced <span class="inline-code">CQRS</span> of event sourcing, the solution was to set up a read-only state machine that reads from the beginning until the specified time is met. With snapshots, a read-only state machine only needs to load one snapshot that contains the data. A snapshot is a giant binary file and a common solution is to save it in an object storage solution, such as <span class="inline-code">HDFS</span> [16].</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_665_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 666" /></div>
+</div>
+<div class="page-divider">Page 28</div>
+<div class="page-content" data-page="28">
+<div class="figure-label">Figure 22 shows the file-based event sourcing architecture. When everything is file-based, the</div>
+<p>system can fully utilize the maximum I/O throughput of the computer hardware.</p>
+<div class="figure-label">Figure 22 Snapshot</div>
+<p>Candidate: We could refactor the design of event sourcing so the command list, event list, state, and snapshot are all saved in files. Event sourcing architecture processes the event list in a linear manner, which fits well into the design of hard disks and operating system cache. Interviewer: The performance of the local file-based solution is better than the system that requires accessing data from remote Kafka and databases. However, there is another problem: because data is saved on a local disk, a server is now stateful and becomes a single point of failure. How do we improve the reliability of the system? Reliable high-performance event sourcing Before we explain the solution, let’s examine the parts of the system that need the reliability guarantee. Reliability analysis Conceptually, everything a node does is around two concepts; data and computation. As long as data is durable, it’s easy to recover the computational result by running the same code on another node. This means we only need to worry about the reliability of data because if data is lost, it is lost forever. The reliability of the system is mostly about the reliability of the data. There are four types of data in our system.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_666_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 667" /></div>
+</div>
+<div class="page-divider">Page 29</div>
+<div class="page-content" data-page="29">
+<ol><li>File-based command</li><li>File-based event</li><li>File-based state</li><li>State snapshot</li></ol>
+<p>Let us take a close look at how to ensure the reliability of each type of data. State and snapshot can always be regenerated by replaying the event list. To improve the reliability of state and snapshot, we just need to ensure the event list has strong reliability. Now let us examine command. On the face of it, event is generated from command. We might think providing a strong reliability guarantee for command should be sufficient. This seems to be correct at first glance, but it misses something important. Event generation is not guaranteed to be deterministic, and also it may contain random factors such as random numbers, external I/O, etc. So command cannot guarantee reproducibility of events. Now it’s time to take a close look at event. Event represents historical facts that introduce changes to the state (account balance.) Event is immutable and can be used to rebuild the state. From this analysis, we conclude that event data is the only one that requires a high-reliability guarantee. We will explain how to achieve this in the next section. Consensus To provide high reliability, we need to replicate the event list across multiple nodes. During the replication process, we have to guarantee the following properties.</p>
+<ol><li>No data loss.</li><li>The relative order of data within a log file remains the same across nodes.</li></ol>
+<p>To achieve those guarantees, consensus-based replication is a good fit. The consensus algorithm makes sure that multiple nodes reach a consensus on what the event list is. Let’s use the Raft [17] consensus algorithm as an example. The Raft algorithm guarantees that as long as more than half of the nodes are online, the append-only lists on them have the same data. For example, if we have 5 nodes and use the Raft algorithm to synchronize their data, as long as at least 3 (more than half) of the nodes are up as Figure 23 shows, the system can still work properly as a whole:</p>
+
+</div>
+<div class="page-divider">Page 30</div>
+<div class="page-content" data-page="30">
+<div class="figure-label">Figure 23 Raft</div>
+<p>A node can have three different roles in the Raft algorithm.</p>
+<ol><li>Leader</li><li>Candidate</li><li>Follower</li></ol>
+<p>We can find the implementation of the Raft algorithm in the Raft paper. We will only cover the high level concepts here and not go into detail. In Raft, at most one node is the leader of the cluster and the remaining nodes are followers. The leader is responsible for receiving external commands and replicating data reliably across nodes in the cluster. With the Raft algorithm, the system is reliable as long as the majority of the nodes are operational. For example, if there are 3 nodes in the cluster, it could tolerate the failure of 1 node, and if there are 5 nodes, it can tolerate the failure of 2 nodes. Reliable solution With replication, there won’t be a single point of failure in our file-based event sourcing architecture. Let’s take a look at the implementation details. Figure 24 shows the event sourcing architecture with the reliability guarantee.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_668_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 669" /></div>
+</div>
+<div class="page-divider">Page 31</div>
+<div class="page-content" data-page="31">
+<div class="figure-label">Figure 24 Raft node group</div>
+<p>In Figure 24, we set up 3 event sourcing nodes. These nodes use the Raft algorithm to synchronize the event list reliably. The leader takes incoming command requests from external users, converts them into events, and appends events into the local event list. The Raft algorithm replicates newly added events to the followers. All nodes, including the followers, process the event list and update the state. The Raft algorithm ensures the leader and followers have the same event lists, while event sourcing guarantees all states are the same, as long as the event lists are the same. A reliable system needs to handle failures gracefully, so let’s explore how node crashes are handled. If the leader crashes, the Raft algorithm automatically selects a new leader from the remaining healthy nodes. This newly elected leader takes responsibility for accepting commands from external users. It is guaranteed that the cluster as a whole can provide continued service when a node goes down. When the leader crashes, it is possible that the crash happens before the command list is converted to events. In this case, the client would notice the issue either by a timeout or by receiving an error response. The client needs to resend the same command to the newly elected leader.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_669_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 670" /></div>
+</div>
+<div class="page-divider">Page 32</div>
+<div class="page-content" data-page="32">
+<p>In contrast, follower crashes are much easier to handle. If a follower crashes, requests sent to it will fail. Raft handles failures by retrying indefinitely until the crashed node is restarted or a new one replaces it. Candidate: In this design, we use the Raft consensus algorithm to replicate the event list across multiple nodes. The leader receives commands and replicates events to other nodes. Interviewer: Yes, the system is more reliable and fault-tolerant. However, in order to handle 1 million <span class="inline-code">TPS</span>, one server is not enough. How can we make the system more scalable? Distributed event sourcing In the previous section, we explained how to implement a reliable high-performance event sourcing architecture. It solves the reliability issue, but it has two limitations.</p>
+<ol><li>When a digital wallet is updated, we want to receive the updated result immediately. But in</li></ol>
+<p>the <span class="inline-code">CQRS</span> design, the request/response flow can be slow. This is because a client doesn’t know exactly when a digital wallet is updated and the client may need to rely on periodic polling.</p>
+<ol><li>The capacity of a single Raft group is limited. At a certain scale, we need to shard the data and implement distributed transactions.</li></ol>
+<p>Let’s take a look at how those two problems are solved. Pull vs push In the pull model, an external user periodically polls execution status from the read-only state machine. This model is not real-time and may overload the wallet service if the polling frequency is set too high. Figure 25 shows the pulling model.</p>
+
+</div>
+<div class="page-divider">Page 33</div>
+<div class="page-content" data-page="33">
+<div class="figure-label">Figure 25 Periodical pulling</div>
+<p>The naive pull model can be improved by adding a reverse proxy [18] between the external user and the event sourcing node. In this design, the external user sends a command to the reverse proxy, which forwards the command to event sourcing nodes and periodically polls the execution status. This design simplifies the client logic, but the communication is still not real- time.</p>
+<div class="figure-label">Figure 26 shows the pull model with a reverse proxy added.</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_671_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 672" /></div>
+</div>
+<div class="page-divider">Page 34</div>
+<div class="page-content" data-page="34">
+<div class="figure-label">Figure 26 Pull model with reverse proxy</div>
+<p>Once we have the reverse proxy, we could make the response faster by modifying the read- only state machine. As we mentioned earlier, the read-only state machine could have its own behavior. For example, one behavior could be that the read-only state machine pushes execution status back to the reverse proxy, as soon as it receives the event. This will give the user a feeling of real-time response.</p>
+<div class="figure-label">Figure 27 shows the push-based model.</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_672_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 673" /></div>
+</div>
+<div class="page-divider">Page 35</div>
+<div class="page-content" data-page="35">
+<div class="figure-label">Figure 27 Push model</div>
+<p>Distributed transaction Once synchronous execution is adopted for every event sourcing node group, we can reuse the distributed transaction solution, <span class="inline-code">TC</span>/C or Saga. Assume we partition the data by dividing the hash value of keys by 2.</p>
+<div class="figure-label">Figure 28 shows the updated design.</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_673_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 674" /></div>
+</div>
+<div class="page-divider">Page 36</div>
+<div class="page-content" data-page="36">
+<div class="figure-label">Figure 28 Final design</div>
+<p>Let’s take a look at how the money transfer works in the final distributed event sourcing architecture. To make it easier to understand, we use the Saga distributed transaction model and only explain the happy path without any rollback. The money transfer operation contains 2 distributed operations: A-$1 and C+$1. The Saga coordinator coordinates the execution as shown in Figure 29:</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_674_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 675" /></div>
+</div>
+<div class="page-divider">Page 37</div>
+<div class="page-content" data-page="37">
+<ol><li>User A sends a distributed transaction to the Saga coordinator. It contains two operations:</li></ol>
+<p>A-$1 and C+$1.</p>
+<ol><li>Saga coordinator creates a record in the phase status table to trace the status of a transaction.</li><li>Saga coordinator examines the order of operations and determines that it needs to handle</li></ol>
+<p>A-$1 first. The coordinator sends A-$1 as a command to Partition 1, which contains account A’s information.</p>
+<ol><li>Partition 1’s Raft leader receives the A-$1 command and stores it in the command list. It</li></ol>
+<p>then validates the command. If it is valid, it is converted into an event. The Raft consensus algorithm is used to synchronize data across different nodes. The event (deducting $1 from A’s account balance) is executed after synchronization is complete.</p>
+<ol><li>After the event is synchronized, the event sourcing framework of Partition 1 synchronizes</li></ol>
+<p>the data to the read path using <span class="inline-code">CQRS</span>. The read path reconstructs the state and the status of execution.</p>
+<ol><li>The read path of Partition 1 pushes the status back to the caller of the event sourcing</li></ol>
+<p>framework, which is the Saga coordinator.</p>
+<ol><li>Saga coordinator receives the success status from Partition 1.</li><li>The Saga coordinator creates a record, indicating the operation in Partition 1 is successful, in the phase status table.</li><li>Because the first operation succeeds, the Saga coordinator executes the second</li></ol>
+<p>operation, which is C+$1. The coordinator sends C+$1 as a command to Partition 2 which contains account C’s information.</p>
+<ol><li>Partition 2’s Raft leader receives the C+$1 command and saves it to the command list. If it</li></ol>
+<p>is valid, it is converted into an event. The Raft consensus algorithm is used to synchronize data across different nodes. The event (add $1 to C’s account ) is executed after synchronization is complete.</p>
+<ol><li>After the event is synchronized, the event sourcing framework of Partition 2 synchronizes</li></ol>
+<p>the data to the read path using <span class="inline-code">CQRS</span>. The read path reconstructs the state and the status of execution.</p>
+<ol><li>The read path of Partition 2 pushes the status back to the caller of the event sourcing</li></ol>
+<p>framework, which is the Saga coordinator.</p>
+<ol><li>The Saga coordinator receives the success status from Partition 2.</li><li>The Saga coordinator creates a record, indicating the operation in Partition 2 is successful in the phase status table.</li></ol>
+
+</div>
+<div class="page-divider">Page 38</div>
+<div class="page-content" data-page="38">
+<ol><li>At this time, all operations succeed and the distributed transaction is completed. The Saga</li></ol>
+<p>coordinator responds to its caller with the result.</p>
+<div class="figure-label">Figure 29 Final design in a numbered sequence</div>
+<h3>Step 4 - Wrap Up</h3>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_676_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 677" /></div>
+</div>
+<div class="page-divider">Page 39</div>
+<div class="page-content" data-page="39">
+<p>In this chapter, we designed a wallet service that is capable of processing over 1 million payment commands per second. After a back-of-the-envelope estimation, we concluded that a few thousand nodes are required to support such a load. In the first design, a solution using in-memory key-value stores like Redis is proposed. The problem with this design is that data isn&#x27;t durable. In the second design, the in-memory cache is replaced by transactional databases. To support multiple nodes, different transactional protocols such as 2PC, <span class="inline-code">TC</span>/C, and Saga are proposed. The main issue with transaction-based solutions is that we cannot conduct a data audit easily. Next, event sourcing is introduced. We first implemented event sourcing using an external database and queue, but it’s not performant. We improved performance by storing command, event, and state in a local node. A single node means a single point of failure. To increase the system reliability, we use the Raft consensus algorithm to replicate the event list onto multiple nodes. The last enhancement we made was to adopt the <span class="inline-code">CQRS</span> feature of event sourcing. We added a reverse proxy to change the asynchronous event sourcing framework to a synchronous one for external users. The <span class="inline-code">TC</span>/C or Saga protocol is used to coordinate Command executions across multiple node groups. Congratulations on getting this far! Now give yourself a pat on the back. Good job!</p>
+<h2>Chapter Summary</h2>
+
+</div>
+<div class="page-divider">Page 40</div>
+<div class="page-content" data-page="40">
+<p>Reference materials</p>
+<h2>[1] Transactional guarantees:</h2>
+<p>https://docs.oracle.com/cd/E17275_01/html/<span class="inline-code">programmer_reference</span>/<span class="inline-code">rep_trans</span>.html [2] <span class="inline-code">TPC</span>-E Top Price/Performance Results: http://tpc.org/tpce/results/<span class="inline-code">tpce_price_perf_results5</span>.asp?resulttype=all [3] <span class="inline-code">ISO</span> 4217 <span class="inline-code">CURRENCY</span> <span class="inline-code">CODES</span>: https://en.wikipedia.org/wiki/<span class="inline-code">ISO_4217</span> [4] Apache Zookeeper: https://zookeeper.apache.org/</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_678_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 679" /></div>
+</div>
+<div class="page-divider">Page 41</div>
+<div class="page-content" data-page="41">
+<p>[5] Martin Kleppmann (2017). Designing Data-Intensive Applications. O&#x27;Reilly Media. [6] X/Open <span class="inline-code">XA</span>: https://en.wikipedia.org/wiki/X/<span class="inline-code">Open_XA</span> [7] Compensating transaction: https://en.wikipedia.org/wiki/<span class="inline-code">Compensating_transaction</span> [8] <span class="inline-code">SAGAS</span>, <span class="inline-code">HectorGarcia</span>-Molina: https://www.cs.cornell.edu/andru/cs711/2002fa/reading/saga s.pdf [9] Evans, E. (2003). Domain-Driven Design: Tackling Complexity in the Heart of Software. Addison-Wesley Professional. [10] Apache Kafka. https://kafka.apache.org/ [11] <span class="inline-code">CQRS</span>: https://martinfowler.com/bliki/<span class="inline-code">CQRS</span>.html [12] Comparing Random and Sequential Access in Disk and Memory: https://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg [13] mmap: https://man7.org/linux/man-pages/man2/mmap.2.html [14] <span class="inline-code">SQLite</span>: https://www.sqlite.org/index.html [15] <span class="inline-code">RocksDB</span>. https://rocksdb.org/ [16] Apache Hadoop: https://hadoop.apache.org/ [17] Raft: https://raft.github.io/ [18] Reverse proxy: https://en.wikipedia.org/wiki/<span class="inline-code">Reverse_proxy</span> Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

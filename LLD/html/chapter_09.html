@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 09</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-lld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 09</h2>
+<p>Design a Grocery Store System In this chapter, we will explore the design of a grocery store system. This system is tailored for grocery store workers to streamline operations like managing the item catalog, configuring pricing, and applying discounts. Grocery Store System Requirements Gathering Here is an example of a typical prompt an interviewer might give: “Imagine you’re at a grocery store, filling your cart with fresh produce, snacks, and household essentials. At the checkout, the cashier scans each item, and the system instantly tracks the order, applies any discounts, and displays the final total. Behind the scenes, the system is seamlessly managing the item catalog, updating inventory as stock arrives or sells, and ensuring every transaction is smooth and accurate. Now, let’s design a grocery store system that does all this.” Requirements clarification</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_166_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 167" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Here is an example of how a conversation between a candidate and an interviewer might</p>
+<h2>unfold:</h2>
+<p>Candidate: What are the primary operations the grocery store system needs to support? Interviewer: The system should support store workers, including shipment handlers and cashiers, in managing the item catalog, tracking inventory, and processing customer checkouts with applicable discounts. Candidate: I’d like to confirm my understanding of the checkout process. The cashier scans or enters a code for each item, and the system keeps track of the order. It calculates the subtotal, applies any discounts, and updates the total. Once all items are entered, the cashier sees the final amount, accepts payment, and provides change if needed. A receipt is then generated. Does this sound correct? Interviewer: Yes, that’s an accurate understanding of the system. Candidate: How should the system handle inventory management? Interviewer: The system should track inventory for all items, increasing inventory when new stock arrives and automatically decreasing inventory during checkout for items sold. Candidate: Should the system categorize items into different categories, such as food, beverages, etc.? Interviewer: Yes, that’s a good idea. Candidate: For discounts, can I assume it works this way? The system should track discount campaigns, which can apply to specific items or categories. If multiple discounts apply to the same item, the system should automatically apply the highest discount. Interviewer: That sounds great. Requirements This question has multiple requirements, so grouping similar ones makes it easier to manage and track. The requirements can be broken down into four groups. Catalog management Admins can add, update, and remove items from the catalog. The catalog tracks item details, including name, category, price, and barcode. Inventory management Shipment handlers can update inventory when shipments arrive. The system should automatically decrease inventory when items are sold.</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>Checkout process Cashiers can scan barcodes or manually enter item codes to build an order. Cashiers can view details of the active order, including items, discounts, and the subtotal. The system calculates and applies relevant discounts automatically. Cashiers can finalize an order, calculate the total, handle payments, and calculate change. A detailed receipt is generated. Discount campaigns Admins can define discount campaigns for specific items or categories. If multiple discounts apply to an item, the system selects the highest discount. Below are the non-functional requirements: The system should provide clear, user-friendly error messages (e.g., for invalid barcodes or insufficient inventory) to the cashier. The system’s components (catalog, inventory, checkout, discounts) must be modular to allow updates or replacements of individual modules without affecting the entire system. Identify Core Objects Before diving into the design, it’s important to enumerate the core objects. Item: Represents an individual product in the grocery store, encapsulating details such as name, barcode, category, and price. Catalog: Acts as the central repository for all items, managing the collection of products and supporting operations like adding, updating, and removing items. Inventory: Tracks the stock levels for each item. It updates the count of available items when new stock arrives (via shipments) or when items are sold during the checkout process. Order: This object tracks the ongoing checkout process. It manages details such as the items in the order, active discounts, and the calculation of subtotals and total prices. This data is used to generate a receipt once the order is finalized. <span class="inline-code">DiscountCampaign</span>: The <span class="inline-code">DiscountCampaign</span> object defines promotional rules for applying discounts. Design Class Diagram Now that we know the core objects and their roles, the next step is to create classes and methods that turn the requirements into an easy-to-maintain system. Let’s take a closer look.</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Item The first component in our class diagram is the Item class, which represents individual products in the store. It encapsulates attributes like name, barcode, category, and price. Below is the representation of this class. Catalog The Catalog class is responsible for maintaining a structured list of all available products, each uniquely identified by a barcode. It provides methods to add, update, remove, and retrieve items. The <span class="inline-code">UML</span> diagram below illustrates this structure. Inventory Building on the Catalog class, the Inventory class is a critical component of the grocery store system, responsible for managing stock levels of items. It maintains a mapping between each item&#x27;s barcode and its corresponding stock quantity. Here is the representation of this class.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_169_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 170" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_169_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 170" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Design choice: To ensure modularity and maintainability, we have deliberately separated static product details from dynamic stock levels: Static Data (Catalog): Product metadata, such as name, category, and price, is managed by the Catalog class. This allows consistent, centralized handling of product information that does not change frequently. Dynamic Data (Inventory): Stock levels, which change frequently due to operations like sales and shipments, are managed independently in the Inventory class. This separation simplifies both classes and adheres to the Single Responsibility Principle, ensuring each class focuses on a distinct aspect of the system. <span class="inline-code">DiscountCriteria</span> The <span class="inline-code">DiscountCriteria</span> interface encapsulates the logic to determine whether a discount applies to an item. It provides a flexible, extensible framework for defining applicability checks, such as item-based and category-based criteria, allowing the system to support diverse discount rules without modifying existing code. The <span class="inline-code">UML</span> diagram below illustrates this structure.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_170_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 171" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_170_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 171" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p><span class="inline-code">DiscountCriteria</span> interface and concrete classes <span class="inline-code">CategoryBasedCriteria</span>: The <span class="inline-code">CategoryBasedCriteria</span> determines whether a discount is applicable by verifying if an item belongs to a specific category. For example, if the discount targets the &quot;Beverages&quot; category and the item&#x27;s category is &quot;Beverages,&quot; the discount is applicable. This approach is ideal for campaigns that focus on broad groups of products, such as category-wide promotions. <span class="inline-code">ItemBasedCriteria</span>: The <span class="inline-code">ItemBasedCriteria</span> checks whether a discount applies to a specific item by matching its unique identifier. For instance, if the discount applies to an item with <span class="inline-code">ID</span> 12345 and the item&#x27;s <span class="inline-code">ID</span> is 12345, the discount is considered applicable. This criterion is particularly useful for campaigns targeting specific products, such as special promotions or clearance discounts for individual items. <span class="inline-code">DiscountCalculationStrategy</span> The <span class="inline-code">DiscountCalculationStrategy</span> interface encapsulates the logic for calculating discounts. It uses the Strategy Pattern to provide flexibility in applying a variety of discount types, such as fixed amount-based or percentage-based discounts. Below is the representation of this interface.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_171_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 172" /></div>
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p><span class="inline-code">DiscountCalculationStrategy</span> interface and concrete classes <span class="inline-code">AmountBasedStrategy</span>: This strategy applies a fixed discount amount to the original price. For example, if the original price is $100 and the discount amount is $20, the resulting price after the discount will be $80. This approach is straightforward and is ideal for campaigns offering a constant monetary reduction. <span class="inline-code">PercentageBasedStrategy</span>: This strategy applies a percentage-based discount to the original price. For instance, if the original price is $100 and the discount percentage is 20%, the price after the discount will be $80. This strategy is particularly useful for campaigns offering proportional reductions, such as seasonal or category-based discounts. Design choice: This design is highly extensible, as new discount strategies, such as tiered discounts or &quot;Buy X Get Y Free,&quot; can be added seamlessly without modifying the existing implementation, adhering to the Open/Closed Principle. <span class="inline-code">DiscountCampaign</span> Now, we design the <span class="inline-code">DiscountCampaign</span> class, which models active discount campaigns and is a key component for applying discounts. It leverages the Strategy Pattern to encapsulate different calculation strategies (e.g., percentage-based or fixed-amount discounts), ensuring flexibility in how discounts are computed. The class uses a <span class="inline-code">DiscountCriteria</span> interface to specify which items qualify for a discount, such as those in a particular category or with a specific barcode, allowing precise targeting of promotions while maintaining extensibility for new applicability rules. The <span class="inline-code">UML</span> diagram below illustrates this structure.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_172_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 173" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_172_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 173" /></div>
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>Design choice: By separating the applicability logic (criteria) from the calculation strategy, the class is more modular and easier to extend. New criteria types or calculation strategies can be added without modifying the existing implementation. <span class="inline-code">OrderItem</span> The next component is the <span class="inline-code">OrderItem</span> class, which represents a specific item in an order, along with its quantity. It encapsulates methods to calculate the total price for the item, based on its unit price and quantity. Below is the representation of this class. Design choice: The <span class="inline-code">OrderItem</span> class separates item-level details from the higher- level order. This ensures that each item&#x27;s quantity and price logic are encapsulated, making the design modular and easier to maintain. Order The Order class represents an active transaction during the checkout process. It tracks the list of items in order, along with any applied discounts. The class provides methods to calculate the subtotal (before discounts) and the total amount (after discounts).</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_173_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 174" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_173_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 174" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_173_img_2.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 174" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<p>Below is the representation of this class. Design choice: The Order class focuses on managing transactional data for the checkout process. It delegates the handling of individual item quantities to the <span class="inline-code">OrderItem</span> class, ensuring a clean separation of responsibilities. Receipt The Receipt class acts as the final record of a completed transaction, consolidating all relevant details into a formatted output for the customer. It includes essential transaction information such as the order summary, payment details, and any changes to be given to the customer. Below is the representation of this class. Design choice: The Receipt class focuses solely on presenting transaction data in a customer-friendly format. It delegates all business logic, such as order calculations and discount handling, to the Order and <span class="inline-code">OrderItem</span> classes. This ensures the receipt remains lightweight and dedicated to its role as a transaction summary.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_174_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 175" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_174_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 175" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_174_img_2.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 175" /></div>
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>Checkout Moving on to the Checkout class, which encapsulates the logic for handling the checkout process within the grocery store system. It maintains an active Order object to track the transaction details. Additionally, it applies active discount campaigns by determining their applicability and performing calculations. Below is the representation of this class. Design choice: Despite its central role, the Checkout class remains lightweight because the responsibilities for managing items, discounts, and calculations are delegated to well-separated components such as Order, <span class="inline-code">DiscountCampaign</span>, and the underlying strategy classes. This modular design ensures a clean separation of concerns and keeps the checkout logic manageable. <span class="inline-code">GroceryStoreSystem</span> Finally, we design the <span class="inline-code">GroceryStoreSystem</span> class, which serves as a facade that simplifies interaction with the components of the system, such as the Catalog, Inventory, and Checkout. By providing a unified interface, it abstracts away the underlying complexity, making the system easier for clients to use. In an interview, this facade also allows us to validate that we have addressed the requirements by mapping them to the facade methods.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_175_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 176" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_175_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 176" /></div>
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>Complete Class Diagram Below is the complete class diagram of our grocery store system. The detailed methods and attributes are skipped to make the diagram more readable.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_176_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 177" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>Class Diagram of Grocery Store System</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_177_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 178" /></div>
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p>Code - Grocery Store System In this section, we’ll implement the core functionality of the grocery store system, focusing on key areas such as managing products and inventory, and streamlining the checkout process, including discount handling. Item We implement the Item class, which encapsulates product attributes, including the name, barcode, category, and price. It is designed as a simple data container with no business logic, making it easy to use and maintain. Here is the implementation of this class.</p>
+<pre><code>public class Item {
+    private final String name;
+    private final String barcode;
+    private final String category;
+    private BigDecimal price;
+    public Item(String name, String barcode, String category, Big
+        this.name = name;
+        this.barcode = barcode;
+        this.category = category;
+        this.price = price;
+    }
+    // getter and setter methods are omitted for brevity
+}
+Catalog
+We define the Catalog class, which acts as the centralized repository for managing the store&#x27;s
+item inventory. Below is the implementation of this class.
+public class Catalog {
+    // Map of barcodes to their corresponding items
+    private final Map&lt;String, Item&gt; items = new HashMap&lt;&gt;();
+    public void updateItem(Item item) {</code></pre>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<pre><code>        items.put(item.getBarcode(), item);
+    }
+    public void removeItem(String barcode) {
+        items.remove(barcode);
+    }
+    public Item getItem(String barcode) {
+        return items.get(barcode);
+    }
+}
+Implementation note: The class uses a Map&lt;String, Item&gt; to store items, where the barcode
+serves as the key. The hash map ensures efficient lookups, updates, and deletions.
+Inventory
+The Inventory class manages the stock levels of items, associating each item&#x27;s barcode with its
+available quantity. It provides methods to handle stock operations, such as adding new stock,
+decreasing stock for sales, and querying the current stock levels for a specific item.
+Here is the implementation of this class.
+public class Inventory {
+    // Map of barcodes to their stock quantities
+    private final Map&lt;String, Integer&gt; stock = new HashMap&lt;&gt;();
+    public void addStock(String barcode, int count) {
+        stock.put(barcode, stock.getOrDefault(barcode, 0) + count
+    }
+    public void reduceStock(String barcode, int count) {
+        stock.put(barcode, stock.getOrDefault(barcode, 0) - count
+    }
+    public int getStock(String barcode) {
+        return stock.getOrDefault(barcode, 0);
+    }
+}
+addStock(String barcode, int count): Increases the stock for the specified barcode.</code></pre>
+
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p><span class="inline-code">reduceStock</span>(String barcode, int count): Decreases the stock for the specified barcode. <span class="inline-code">getStock</span>(String barcode): Returns the current stock count for the specified barcode. Implementation choice: The Inventory class uses a <span class="inline-code">HashMap</span> to map barcodes to stock quantities, enabling O(1) average-case time complexity for updates and queries. This supports efficient inventory management during sales and shipments, which is crucial for maintaining accurate stock levels in a busy store. <span class="inline-code">DiscountCampaign</span> The <span class="inline-code">DiscountCampaign</span> class models promotional rules for applying discounts. It separates the logic for determining discount applicability (using <span class="inline-code">DiscountCriteria</span>) from the calculation of discount values (using <span class="inline-code">DiscountCalculationStrategy</span>). This design ensures flexibility and extensibility for various discount configurations. Below is the implementation of this class.</p>
+<pre><code>public class DiscountCampaign {
+    // Unique identifier for the discount campaign
+    private final String discountId;
+    // Name of the discount campaign
+    private final String name;
+    // Criteria that determines if the discount applies to an ite
+    private final DiscountCriteria criteria;
+    // Strategy for calculating the discounted price
+    private final DiscountCalculationStrategy calculationStrategy
+    // Creates a new discount campaign with the specified details
+    public DiscountCampaign(
+            String discountId,
+            String name,
+            DiscountCriteria criteria,
+            DiscountCalculationStrategy calculationStrategy) {
+        this.discountId = discountId;
+        this.name = name;
+        this.criteria = criteria;
+        this.calculationStrategy = calculationStrategy;
+    }
+    // Checks if this discount applies to the given item
+    public boolean isApplicable(Item item) {
+        return criteria.isApplicable(item);
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<p>// Calculates the discounted price for the given order item</p>
+<pre><code>    public BigDecimal calculateDiscount(OrderItem item) {
+        return calculationStrategy.calculateDiscountedPrice(item
+    }
+    // getter and setter methods are omitted for brevity
+}</code></pre>
+<p><span class="inline-code">isApplicable</span>(Item item): Check if the discount applies to a given item based on the defined criteria. Returns true if applicable; otherwise, false. <span class="inline-code">calculateDiscount</span>(<span class="inline-code">BigDecimal</span> price): Computes the discount amount using the specified <span class="inline-code">calculationStrategy</span>. Supports both percentage-based and fixed-amount calculations. Implementation choice: The <span class="inline-code">DiscountCampaign</span> class uses composition to hold a single <span class="inline-code">DiscountCriteria</span> and <span class="inline-code">DiscountCalculationStrategy</span>, leveraging polymorphism for flexible discount configurations. This allows each campaign to combine one applicability rule and one calculation method, simplifying the implementation while supporting diverse promotions. Note: For brevity, the code for <span class="inline-code">DiscountCriteria</span> and <span class="inline-code">DiscountCalculationStrategy</span> is omitted. These interfaces define applicability checks (e.g., category or item matching) and discount calculations (e.g., percentage-based), respectively. <span class="inline-code">OrderItem</span> The <span class="inline-code">OrderItem</span> class tracks an individual product within an order, along with its quantity. It calculates the total cost for the item by multiplying its unit price by the quantity, enabling seamless integration with the order&#x27;s subtotal and total calculations. Here is the implementation of this class.</p>
+<pre><code>public class OrderItem {
+    // The item being ordered
+    private final Item item;
+    // Quantity of the item
+    private final int quantity;
+    // Creates a new order item with the specified item and quant
+    public OrderItem(Item item, int quantity) {
+        this.item = item;
+        this.quantity = quantity;
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<p>// Calculates the total price for this order item without any</p>
+<pre><code>    public BigDecimal calculatePrice() {
+        return item.getPrice().multiply(BigDecimal.valueOf(quanti
+    }
+    // Calculates the total price for this order item with the gi
+    public BigDecimal calculatePriceWithDiscount(DiscountCampaign
+        return newDiscount.calculateDiscount(this);</code></pre>
+<p>} // getter and setter methods are omitted for brevity</p>
+<pre><code>}</code></pre>
+<p><span class="inline-code">calculatePriceWithDiscount</span>(<span class="inline-code">DiscountCampaign</span> <span class="inline-code">newDiscount</span>): This method computes the item&#x27;s total price after applying a given discount campaign. Instead of simply returning the base price (unit price × quantity), it factors in the discount to determine the adjusted price. Order The Order class handles customer transactions by maintaining a list of purchased items and their associated discounts. It dynamically calculates the subtotal and total amounts based on the items currently included in the order and the discounts applied to them at the time of calculation.</p>
+<pre><code>public class Order {
+    // Unique identifier for the order
+    private final String orderId;
+    // List of items in the order
+    private final List&lt;OrderItem&gt; items = new ArrayList&lt;&gt;();
+    // Map of items to their applied discounts
+    private final Map&lt;OrderItem, DiscountCampaign&gt; appliedDiscoun
+    // Amount paid by the customer
+    private BigDecimal paymentAmount = BigDecimal.ZERO;
+    // Creates a new order with a random UUID
+    public Order() {
+        this.orderId = String.valueOf(UUID.randomUUID());
+    }
+    // Adds an item to the order
+    public void addItem(OrderItem item) {
+        items.add(item);
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<p>// Calculates the subtotal of all items without discounts</p>
+<pre><code>    public BigDecimal calculateSubtotal() {
+        return items.stream()
+                .map(OrderItem::calculatePrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    // Calculates the total price including all applied discounts
+    public BigDecimal calculateTotal() {
+        return items.stream()
+                .map(
+                        item -&gt; {</code></pre>
+<p><span class="inline-code">DiscountCampaign</span> discount = <span class="inline-code">appliedDi</span></p>
+<pre><code>                            return discount != null</code></pre>
+<p>? item.<span class="inline-code">calculatePriceWithDisc</span></p>
+<pre><code>                                    : item.calculatePrice();
+                        })
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    // Applies a discount to a specific item in the order
+    public void applyDiscount(OrderItem item, DiscountCampaign di
+        appliedDiscounts.put(item, discount);
+    }
+    // Calculates the change to be returned to the customer
+    public BigDecimal calculateChange() {
+        return paymentAmount.subtract(calculateTotal());
+    }
+    // getter and setter methods are omitted for brevity
+}
+Implementation choice: The Order class uses an ArrayList for fast O(1) item additions via
+addItem and efficient O(n) iteration for calculateSubtotal and calculateTotal, ideal for small
+grocery orders. Similarly, a HashMap&lt;OrderItem, DiscountCampaign&gt; tracks discounts per
+item, providing O(1) average-case lookups and updates.
+Checkout
+The Checkout class orchestrates the transaction process by integrating the order and discount
+campaigns. It allows items to be added to an order, applies relevant discounts, and finalizes the</code></pre>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<p>payment.</p>
+<pre><code>public class Checkout {
+    // Current order being processed
+    private Order currentOrder;
+    // List of active discount campaigns
+    private final List&lt;DiscountCampaign&gt; activeDiscounts;
+    // Creates a new checkout with the given active discounts
+    public Checkout(List&lt;DiscountCampaign&gt; activeDiscounts) {
+        this.activeDiscounts = activeDiscounts;
+        startNewOrder();
+    }
+    // Starts a new order
+    public void startNewOrder() {
+        this.currentOrder = new Order();
+    }
+    // Processes the payment and returns the change
+    public BigDecimal processPayment(BigDecimal paymentAmount) {
+        currentOrder.setPayment(paymentAmount);
+        return currentOrder.calculateChange();
+    }
+    // Adds an item to the current order and applies applicable d
+    public void addItemToOrder(Item item, int quantity) {
+        OrderItem orderItem = new OrderItem(item, quantity);
+        currentOrder.addItem(orderItem);
+        for (DiscountCampaign newDiscount : activeDiscounts) {
+            if (newDiscount.isApplicable(item)) {
+                // if there are multiple newDiscount that apply t</code></pre>
+<p>if (<span class="inline-code">currentOrder</span>.<span class="inline-code">getAppliedDiscounts</span>().<span class="inline-code">containsKe</span> <span class="inline-code">DiscountCampaign</span> <span class="inline-code">existingDiscount</span> = <span class="inline-code">currentOrder</span>.<span class="inline-code">getAppliedDiscounts</span>().ge if (<span class="inline-code">orderItem</span> .<span class="inline-code">calculatePriceWithDiscount</span>(n .<span class="inline-code">compareTo</span>( <span class="inline-code">orderItem</span>.<span class="inline-code">calculatePr</span></p>
+<pre><code>                            &gt; 0) {
+                        currentOrder.applyDiscount(orderItem, new
+                    }
+                } else {
+                    currentOrder.applyDiscount(orderItem, newDisc
+                }</code></pre>
+
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<pre><code>            }
+        }
+    }
+    // Generates a receipt for the current order
+    public Receipt getReceipt() {
+        return new Receipt(currentOrder);
+    }
+    // Calculates the total amount for the current order
+    public BigDecimal getOrderTotal() {
+        return currentOrder.calculateTotal();
+    }
+}
+Implementation choice: The Checkout class uses an ArrayList to store active discounts,</code></pre>
+<p>enabling linear iteration (O(n)) to evaluate applicability and select the highest discount. This is efficient given the small number of active campaigns. <span class="inline-code">GroceryStoreSystem</span> Finally, we implement the <span class="inline-code">GroceryStoreSystem</span> class that provides a unified interface to interact with the system&#x27;s other components, including the catalog, inventory, discount campaigns, and checkout. It simplifies client interactions and ensures consistency across operations such as managing products, applying discounts, and processing customer transactions. Here is the implementation of this class.</p>
+<pre><code>public class GroceryStoreSystem {
+    // Product catalog containing all available items
+    private final Catalog catalog;
+    // Inventory tracking system
+    private final Inventory inventory;
+    // List of active discount campaigns
+    private List&lt;DiscountCampaign&gt; activeDiscounts = new ArrayLis
+    // Checkout system for processing orders
+    private final Checkout checkout;
+    public GroceryStoreSystem() {
+        this.catalog = new Catalog();
+        this.inventory = new Inventory();
+        this.checkout = new Checkout(activeDiscounts);</code></pre>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<pre><code>    }
+    // Adds or updates an item in the catalog
+    public void addOrUpdateItem(Item item) {
+        catalog.updateItem(item);
+    }
+    // Updates the inventory count for an item
+    public void updateInventory(String barcode, int count) {
+        inventory.addStock(barcode, count);
+    }
+    // Adds a new discount campaign to the system
+    public void addDiscountCampaign(DiscountCampaign discount) {
+        activeDiscounts.add(discount);
+    }
+    // Retrieves an item from the catalog by its barcode
+    public Item getItemByBarcode(String barcode) {
+        return catalog.getItem(barcode);
+    }
+    // Removes an item from the catalog
+    public void removeItem(String barcode) {
+        catalog.removeItem(barcode);
+    }
+}
+Deep Dive Topics
+In this section, we’ll explore some common follow-up topics interviewers may ask about the</code></pre>
+<p>grocery store system. Flexible Discount Criteria The current design encapsulates discount logic into two components: Criteria: Determines whether an item qualifies for a discount. Price Calculation Strategy: Computes the discounted price for eligible items. This design provides reusability by allowing different combinations of discount policies to be expressed without duplicating code. However, what if the interviewer asks you to implement more complex composite discounts, such as:</p>
+
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<p>&quot;If total electronics purchases exceed $100, apply a 10% discount; if they exceed $200, apply a 20% discount.&quot; &quot;Buy at least 3 units of the same item in the food category for a special price.&quot; These scenarios require combining multiple criteria and calculations. We can handle such complexity by enhancing the design using the Composite Pattern for criteria and the Decorator Pattern for sequential calculations. Note: To learn more about the Composite Pattern and its common use cases, refer to the Unix File Search chapter of the book. Combining Multiple Criteria To address nested or combined criteria, we will use the Composite Pattern, which is particularly well-suited for scenarios where hierarchical structures or combinations of logic are required. Composite criteria allow us to combine multiple rules (e.g., category-based, item-based) using logical operators like <span class="inline-code">AND</span> and <span class="inline-code">OR</span>, without hardcoding the logic. For example, it can check if an item belongs to a specific category and meets a minimum price threshold. Design changes Add a <span class="inline-code">CompositeCriteria</span> class to support combining criteria. Code changes Below is an example of how to implement <span class="inline-code">CompositeCriteria</span>: // Composite criteria that combines multiple discount criteria</p>
+<pre><code>public class CompositeCriteria implements DiscountCriteria {
+    // List of criteria to be combined
+    private final List&lt;DiscountCriteria&gt; criteriaList;
+    // Creates a new composite criteria with the given list of cr
+    public CompositeCriteria(List&lt;DiscountCriteria&gt; criteriaList)
+        this.criteriaList = new ArrayList&lt;&gt;(criteriaList);
+    }
+    // Checks if the item satisfies all the criteria in the list
+    @Override
+    public boolean isApplicable(Item item) {
+        return criteriaList.stream().allMatch(criteria -&gt; criteri
+    }</code></pre>
+
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<p>// Adds a new criteria to the composite</p>
+<pre><code>    public void addCriteria(DiscountCriteria criteria) {
+        criteriaList.add(criteria);
+    }
+    // Removes a criteria from the composite
+    public void removeCriteria(DiscountCriteria criteria) {
+        criteriaList.remove(criteria);
+    }
+}</code></pre>
+<p>Layering Discount Calculations To manage sequential discount calculations, we can use the Decorator Pattern. By wrapping multiple calculation strategies, we can apply discounts in a specific order without modifying the</p>
+<h2>underlying strategy logic. For example:</h2>
+<p>Apply a fixed discount first. Then apply a percentage-based discount to the remaining price. Note: To learn more about the Decorator Pattern and its common use cases, refer to the Further Reading section at the end of this chapter. Design changes Introduce decorators like <span class="inline-code">FixedDiscountDecorator</span> and <span class="inline-code">PercentageDiscountDecorator</span> to wrap existing strategies. Code changes Below are examples of implementing decorators: <span class="inline-code">FixedDiscountDecorator</span></p>
+<pre><code>public class FixedDiscountDecorator implements DiscountCalculatio
+    // The strategy being decorated
+    private final DiscountCalculationStrategy strategy;
+    // The fixed amount to be added to the discount
+    private final BigDecimal fixedAmount;
+    public FixedDiscountDecorator(DiscountCalculationStrategy str</code></pre>
+
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<pre><code>        this.strategy = strategy;
+        this.fixedAmount = fixedAmount;
+    }
+    // Calculates the discounted price by applying both the base 
+    @Override
+    public BigDecimal calculateDiscountedPrice(BigDecimal origina
+        return strategy.calculateDiscountedPrice(originalPrice).s
+    }
+}
+PercentageDiscountDecorator
+public class PercentageDiscountDecorator implements DiscountCalcu
+    // The strategy being decorated
+    private final DiscountCalculationStrategy strategy;
+    // The additional percentage to be discounted
+    private final BigDecimal additionalPercentage;
+    public PercentageDiscountDecorator(
+            DiscountCalculationStrategy strategy, BigDecimal addi
+        this.strategy = strategy;
+        this.additionalPercentage = additionalPercentage;
+    }
+    // Calculates the discounted price by applying both the base 
+    // percentage
+    @Override
+    public BigDecimal calculateDiscountedPrice(BigDecimal origina</code></pre>
+<p><span class="inline-code">BigDecimal</span> <span class="inline-code">baseDiscountedPrice</span> = strategy.<span class="inline-code">calculateDiscou</span></p>
+<pre><code>        return baseDiscountedPrice.multiply(
+                BigDecimal.ONE.subtract(additionalPercentage.divi
+    }
+}
+By combining nested criteria and sequential calculation strategies, we can design a highly</code></pre>
+<p>flexible discount system capable of handling even the most complex scenarios. This design approach not only simplifies implementation but also demonstrates a deep understanding of abstraction and extensibility principles, which are crucial in object-oriented design interviews.</p>
+
+</div>
+<div class="page-divider">Page 25</div>
+<div class="page-content" data-page="25">
+<p>Wrap Up In this chapter, we designed a grocery store system. We tried to solve the grocery store problem in a step-by-step manner, just like a candidate would do in an actual object-oriented design interview. We started off by listing down the requirements through a series of question/answer formats between the candidate and the interviewer. We then identified the core objects, followed by the class diagram of the grocery store, and presented the implementation code. The most important takeaway is the clear separation of concerns, where each component, such as Catalog, Inventory, Order, and <span class="inline-code">DiscountCampaign</span>, focuses on a specific responsibility. This modularity not only simplifies individual components but also ensures they integrate seamlessly. In the deep dive section, we explored advanced topics like implementing composite discounts and layering multiple calculation strategies. These enhancements showcase how abstraction and extensibility can handle complex real-world scenarios, such as applying tiered discounts or combining fixed and percentage-based discounts. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Further Reading: Decorator Design Pattern This section gives a quick overview of the design patterns used in this chapter. It’s helpful if you’re new to these patterns or need a refresher to better understand the design choices. Decorator design pattern Decorator is a structural design pattern that allows you to add new behaviors to an object by wrapping it in another object that provides the additional functionality, without modifying the original object’s code. In the grocery store system design, we have used the Decorator pattern to layer multiple discount calculations by wrapping a <span class="inline-code">DiscountCalculationStrategy</span> object in decorator classes like <span class="inline-code">FixedDiscountDecorator</span> and <span class="inline-code">PercentageDiscountDecorator</span>. This allows the system to apply discounts sequentially, such as a fixed amount followed by a percentage reduction, during checkout without altering the core discount strategy. To illustrate the Decorator pattern in another domain, consider a text formatting system where a document editor applies styles like bold or italic to text content to enhance its appearance.</p>
+
+</div>
+<div class="page-divider">Page 26</div>
+<div class="page-content" data-page="26">
+<p>Problem Imagine you’re developing a text editor where users can format text with styles like bold, italic, or underline. Initially, you might handle these by modifying the Text class with conditional logic or creating subclasses for each style combination (e.g., <span class="inline-code">BoldText</span>, <span class="inline-code">BoldItalicText</span>). However, this leads to complex code or an explosion of subclasses, making it difficult to add new styles (e.g., strikethrough) or combine multiple styles (e.g., bold and italic). Solution The Decorator Pattern addresses this by creating decorator classes that implement the same</p>
+<pre><code>interface as the Text class and wrap a Text object to add new behaviors. For example, a
+BoldDecorator wraps a Text object to add bold formatting to its display, while an ItalicDecorator
+adds italic formatting. The editor interacts with the decorated text through the same interface,
+enabling seamless style application. Decorators can be stacked to combine styles (e.g., bold
+and italic), providing flexibility without altering the Text class.</code></pre>
+<p>Here’s a simple diagram showing the Decorator pattern for text formatting: Text interface and concrete classes Text is the common interface that <span class="inline-code">PlainText</span>, <span class="inline-code">BoldDecorator</span>, and <span class="inline-code">ItalicDecorator</span> implement. The advantage is that we can treat all objects uniformly through the Text interface, allowing decorators to wrap and enhance text formatting, like bold or italic, without knowing the underlying object’s type. When to use The Decorator design pattern is useful in scenarios:</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_191_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 192" /></div>
+</div>
+<div class="page-divider">Page 27</div>
+<div class="page-content" data-page="27">
+<p>When you need to add features or behaviors to objects dynamically at runtime without modifying their code. When subclassing results in too many combinations of features (e.g., <span class="inline-code">BoldItalicText</span>), composition is a simpler alternative. Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

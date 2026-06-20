@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 30</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 30</h2>
+<p>The Learning Continues Designing good systems requires years of accumulation of knowledge. One shortcut is to dive into real-world system architectures. Below is a collection of helpful reading materials. We highly recommend you pay attention to both the shared principles and the underlying technologies. Researching each technology and understanding what problems it solves is a great way to strengthen your knowledge base and refine the design process. Real-world systems The following materials can help you understand general design ideas of real system architectures behind different companies. Facebook Timeline: Brought To You By The Power Of Denormalization: https://goo.gl/<span class="inline-code">FCNrbm</span> Scale at Facebook: https://goo.gl/<span class="inline-code">NGTdCs</span> Building Timeline: Scaling up to hold your life story: https://goo.gl/8p5wDV Erlang at Facebook (Facebook chat): https://goo.gl/<span class="inline-code">zSLHrj</span> Facebook Chat: https://goo.gl/<span class="inline-code">qzSiWC</span> Finding a needle in Haystack: Facebook’s photo storage: https://goo.gl/edj4FL Serving Facebook Multifeed: Efficiency, performance gains through redesign: https://goo.gl/<span class="inline-code">adF</span></p>
+<h2>VMQ</h2>
+<p>Scaling Memcache at Facebook: https://goo.gl/<span class="inline-code">rZiAhX</span> <span class="inline-code">TAO</span>: Facebook’s Distributed Data Store for the Social Graph: https://goo.gl/Tk1DyH Amazon Architecture: https://goo.gl/k4feoW Dynamo: Amazon’s Highly Available Key-value Store: https://goo.gl/C7zxDL A 360 Degree View Of The Entire Netflix Stack: https://goo.gl/<span class="inline-code">rYSDTz</span> It’s All A/Bout Testing: The Netflix Experimentation Platform: https://goo.gl/<span class="inline-code">agbA4K</span> Netflix Recommendations: Beyond the 5 stars (Part 1): https://goo.gl/A4FkYi</p>
+
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Netflix Recommendations: Beyond the 5 stars (Part 2): https://goo.gl/<span class="inline-code">XNPMXm</span> Google Architecture: https://goo.gl/<span class="inline-code">dvkDiY</span> The Google File System (Google Docs): https://goo.gl/xj5n9R Differential Synchronization (Google Docs): https://goo.gl/9zqG7x <span class="inline-code">YouTube</span> Architecture: https://goo.gl/<span class="inline-code">mCPRUF</span> Seattle Conference on Scalability: <span class="inline-code">YouTube</span> Scalability: https://goo.gl/<span class="inline-code">dH3zYq</span> Bigtable: A Distributed Storage System for Structured Data: https://goo.gl/6NaZca Instagram Architecture: 14 Million Users, Terabytes Of Photos, 100s Of Instances, Dozens Of Technologies: https://goo.gl/s1VcW5 The Architecture Twitter Uses To Deal With 150M Active Users: https://goo.gl/<span class="inline-code">EwvfRd</span> Scaling Twitter: Making Twitter 10000 Percent Faster: https://goo.gl/<span class="inline-code">nYGC1k</span> Announcing Snowflake (Snowflake is a network service for generating unique <span class="inline-code">ID</span> numbers at high scale with some simple guarantees): https://goo.gl/<span class="inline-code">GzVWYm</span> Timelines at Scale: https://goo.gl/8KbqTy How Uber Scales Their Real-Time Market Platform: https://goo.gl/<span class="inline-code">kGZuVy</span> Scaling Pinterest: https://goo.gl/<span class="inline-code">KtmjW3</span> Pinterest Architecture Update: https://goo.gl/w6rRsf A Brief History of Scaling <span class="inline-code">LinkedIn</span>: https://goo.gl/8A1Pi8 Flickr Architecture: https://goo.gl/<span class="inline-code">dWtgYa</span> How We&#x27;ve Scaled Dropbox: https://goo.gl/<span class="inline-code">NjBDtC</span> The <span class="inline-code">WhatsApp</span> Architecture Facebook Bought For $19 Billion: https://bit.ly/2AHJnFn Company engineering blogs If you are going to interview with a company, it is a great idea to read their engineering blogs and get familiar with technologies and systems adopted and implemented there. Besides,</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>engineering blogs provide invaluable insights about certain fields. Reading them regularly could help us become better engineers. Here is a list of engineering blogs of well-known large companies and startups. Airbnb: https://medium.com/airbnb-engineering Amazon: https://developer.amazon.com/blogs Asana: https://blog.asana.com/category/eng Atlassian: https://developer.atlassian.com/blog Bittorrent: http://engineering.bittorrent.com Cloudera: https://blog.cloudera.com Docker: https://blog.docker.com Dropbox: https://blogs.dropbox.com/tech <span class="inline-code">eBay</span>: http://www.ebaytechblog.com Facebook: https://code.facebook.com/posts <span class="inline-code">GitHub</span>: https://githubengineering.com Google: https://developers.googleblog.com Groupon: https://engineering.groupon.com Highscalability: http://highscalability.com Instacart: https://tech.instacart.com Instagram: https://engineering.instagram.com Linkedin: https://engineering.linkedin.com/blog Mixpanel: https://mixpanel.com/blog Netflix: https://medium.com/netflix-techblog Nextdoor: https://engblog.nextdoor.com <span class="inline-code">PayPal</span>: https://www.paypal-engineering.com</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Pinterest: https://engineering.pinterest.com Quora: https://engineering.quora.com Reddit: https://redditblog.com Salesforce: https://engineering.salesforce.com/blog/ Shopify: https://engineering.shopify.com Slack: https://slack.engineering Soundcloud: https://developers.soundcloud.com/blog Spotify: https://labs.spotify.com Stripe: https://stripe.com/blog/engineering System design primer: https://github.com/donnemartin/system-design-primer Twitter: https://blog.twitter.com/engineering/<span class="inline-code">en_us</span>.html Thumbtack: https://www.thumbtack.com/engineering Uber: http://eng.uber.com Yahoo: https://developer.yahoo.com/blogs/ Yelp: https://engineeringblog.yelp.com Zoom: https://medium.com/zoom-developer-blog Congratulations! You are at the end of this interview guide. You have accumulated skills and knowledge to design systems. Not everyone has the discipline to learn what you have learned. Take a moment and pat yourself on the back. Your hard work will be paid off. Landing a dream job is a long journey and requires lots of time and effort. Practice makes perfect. Best luck! Thank you for buying and reading this course. Without readers like you, our work would not exist. We hope you have enjoyed the course!</p>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Loading...</p>
+
+</div>
+  </div>
+</body>
+</html>

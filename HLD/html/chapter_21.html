@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 21</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 21</h2>
+<p>Metrics Monitoring and Alerting System In this chapter, we explore the design of a scalable metrics monitoring and alerting system. A well-designed monitoring and alerting system plays a key role in providing clear visibility into the health of the infrastructure to ensure high availability and reliability.</p>
+<div class="figure-label">Figure 1 shows some of the most popular metrics monitoring and alerting services in the</div>
+<p>marketplace. In this chapter, we design a similar service that can be used internally by a large company.</p>
+<div class="figure-label">Figure 1 Popular metrics monitoring and alerting services</div>
+<h3>Step 1 - Understand the Problem</h3>
+<p>and Establish Design Scope A metrics monitoring and alerting system can mean many different things to different companies, so it is essential to nail down the exact requirements first with the interviewer. For example, you do not want to design a system that focuses on logs such as web server error or access logs if the interviewer has only infrastructure metrics in mind. Let’s first fully understand the problem and establish the scope of the design before diving into the details. Candidate: Who are we building the system for? Are we building an in-house system for a large corporation like Facebook or Google, or are we designing a <span class="inline-code">SaaS</span> service like Datadog [1], Splunk [2], etc? Interviewer: That’s a great question. We are building it for internal use only.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_413_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 414" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>Candidate: Which metrics do we want to collect? Interviewer: We want to collect operational system metrics. These can be low-level usage data of the operating system, such as <span class="inline-code">CPU</span> load, memory usage, and disk space consumption. They can also be high-level concepts such as requests per second of a service or the running server count of a web pool. Business metrics are not in the scope of this design. Candidate: What is the scale of the infrastructure we are monitoring with this system? Interviewer: 100 million daily active users, 1,000 server pools, and 100 machines per pool. Candidate: How long should we keep the data? Interviewer: Let’s assume we want 1-year retention. Candidate: May we reduce the resolution of the metrics data for long-term storage? Interviewer: That’s a great question. We would like to be able to keep newly received data for 7 days. After 7 days, you may roll them up to a 1-minute resolution for 30 days. After 30 days, you may further roll them up at a 1-hour resolution. Candidate: What are the supported alert channels? Interviewer: Email, phone, <span class="inline-code">PagerDuty</span>, or webhooks (<span class="inline-code">HTTP</span> endpoints). Candidate: Do we need to collect logs, such as error log or access log? Interviewer: No. Candidate: Do we need to support distributed system tracing? Interviewer: No. High-level requirements and assumptions Now you have finished gathering requirements from the interviewer and have a clear scope of</p>
+<h2>the design. The requirements are:</h2>
+<p>The infrastructure being monitored is large-scale. 100 million daily active users Assume we have 1,000 server pools, 100 machines per pool, 100 metrics per machine =&gt; ~10 million metrics 1-year data retention Data retention policy: raw form for 7 days, 1-minute resolution for 30 days, 1-hour resolution for 1 year. A variety of metrics can be monitored, for example:</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p><span class="inline-code">CPU</span> usage Request count Memory usage Message count in message queues Non-functional requirements Scalability. The system should be scalable to accommodate growing metrics and alert volume. Low latency. The system needs to have low query latency for dashboards and alerts. Reliability. The system should be highly reliable to avoid missing critical alerts. Flexibility. Technology keeps changing, so the pipeline should be flexible enough to easily integrate new technologies in the future. Which requirements are out of scope? Log monitoring. The Elasticsearch, Logstash, Kibana (<span class="inline-code">ELK</span>) stack is very popular for collecting and monitoring logs [3]. Distributed system tracing [4] [5]. Distributed tracing refers to a tracing solution that tracks service requests as they flow through distributed systems. It collects data as requests go from one service to another.</p>
+<h3>Step 2 - Propose High-</h3>
+<p>Level Design and Get Buy-In In this section, we discuss some fundamentals of building the system, the data model, and the high-level design. Fundamentals A metrics monitoring and alerting system generally contains five components, as illustrated in</p>
+<div class="figure-label">Figure 2.</div>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<div class="figure-label">Figure 2 Five components of the system</div>
+<p>Data collection: collect metric data from different sources. Data transmission: transfer data from sources to the metrics monitoring system. Data storage: organize and store incoming data. Alerting: analyze incoming data, detect anomalies, and generate alerts. The system must be able to send alerts to different communication channels. Visualization: present data in graphs, charts, etc. Engineers are better at identifying patterns, trends, or problems when data is presented visually, so we need visualization functionality. Data model Metrics data is usually recorded as a time series that contains a set of values with their associated timestamps. The series itself can be uniquely identified by its name, and optionally by a set of labels. Let’s take a look at two examples. Example 1: What is the <span class="inline-code">CPU</span> load on production server instance i631 at 20:00?</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_416_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 417" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>avg of cpu.load.i631 0.29</p>
+<div class="figure-label">Figure 3 CPU load</div>
+<p>The data point highlighted in Figure 3 can be represented by Table 1. <span class="inline-code">metric_namecpu</span>.load labels host:i631,env:prod timestamp 1613707265 value 0.29</p>
+<div class="figure-label">Table 1 The data point represented by a table</div>
+<p>In this example, the time series is represented by the metric name, the labels (host:i631,env:prod), and a single point value at a specific time. Example 2: What is the average <span class="inline-code">CPU</span> load across all web servers in the us-west region for the last 10 minutes? Conceptually, we would pull up something like this from storage where the metric name is “<span class="inline-code">CPU</span>.load” and the region label is “us-west”: <span class="inline-code">CPU</span>.load host=webserver01,region=us-west 1613707265 50 <span class="inline-code">CPU</span>.load host=webserver01,region=us-west 1613707265 62 <span class="inline-code">CPU</span>.load host=webserver02,region=us-west 1613707265 43 <span class="inline-code">CPU</span>.load host=webserver02,region=us-west 1613707265 53 ... <span class="inline-code">CPU</span>.load host=webserver01,region=us-west 1613707265 76 <span class="inline-code">CPU</span>.load host=webserver01,region=us-west 1613707265 83</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_417_img_0.png" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 418" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>The average <span class="inline-code">CPU</span> load could be computed by averaging the values at the end of each line. The format of the lines in the above example is called the line protocol. It is a common input format for many monitoring software in the market. Prometheus [6] and <span class="inline-code">OpenTSDB</span> [7] are two examples. Every time series consists of the following [8]: Name Type A metric name String A set of tags/labels List of &lt;key:value&gt; pairs An array of values and their <span class="inline-code">timestampsAn</span> array of &lt;value, timestamp&gt; pairs</p>
+<div class="figure-label">Table 2 Time series</div>
+<p>Data access pattern Time series Names/Labels Time t4t1 t2 t3 t5 t6 t7 t8 t9 Query to get errors on servicepool=s1 and method=<span class="inline-code">GET</span> across all machines between time t4 and t7 <span class="inline-code">http_error_count</span>{“servicepool”:”s1”,</p>
+<pre><code>”method”:&quot;GET”,&quot;machinename&quot;:&quot;m1&quot;}
+http_error_count{“servicepool”:”s1”,
+”method”:&quot;GET”,&quot;machinename&quot;:&quot;m2&quot;}</code></pre>
+<div class="figure-label">Figure 4 Data access pattern</div>
+<p>In Figure 4, each label on the y-axis represents a time series (uniquely identified by the names and labels) while the x-axis represents time.</p>
+
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>The write load is heavy. As you can see, there can be many time-series data points written at any moment. As we mentioned in the “High-level requirements” section, about 10 million operational metrics are written per day, and many metrics are collected at high frequency, so the traffic is undoubtedly write-heavy. At the same time, the read load is spiky. Both visualization and alerting services send queries to the database, and depending on the access patterns of the graphs and alerts, the read volume could be bursty. In other words, the system is under constant heavy write load, while the read load is spiky. Data storage system The data storage system is the heart of the design. It’s not recommended to build your own storage system or use a general-purpose storage system (for example, <span class="inline-code">MySQL</span>) for this job. A general-purpose database, in theory, could support time-series data, but it would require expert-level tuning to make it work at our scale. Specifically, a relational database is not optimized for operations you would commonly perform against time-series data. For example, computing the moving average in a rolling time window requires complicated <span class="inline-code">SQL</span> that is difficult to read (there is an example of this in the deep dive section). Besides, to support tagging/labeling data, we need to add an index for each tag. Moreover, a general-purpose relational database does not perform well under constant heavy write load. At our scale, we would need to expend significant effort in tuning the database, and even then, it might not perform well. How about <span class="inline-code">NoSQL</span>? In theory, a few <span class="inline-code">NoSQL</span> databases on the market could handle time-series data effectively. For example, Cassandra and Bigtable [9] can both be used for time series data. However, this would require deep knowledge of the internal workings of each <span class="inline-code">NoSQL</span> to devise a scalable schema for effectively storing and querying time-series data. With industrial- scale time-series databases readily available, using a general-purpose <span class="inline-code">NoSQL</span> database is not appealing. There are many storage systems available that are optimized for time-series data. The optimization lets us use far fewer servers to handle the same volume of data. Many of these databases also have custom query interfaces specially designed for the analysis of time-series data that are much easier to use than <span class="inline-code">SQL</span>. Some even provide features to manage data retention and data aggregation. Here are a few examples of time-series databases.</p>
+
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p><span class="inline-code">OpenTSDB</span> is a distributed time-series database, but since it is based on Hadoop and <span class="inline-code">HBase</span>, running a Hadoop/<span class="inline-code">HBase</span> cluster adds complexity. Twitter uses <span class="inline-code">MetricsDB</span> [10], and Amazon offers Timestream as a time-series database [11]. According to <span class="inline-code">DB</span>-engines [12], the two most popular time-series databases are <span class="inline-code">InfluxDB</span> [13] and Prometheus, which are designed to store large volumes of time-series data and quickly perform real-time analysis on that data. Both of them primarily rely on an in-memory cache and on-disk storage. And they both handle durability and performance quite well. As shown in Figure 5, an <span class="inline-code">InfluxDB</span> with 8 cores and 32GB <span class="inline-code">RAM</span> can handle over 250,000 writes per second.</p>
+<div class="figure-label">Figure 5 InfluxDb benchmarking</div>
+<p>Since a time-series database is a specialized database, you are not expected to understand the internals in an interview unless you explicitly mentioned it in your resume. For the purpose of an interview, it’s important to understand the metrics data are time-series in nature and we can select time-series databases such as <span class="inline-code">InfluxDB</span> for storage to store them. Another feature of a strong time-series database is efficient aggregation and analysis of a large amount of time-series data by labels, also known as tags in some databases. For example, <span class="inline-code">InfluxDB</span> builds indexes on labels to facilitate the fast lookup of time-series by labels [13]. It provides clear best-practice guidelines on how to use labels, without overloading the database. The key is to make sure each label is of low cardinality (having a small set of possible values). This feature is critical for visualization, and it would take a lot of effort to build this with a general-purpose database. High-level design The high-level design diagram is shown in Figure 6.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_420_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 421" /></div>
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<div class="figure-label">Figure 6 High-level design</div>
+<p>Metrics source. This can be application servers, <span class="inline-code">SQL</span> databases, message queues, etc. Metrics collector. It gathers metrics data and writes data into the time-series database. Time-series database. This stores metrics data as time series. It usually provides a custom query interface for analyzing and summarizing a large amount of time-series data. It maintains indexes on labels to facilitate the fast lookup of time-series data by labels. Query service. The query service makes it easy to query and retrieve data from the time- series database. This should be a very thin wrapper if we choose a good time-series database. It could also be entirely replaced by the time-series database’s own query interface. Alerting system. This sends alert notifications to various alerting destinations. Visualization system. This shows metrics in the form of various graphs/charts.</p>
+<h3>Step 3 - Design Deep Dive</h3>
+<p>In a system design interview, candidates are expected to dive deep into a few key components or flows. In this section, we investigate the following topics in detail: Metrics collection Scaling the metrics transmission pipeline Query service Storage layer Alerting system Visualization system</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_421_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 422" /></div>
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>Metrics collection For metrics collection like counters or <span class="inline-code">CPU</span> usage, occasional data loss is not the end of the world. It’s acceptable for clients to fire and forget. Now let’s take a look at the metrics collection flow. This part of the system is inside the dashed box (Figure 7).</p>
+<div class="figure-label">Figure 7 Metrics collection flow</div>
+<p>Pull vs push models There are two ways metrics data can be collected, pull or push. It is a routine debate as to which one is better and there is no clear answer. Let’s take a close look. Pull model</p>
+<div class="figure-label">Figure 8 shows data collection with a pull model over HTTP. We have dedicated metric</div>
+<p>collectors which pull metrics values from the running applications periodically.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_422_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 423" /></div>
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<div class="figure-label">Figure 8 Pull model</div>
+<p>In this approach, the metrics collector needs to know the complete list of service endpoints to pull data from. One naive approach is to use a file to hold <span class="inline-code">DNS</span>/<span class="inline-code">IP</span> information for every service endpoint on the “metric collector” servers. While the idea is simple, this approach is hard to maintain in a large-scale environment where servers are added or removed frequently, and we want to ensure that metric collectors don’t miss out on collecting metrics from any new servers. The good news is that we have a reliable, scalable, and maintainable solution available through Service Discovery, provided by etcd [14], Zookeeper [15], etc., wherein services register their availability and the metrics collector can be notified by the Service Discovery component whenever the list of service endpoints changes. Service discovery contains configuration rules about when and where to collect metrics as shown in Figure 9.</p>
+<div class="figure-label">Figure 9 Service discovery</div>
+<div class="figure-label">Figure 10 explains the pull model in detail.</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_423_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 424" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_423_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 424" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<div class="figure-label">Figure 10 Pull model in detail</div>
+<ol><li>The metrics collector fetches configuration metadata of service endpoints from Service</li></ol>
+<p>Discovery. Metadata include pulling interval, <span class="inline-code">IP</span> addresses, timeout and retry parameters, etc.</p>
+<ol><li>The metrics collector pulls metrics data via a pre-defined HTTP endpoint (for example,</li></ol>
+<p>/metrics). To expose the endpoint, a client library usually needs to be added to the service. In Figure 10, the service is Web Servers.</p>
+<ol><li>Optionally, the metrics collector registers a change event notification with Service</li></ol>
+<p>Discovery to receive an update whenever the service endpoints change. Alternatively, the metrics collector can poll for endpoint changes periodically. At our scale, a single metrics collector will not be able to handle thousands of servers. We must use a pool of metrics collectors to handle the demand. One common problem when there are multiple collectors is that multiple instances might try to pull data from the same resource and produce duplicate data. There must exist some coordination scheme among the instances to avoid this. One potential approach is to designate each collector to a range in a consistent hash ring, and then map every single server being monitored by its unique name in the hash ring. This ensures one metrics source server is handled by one collector only. Let’s take a look at an example. As shown in Figure 11, there are four collectors and six metrics source servers. Each collector is responsible for collecting metrics from a distinct set of servers. Collector 2 is responsible for collecting metrics from server 1 and server 5.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_424_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 425" /></div>
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<div class="figure-label">Figure 11 Consistent hashing</div>
+<p>Push model As shown in Figure 12, in a push model various metrics sources, such as web servers, database servers, etc., directly send metrics to the metrics collector.</p>
+<div class="figure-label">Figure 12 Push model</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_425_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 426" /></div>
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_425_img_1.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 426" /></div>
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<p>In a push model, a collection agent is commonly installed on every server being monitored. A collection agent is a piece of long-running software that collects metrics from the services running on the server and pushes those metrics periodically to the metrics collector. The collection agent may also aggregate metrics (especially a simple counter) locally, before sending them to metric collectors. Aggregation is an effective way to reduce the volume of data sent to the metrics collector. If the push traffic is high and the metrics collector rejects the push with an error, the agent could keep a small buffer of data locally (possibly by storing them locally on disk), and resend them later. However, if the servers are in an auto-scaling group where they are rotated out frequently, then holding data locally (even temporarily) might result in data loss when the metrics collector falls behind. To prevent the metrics collector from falling behind in a push model, the metrics collector should be in an auto-scaling cluster with a load balancer in front of it (Figure 13). The cluster should scale up and down based on the <span class="inline-code">CPU</span> load of the metric collector servers.</p>
+<div class="figure-label">Figure 13 Load balancer</div>
+<p>Pull or push? So, which one is the better choice for us? Just like many things in life, there is no clear answer. Both sides have widely adopted real-world use cases. Examples of pull architectures include Prometheus. Examples of push architectures include Amazon <span class="inline-code">CloudWatch</span> [16] and Graphite [17]. Knowing the advantages and disadvantages of each approach is more important than picking a winner during an interview. Table 3 compares the pros and cons of push and pull architectures [18] [19] [20] [21]. Pull Push</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_426_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 427" /></div>
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>Easy debugging The /metrics endpoint on application servers used for pulling metrics can be used to view metrics at any time. You can even do this on your laptop. Pull wins. If the metrics collector doesn metrics, the problem might be network issues. Health check If an application server doesn’t respond to the pull, you can quickly figure out if an application server is down. Pull wins. If the metrics collector doesn metrics, the problem might be network issues. Short-lived jobs Some of the batch jobs might be and don’t last long enough to Push wins. This can be fixed by push gateways for the pull model Firewall or complicated network setups Having servers pulling metrics requires all metric endpoints to be reachable. This is potentially problematic in multiple data center setups. It might require a more elaborate network infrastructure. If the metrics collector is set up balancer and an auto-scaling g possible to receive data from Push wins. Performance Pull methods typically use <span class="inline-code">TCP</span>. Push methods typically use means the push method provi latency transports of met counterargument here is that th establishing a <span class="inline-code">TCP</span> connection compared to sending the metrics Data authenticity Application servers to collect metrics from are defined in config files in advance. Metrics gathered from Any kind of client can push me metrics collector. This can be</p>
+
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<div class="figure-label">Table 3 Pull vs push</div>
+<p>As mentioned above, pull vs push is a routine debate topic and there is no clear answer. A large organization probably needs to support both, especially with the popularity of serverless [23] these days. There might not be a way to install an agent from which to push data in the first place. Scale the metrics transmission pipeline</p>
+<div class="figure-label">Figure 14 Metrics transmission pipeline</div>
+<p>Let’s zoom in on the metrics collector and time-series databases. Whether you use the push or pull model, the metrics collector is a cluster of servers, and the cluster receives enormous amounts of data. For either push or pull, the metrics collector cluster is set up for auto-scaling, to ensure that there are an adequate number of collector instances to handle the demand. However, there is a risk of data loss if the time-series database is unavailable. To mitigate this problem, we introduce a queueing component as shown in Figure 15. those servers are guaranteed to be authentic. whitelisting servers from which metrics, or by requiring authentica</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_428_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 429" /></div>
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<div class="figure-label">Figure 15 Add queues</div>
+<p>In this design, the metrics collector sends metrics data to queuing systems like Kafka. Then consumers or streaming processing services such as Apache Storm, Flink, and Spark, process and push data to the time-series database. This approach has several advantages: Kafka is used as a highly reliable and scalable distributed messaging platform. It decouples the data collection and data processing services from each other. It can easily prevent data loss when the database is unavailable, by retaining the data in Kafka. Scale through Kafka There are a couple of ways that we can leverage Kafka’s built-in partition mechanism to scale our system. Configure the number of partitions based on throughput requirements. Partition metrics data by metric names, so consumers can aggregate data by metrics names.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_429_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 430" /></div>
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<div class="figure-label">Figure 16 Kafka partition</div>
+<p>Further partition metrics data with tags/labels. Categorize and prioritize metrics so that important metrics can be processed first. Alternative to Kafka Maintaining a production-scale Kafka system is no small undertaking. You might get pushback from the interviewer about this. There are large-scale monitoring ingestion systems in use without using an intermediate queue. Facebook’s Gorilla [24] in-memory time-series database is a prime example; it is designed to remain highly available for writes, even when there is a partial network failure. It could be argued that such a design is as reliable as having an intermediate queue like Kafka. Where aggregations can happen Metrics can be aggregated in different places; in the collection agent (on the client-side), the ingestion pipeline (before writing to storage), and the query side (after writing to storage). Let’s take a closer look at each of them. Collection agent. The collection agent installed on the client-side only supports simple aggregation logic. For example, aggregate a counter every minute before it is sent to the metrics collector.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_430_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 431" /></div>
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<p>Ingestion pipeline. To aggregate data before writing to the storage, we usually need stream processing engines such as Flink. The write volume will be significantly reduced since only the calculated result is written to the database. However, handling late-arriving events could be a challenge and another downside is that we lose data precision and some flexibility because we no longer store the raw data. Query side. Raw data can be aggregated over a given time period at query time. There is no data loss with this approach, but the query speed might be slower because the query result is computed at query time and is run against the whole dataset. Query service The query service comprises a cluster of query servers, which access the time-series databases and handle requests from the visualization or alerting systems. Having a dedicated set of query servers decouples time-series databases from the clients (visualization and alerting systems). And this gives us the flexibility to change the time-series database or the visualization and alerting systems, whenever needed. Cache layer To reduce the load of the time-series database and make query service more performant, cache servers are added to store query results, as shown in Figure 17.</p>
+<div class="figure-label">Figure 17 Cache layer</div>
+<p>The case against query service</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_431_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 432" /></div>
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p>There might not be a pressing need to introduce our own abstraction (a query service) because most industrial-scale visual and alerting systems have powerful plugins to interface with well- known time-series databases on the market. And with a well-chosen time-series database, there is no need to add our own caching, either. Time-series database query language Most popular metrics monitoring systems like Prometheus and <span class="inline-code">InfluxDB</span> don’t use <span class="inline-code">SQL</span> and have their own query languages. One major reason for this is that it is hard to build <span class="inline-code">SQL</span> queries to query time-series data. For example, as mentioned here [25], computing an exponential moving average might look like this in <span class="inline-code">SQL</span>: select id, temp, avg(temp) over (partition by <span class="inline-code">group_nr</span> order by <span class="inline-code">time_read</span>) as from ( select id, temp, <span class="inline-code">time_read</span>, <span class="inline-code">interval_group</span>, id - <span class="inline-code">row_number</span>() over (partition by <span class="inline-code">interval_group</span> order b from ( select id, <span class="inline-code">time_read</span>, &quot;epoch&quot;::timestamp + &quot;900 seconds&quot;::interval * (extract(epoch fr temp from readings ) t1 ) t2</p>
+<pre><code>order by time_read;
+While in Flux, a language that’s optimized for time-series analysis (used in InfluxDB), it looks
+like this. As you can see, it’s much easier to understand.
+from(db:&quot;telegraf&quot;)
+  |&gt; range(start:-1h)</code></pre>
+<p>|&gt; filter(fn: (r) =&gt; r._measurement == &quot;foo&quot;) |&gt; <span class="inline-code">exponentialMovingAverage</span>(size:-10s) Storage layer Now let’s dive into the storage layer.</p>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<p>Choose a time-series database carefully According to a research paper published by Facebook [24], at least 85% of all queries to the operational data store were for data collected in the past 26 hours. If we use a time-series database that harnesses this property, it could have a significant impact on overall system performance. If you are interested in the design of the storage engine, please refer to the design document of the Influx <span class="inline-code">DB</span> storage engine [26]. Space optimization As explained in high-level requirements, the amount of metric data to store is enormous. Here are a few strategies for tackling this. Data encoding and compression Data encoding and compression can significantly reduce the size of data. Those features are usually built into a good time-series database. Here is a simple example.</p>
+<div class="figure-label">Figure 18 Data encoding</div>
+<p>As you can see in the image above, 1610087371 and 1610087381 differ by only 10 seconds, which takes only 4 bits to represent, instead of the full timestamp of 32 bits. So, rather than storing absolute values, the delta of the values can be stored along with one base value like: 1610087371, 10, 10, 9, 11 Downsampling Downsampling is the process of converting high-resolution data to low-resolution to reduce overall disk usage. Since our data retention is 1 year, we can downsample old data. For example, we can let engineers and data scientists define rules for different metrics. Here is an</p>
+<h2>example:</h2>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_433_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 434" /></div>
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<p>Retention: 7 days, no sampling Retention: 30 days, downsample to 1-minute resolution Retention: 1 year, downsample to 1-hour resolution Let’s take a look at another concrete example. It aggregates 10-second resolution data to 30- second resolution data.</p>
+<div class="figure-label">Table 4 10-second resolution data</div>
+<p>Rollup from 10-second resolution data to 30-second resolution data.</p>
+<div class="figure-label">Table 5 30-second resolution data</div>
+<p>Cold storage Cold storage is the storage of inactive data that is rarely used. The financial cost for cold storage is much lower. In a nutshell, we should probably use third-party visualization and alerting systems, instead of building our own. Alerting system metric timestamp <span class="inline-code">hostnameMetric_value</span> cpu 2021-10-24T19:00:00Zhost-a 10 cpu 2021-10-24T19:00:10Zhost-a 16 cpu 2021-10-24T19:00:20Zhost-a 20 cpu 2021-10-24T19:00:30Zhost-a 30 cpu 2021-10-24T19:00:40Zhost-a 20 cpu 2021-10-24T19:00:50Zhost-a 30 metric timestamp <span class="inline-code">hostnameMetric_value</span> (avg) cpu 2021-10-24T19:00:00Zhost-a 19 cpu 2021-10-24T19:00:30Zhost-a 25</p>
+
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<p>For the purpose of the interview, let’s look at the alerting system, shown in Figure 19 below.</p>
+<div class="figure-label">Figure 19 Alerting system</div>
+<h2>The alert flow works as follows:</h2>
+<ol><li>Load config files to cache servers. Rules are defined as config files on the disk. YAML [27] is</li></ol>
+<p>a commonly used format to define rules. Here is an example of alert rules:</p>
+<ul><li>name: instance_down rules:</li></ul>
+<p># Alert for any instance that is unreachable for &gt;5 minutes.</p>
+<ul><li>alert: instance_down expr: up == 0 for: 5m labels: severity: page</li></ul>
+<ol><li>The alert manager fetches alert configs from the cache.</li><li>Based on config rules, the alert manager calls the query service at a predefined interval. If</li></ol>
+<p>the value violates the threshold, an alert event is created. The alert manager is responsible for</p>
+<h2>the following:</h2>
+<p>Filter, merge, and dedupe alerts. Here is an example of merging alerts that are triggered within one instance within a short amount of time (instance1) (Figure 20).</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_435_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 436" /></div>
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<div class="figure-label">Figure 20 Merge alerts</div>
+<p>Access control. To avoid human error and keep the system secure, it is essential to restrict access to certain alert management operations to authorized individuals only. Retry. The alert manager checks alert states and ensures a notification is sent at least once.</p>
+<ol><li>The alert store is a key-value database, such as Cassandra, that keeps the state (inactive,</li></ol>
+<p>pending, firing, resolved) of all alerts. It ensures a notification is sent at least once.</p>
+<ol><li>Eligible alerts are inserted into Kafka.</li><li>Alert consumers pull alert events from Kafka.</li><li>Alert consumers process alert events from Kafka and send notifications over to different</li></ol>
+<p>channels such as email, text message, <span class="inline-code">PagerDuty</span>, or <span class="inline-code">HTTP</span> endpoints. Alerting system - build vs buy There are many industrial-scale alerting systems available off-the-shelf, and most provide tight integration with the popular time-series databases. Many of these alerting systems integrate well with existing notification channels, such as email and <span class="inline-code">PagerDuty</span>. In the real world, it is a tough call to justify building your own alerting system. In interview settings, especially for a senior position, be ready to justify your decision. Visualization system Visualization is built on top of the data layer. Metrics can be shown on the metrics dashboard over various time scales and alerts can be shown on the alerts dashboard. Figure 21 shows a</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_436_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 437" /></div>
+</div>
+<div class="page-divider">Page 25</div>
+<div class="page-content" data-page="25">
+<p>dashboard that displays some of the metrics like the current server requests, memory/<span class="inline-code">CPU</span> utilization, page load time, traffic, and login information [28].</p>
+<div class="figure-label">Figure 21 Grafana UI</div>
+<p>A high-quality visualization system is hard to build. The argument for using an off-the-shelf system is very strong. For example, Grafana can be a very good system for this purpose. It integrates well with many popular time-series databases which you can buy.</p>
+<h3>Step 4 - Wrap Up</h3>
+<p>In this chapter, we presented the design for a metrics monitoring and alerting system. At a high level, we talked about data collection, time-series database, alerts, and visualization. Then we went in-depth into some of the most important techniques/components: Pull vs push model for collecting metrics data. Utilize Kafka to scale the system. Choose the right time-series database.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_437_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 438" /></div>
+</div>
+<div class="page-divider">Page 26</div>
+<div class="page-content" data-page="26">
+<p>Use downsampling to reduce data size. Build vs buy options for alerting and visualization systems. We went through a few iterations to refine the design, and our final design looks like this:</p>
+<div class="figure-label">Figure 22 Final design</div>
+<p>Congratulations on getting this far! Now give yourself a pat on the back. Good job!</p>
+<h2>Chapter Summary</h2>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_438_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 439" /></div>
+</div>
+<div class="page-divider">Page 27</div>
+<div class="page-content" data-page="27">
+<p>Reference Materials [1] Datadog: https://www.datadoghq.com/ [2] Splunk: https://www.splunk.com/</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_439_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 440" /></div>
+</div>
+<div class="page-divider">Page 28</div>
+<div class="page-content" data-page="28">
+<p>[3] Elastic stack: https://www.elastic.co/elastic-stack [4] Dapper, a Large-Scale Distributed Systems Tracing Infrastructure: https://research.google/pubs/pub36356/ [5] Distributed Systems Tracing with Zipkin: https://blog.twitter.com/engineering/<span class="inline-code">en_us</span>/a/2012/distributed-systems-tracing-with-zipkin.html [6] Prometheus: https://prometheus.io/docs/introduction/overview/ [7] <span class="inline-code">OpenTSDB</span> - A Distributed, Scalable Monitoring System: http://opentsdb.net/ [8] Data model: : https://prometheus.io/docs/concepts/<span class="inline-code">data_model</span>/ [9] Schema design for time-series data | Cloud Bigtable Documentation https://cloud.google.com/bigtable/docs/schema-design-time-series [10] <span class="inline-code">MetricsDB</span>: <span class="inline-code">TimeSeries</span> Database for storing metrics at Twitter: https://blog.twitter.com/engineering/<span class="inline-code">en_us</span>/topics/infrastructure/2019/metricsdb.html [11] Amazon Timestream: https://aws.amazon.com/timestream/ [12] <span class="inline-code">DB</span>-Engines Ranking of time-series <span class="inline-code">DBMS</span>: https://db-engines.com/en/ranking/time+series +dbms [13] <span class="inline-code">InfluxDB</span>: https://www.influxdata.com/ [14] etcd: https://etcd.io [15] Service Discovery with Zookeeper https://cloud.spring.io/spring-cloud-zookeeper/1.2.x/multi/<span class="inline-code">multi_spring</span>-cloud-zookeeper-discove ry.html [16] Amazon <span class="inline-code">CloudWatch</span>: https://aws.amazon.com/cloudwatch/ [17] Graphite: https://graphiteapp.org/ [18] Push vs Pull: http://bit.ly/3aJEPxE</p>
+<h2>[19] Pull doesn’t scale - or does it?:</h2>
+<p>https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/</p>
+<h2>[20] Monitoring Architecture:</h2>
+<p>https://developer.lightbend.com/guides/monitoring-at-scale/monitoring-architecture/architecture. html</p>
+
+</div>
+<div class="page-divider">Page 29</div>
+<div class="page-content" data-page="29">
+<p>[21] Push vs Pull in Monitoring Systems: https://giedrius.blog/2019/05/11/push-vs-pull-in-monitoring-systems/ [22] Pushgateway: https://github.com/prometheus/pushgateway [23] Building Applications with Serverless Architectures https://aws.amazon.com/lambda/serverless-architectures-learn-more/ [24] Gorilla: A Fast, Scalable, In-Memory Time Series Database: http://www.vldb.org/pvldb/vol8/p1816-teller.pdf [25] Why We’re Building Flux, a New Data Scripting and Query Language: https://www.influxdata.com/blog/why-were-building-flux-a-new-data-scripting-and-query-langua ge/ [26] <span class="inline-code">InfluxDB</span> storage engine: https://docs.influxdata.com/influxdb/v2.0/reference/internals/stora ge-engine/ [27] <span class="inline-code">YAML</span>: https://en.wikipedia.org/wiki/<span class="inline-code">YAML</span> [28] Grafana Demo: https://play.grafana.org/ Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

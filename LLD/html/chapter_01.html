@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 01</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-lld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 01</h2>
+<p>What is an Object-Oriented Design Interview Object-oriented design interviews have become increasingly popular in technical hiring. This shift reflects companies’ growing emphasis on skills that align with real-world software development. <span class="inline-code">OOD</span> interviews are important at companies like Amazon, Bloomberg, and Uber, serving as a practical coding exercise. These interviews test your ability to build logical, maintainable systems and gauge how effectively you apply object-oriented design principles and patterns. Unlike algorithm interviews, which demand a single, optimal solution, <span class="inline-code">OOD</span> interviews leave space for creativity. There’s no one-size-fits-all answer, as various approaches can produce a coherent and working design. For example, some questions focus on real-world systems like a Parking Lot or a Vending Machine, while others take a more abstract turn, such as a Unix File Search or a Tic-Tac-Toe game. Each question presents unique challenges to test your skills, but they all build on the same basic knowledge and follow a similar interview structure. How Is This Book Structured? This brief chapter explains what <span class="inline-code">OOD</span> interview questions are. Next, we’ll present a framework for approaching <span class="inline-code">OOD</span> interviews and guide you through a complete end-to-end example. Then,</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_0_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 1" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>we’ll cover common design principles and patterns used in <span class="inline-code">OOD</span>. After that, the rest of the book focuses on typical case study questions, tackling them one at a time. Why Do Companies Use <span class="inline-code">OOD</span> Interviews? Companies use <span class="inline-code">OOD</span> interviews to hire skilled developers who can write effective code fast. They look for candidates who can define the problem scope, clarify requirements and edge cases, create practical, low-level designs, and build software that is easy to understand, maintain, and extend. <span class="inline-code">OOD</span> interviews, along with System Design and Behavioral Questions, help companies decide a candidate’s level. Doing well in <span class="inline-code">OOD</span> often sets intermediate and senior engineers apart by showing deeper design skills. Here’s what interviewers are typically looking for: Product Sense: Translate real-world needs into software by applying domain knowledge and making user-centered decisions. Systems Thinking: Break down a complex system into subsystems and components. Set clear roles for each and define how they work together. Decision Making: See beyond immediate requirements, anticipate future needs, and design with flexibility in mind. Strike the right balance between making designs too complicated and keeping them too basic. Code Quality: Write clean, logical, and maintainable code to implement your design. That’s why modern <span class="inline-code">OOD</span> questions focus on coding, not just diagrams. <span class="inline-code">OOP</span> Knowledge: Use object-oriented techniques, <span class="inline-code">SOLID</span> principles, and design patterns to make software simple and production-ready. Communication: Ask clear questions, guide the discussion, explain your ideas well, and stand by your solutions confidently. How Are <span class="inline-code">OOD</span> Interviews Different From Coding Interviews? <span class="inline-code">OOD</span> interviews and algorithm coding interviews both involve writing code, but they focus on different goals. If you’re familiar with algorithm interviews, you’ll need to shift your mindset for</p>
+<h2>OOD. Here’s how they differ:</h2>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>Focus on quality, not speed Algorithm interviews want the fastest solution, focusing on time and space efficiency. <span class="inline-code">OOD</span> interviews value clean, maintainable software. You’ll use objects and create well-structured code with abstractions and decomposing logic, even if it takes a bit longer, which is fine in <span class="inline-code">OOD</span> interviews. Write clear, organized code with intuitive names so your ideas stand out without extra explanation. Design with objects, not steps Algorithm interviews often push you to solve problems fast, so you might write all the logic in one function. <span class="inline-code">OOD</span> interviews, on the other hand, focus on objects, what they are, what they do, and how they interact with each other. Instead of listing steps, think about each object’s role and relationships. Demonstrate <span class="inline-code">OOP</span> skills, not just answers In algorithm interviews, solving the problem matters most. <span class="inline-code">OOD</span> interviews also test your <span class="inline-code">OOP</span> skills. Use ideas like encapsulation, inheritance, and design patterns to build your solution. Demonstrating a strong grasp of <span class="inline-code">SOLID</span> principles shows that you can design clean, maintainable systems. They value your thinking process, not just the result. Plan extensible designs, not short-term fixes Algorithm interviews keep you racing against the clock, leaving little time to plan for future changes. In <span class="inline-code">OOD</span> interviews, the best solution often requires less coding, and the pacing gives you time to discuss how your solution scales to future requirements. A good design adapts to updates with minimal rework. How To Prepare For An <span class="inline-code">OOD</span> Interview? This book helps you prepare with the most up-to-date view on <span class="inline-code">OOD</span> interviews. It covers the basics, a complete walkthrough, and examples of common <span class="inline-code">OOD</span> problems with solutions. You can also try other resources to build your skills.</p>
+<h2>Here are a few ways to prepare:</h2>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Learn <span class="inline-code">OOP</span> fundamentals: Read articles, tutorials, or books on <span class="inline-code">OOP</span>. This strengthens your interview skills and your job performance later. Start with simple ideas like encapsulation, inheritance, polymorphism, and abstraction. Then, explore <span class="inline-code">SOLID</span> principles and design patterns using online guides. Practice high-frequency problems: This book includes examples of typical <span class="inline-code">OOD</span> problems. Some, like Parking Lot, show how to model real-world systems. Others, like Elevator System, test complex logic, or like Linux File Search, check your abstraction skills. Code along with us, then try solving them on your own and review your work. Mock interview and practice communication: <span class="inline-code">OOD</span> interviews value clear communication, not just coding. Our walkthrough chapter offers tips on key topics, but practice explaining your designs out loud. Work with a friend in a mock interview or record yourself when doing <span class="inline-code">OOD</span> and practice explaining your design decisions while you are coding. Run The Code All the code included in this book is executable. We encourage you to download the repository, run the code, and experiment with the solutions to deepen your understanding of <span class="inline-code">OOD</span> principles. Instructions for setting up and running the code are provided in the repository’s <span class="inline-code">README</span> file. <span class="inline-code">GitHub</span> repo link: github.com/<span class="inline-code">ByteByteGoHq</span>/ood-interview</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_3_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 4" /></div>
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

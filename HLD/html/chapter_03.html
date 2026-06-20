@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 03</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 03</h2>
+<p>Back-of-the-envelope Estimation In a system design interview, sometimes you are asked to estimate system capacity or performance requirements using a back-of-the-envelope estimation. According to Jeff Dean, Google Senior Fellow, “back-of-the-envelope calculations are estimates you create using a combination of thought experiments and common performance numbers to get a good feel for which designs will meet your requirements” [1]. You need to have a good sense of scalability basics to effectively carry out back-of-the- envelope estimation. The following concepts should be well understood: power of two [2], latency numbers every programmer should know, and availability numbers. Power of two Although data volume can become enormous when dealing with distributed systems, calculation all boils down to the basics. To obtain correct calculations, it is critical to know the data volume unit using the power of 2. A byte is a sequence of 8 bits. An <span class="inline-code">ASCII</span> character uses one byte of memory (8 bits). Below is a table explaining the data volume unit (Table 1).</p>
+<div class="figure-label">Table 1</div>
+<p>Latency numbers every programmer should know Dr. Dean from Google reveals the length of typical computer operations in 2010 [1]. Some numbers are outdated as computers become faster and more powerful. However, those Power Approximate <span class="inline-code">valueFull</span> name Short name 10 1 Thousand 1 Kilobyte 1 <span class="inline-code">KB</span> 20 1 Million 1 Megabyte 1 <span class="inline-code">MB</span> 30 1 Billion 1 Gigabyte 1 <span class="inline-code">GB</span> 40 1 Trillion 1 Terabyte 1 <span class="inline-code">TB</span> 50 1 Quadrillion 1 Petabyte 1 <span class="inline-code">PB</span></p>
+
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<p>numbers should still be able to give us an idea of the fastness and slowness of different computer operations.</p>
+<div class="figure-label">Table 2</div>
+<p>Notes ns = nanosecond, µs = microsecond, ms = millisecond 1 ns = 10^-9 seconds 1 µs= 10^-6 seconds = 1,000 ns 1 ms = 10^-3 seconds = 1,000 µs = 1,000,000 ns Operation name Time L1 cache reference 0.5 ns Branch mispredict 5 ns L2 cache reference 7 ns Mutex lock/unlock 100 ns Main memory reference 100 ns Compress 1K bytes with Zippy 10,000 ns = 10 µs Send 2K bytes over 1 Gbps network 20,000 ns = 20 µs Read 1 <span class="inline-code">MB</span> sequentially from memory 250,000 ns = 250 µs Round trip within the same datacenter 500,000 ns = 500 µs Disk seek 10,000,000 ns = 10 ms Read 1 <span class="inline-code">MB</span> sequentially from the network10,000,000 ns = 10 ms Read 1 <span class="inline-code">MB</span> sequentially from disk 30,000,000 ns = 30 ms Send packet <span class="inline-code">CA</span> (California) -&gt;Netherlands-&gt;<span class="inline-code">CA150</span>,000,000 ns = 150 ms</p>
+
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>A Google software engineer built a tool to visualize Dr. Dean’s numbers. The tool also takes the time factor into consideration. Figures 2-1 shows the visualized latency numbers as of 2020 (source of figures: reference material [3]).</p>
+<div class="figure-label">Figure 1</div>
+<p>By analyzing the numbers in Figure 1, we get the following conclusions: Memory is fast but the disk is slow. Avoid disk seeks if possible. Simple compression algorithms are fast. Compress data before sending it over the internet if possible. Data centers are usually in different regions, and it takes time to send data between them. Availability numbers</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_34_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 35" /></div>
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>High availability is the ability of a system to be continuously operational for a desirably long period of time. High availability is measured as a percentage, with 100% means a service that has 0 downtime. Most services fall between 99% and 100%. A service level agreement (<span class="inline-code">SLA</span>) is a commonly used term for service providers. This is an agreement between you (the service provider) and your customer, and this agreement formally defines the level of uptime your service will deliver. Cloud providers Amazon [4], Google [5] and Microsoft [6] set their <span class="inline-code">SLAs</span> at 99.9% or above. Uptime is traditionally measured in nines. The more the nines, the better. As shown in Table 3, the number of nines correlate to the expected system downtime.</p>
+<div class="figure-label">Table 3</div>
+<p>Example: Estimate Twitter <span class="inline-code">QPS</span> and storage requirements Please note the following numbers are for this exercise only as they are not real numbers from Twitter.</p>
+<h2>Assumptions:</h2>
+<p>300 million monthly active users. 50% of users use Twitter daily. Users post 2 tweets per day on average. 10% of tweets contain media. Data is stored for 5 years. Availability % Downtime per <span class="inline-code">dayDowntime</span> per week Downtime per month 99% 14.40 minutes 1.68 hours 7.31 hours 99.99% 8.64 seconds 1.01 minutes 4.38 minutes 99.999% 864.00 milliseconds 6.05 seconds 26.30 seconds 99.9999% 86.40 milliseconds604.80 2.63 seconds</p>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<h2>Estimations:</h2>
+<h2>Query per second (QPS) estimate:</h2>
+<p>Daily active users (<span class="inline-code">DAU</span>) = 300 million * 50% = 150 million Tweets <span class="inline-code">QPS</span> = 150 million * 2 tweets / 24 hour / 3600 seconds = ~3500 Peek <span class="inline-code">QPS</span> = 2 * <span class="inline-code">QPS</span> = ~7000 We will only estimate media storage here.</p>
+<h2>Average tweet size:</h2>
+<p><span class="inline-code">tweet_id</span> 64 bytes text 140 bytes media 1 <span class="inline-code">MB</span> Media storage: 150 million * 2 * 10% * 1 <span class="inline-code">MB</span> = 30 <span class="inline-code">TB</span> per day 5-year media storage: 30 <span class="inline-code">TB</span> * 365 * 5 = ~55 <span class="inline-code">PB</span> Tips Back-of-the-envelope estimation is all about the process. Solving the problem is more important than obtaining results. Interviewers may test your problem-solving skills. Here are a</p>
+<h2>few tips to follow:</h2>
+<p>Rounding and Approximation. It is difficult to perform complicated math operations during the interview. For example, what is the result of “99987 / 9.1”? There is no need to spend valuable time to solve complicated math problems. Precision is not expected. Use round numbers and approximation to your advantage. The division question can be simplified as follows: “100,000 / 10”. Write down your assumptions. It is a good idea to write down your assumptions to be referenced later. Label your units. When you write down “5”, does it mean 5 <span class="inline-code">KB</span> or 5 <span class="inline-code">MB</span>? You might confuse yourself with this. Write down the units because “5 <span class="inline-code">MB</span>” helps to remove ambiguity. Commonly asked back-of-the-envelope estimations: <span class="inline-code">QPS</span>, peak <span class="inline-code">QPS</span>, storage, cache, number of servers, etc. You can practice these calculations when preparing for an interview. Practice makes perfect. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Reference materials</p>
+
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>[1] J. Dean.Google Pro Tip: Use Back-Of-The-Envelope-Calculations To Choose The Best</p>
+<h2>Design:</h2>
+<p>http://highscalability.com/blog/2011/1/26/google-pro-tip-use-back-of-the-envelope-calculations-t o-choo.html</p>
+<h2>[2] System design primer:</h2>
+<p>https://github.com/donnemartin/system-design-primer [3] Latency Numbers Every Programmer Should Know: https://colin-scott.github.io/<span class="inline-code">personal_website</span>/research/<span class="inline-code">interactive_latency</span>.html [4] Amazon Compute Service Level Agreement: https://aws.amazon.com/compute/sla/ [5] Compute Engine Service Level Agreement (<span class="inline-code">SLA</span>): https://cloud.google.com/compute/sla</p>
+<h2>[6] SLA summary for Azure services:</h2>
+<p>https://azure.microsoft.com/en-us/support/legal/sla/summary/ Loading...</p>
+
+</div>
+  </div>
+</body>
+</html>

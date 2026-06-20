@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 02</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 02</h2>
+<p>Scale From Zero To Millions Of Users Designing a system that supports millions of users is challenging, and it is a journey that requires continuous refinement and endless improvement. In this chapter, we build a system that supports a single user and gradually scale it up to serve millions of users. After reading this chapter, you will master a handful of techniques that will help you to crack the system design interview questions. Single server setup A journey of a thousand miles begins with a single step, and building a complex system is no different. To start with something simple, everything is running on a single server. Figure 1 shows the illustration of a single server setup where everything is running on one server: web app, database, cache, etc.</p>
+<div class="figure-label">Figure 1</div>
+<p>To understand this setup, it is helpful to investigate the request flow and traffic source. Let us first look at the request flow (Figure 2).</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_3_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 4" /></div>
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<div class="figure-label">Figure 2</div>
+<ol><li>Users access websites through domain names, such as api.mysite.com. Usually, the Domain</li></ol>
+<p>Name System (<span class="inline-code">DNS</span>) is a paid service provided by 3rd parties and not hosted by our servers.</p>
+<ol><li>Internet Protocol (IP) address is returned to the browser or mobile app. In the example, IP address 15.125.23.214 is returned.</li><li>Once the IP address is obtained, Hypertext Transfer Protocol (HTTP) [1] requests are sent directly to your web server.</li><li>The web server returns HTML pages or JSON response for rendering.</li></ol>
+<p>Next, let us examine the traffic source. The traffic to your web server comes from two sources: web application and mobile application. Web application: it uses a combination of server-side languages (Java, Python, etc.) to handle business logic, storage, etc., and client-side languages (<span class="inline-code">HTML</span> and <span class="inline-code">JavaScript</span>) for presentation. Mobile application: <span class="inline-code">HTTP</span> protocol is the communication protocol between the mobile app and the web server. <span class="inline-code">JavaScript</span> Object Notation (<span class="inline-code">JSON</span>) is commonly used <span class="inline-code">API</span> response format to transfer data due to its simplicity. An example of the <span class="inline-code">API</span> response in <span class="inline-code">JSON</span> format</p>
+<h2>is shown below:</h2>
+<p><span class="inline-code">GET</span> /users/12 – Retrieve user object for id = 12</p>
+<pre><code>{
+   &quot;id&quot;:12,
+   &quot;firstName&quot;:&quot;John&quot;,
+   &quot;lastName&quot;:&quot;Smith&quot;,</code></pre>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_4_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 5" /></div>
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<pre><code>   &quot;address&quot;:{
+      &quot;streetAddress&quot;:&quot;21 2nd Street&quot;,
+      &quot;city&quot;:&quot;New York&quot;,
+      &quot;state&quot;:&quot;NY&quot;,
+      &quot;postalCode&quot;:10021
+   },
+   &quot;phoneNumbers&quot;:[
+      &quot;212 555-1234&quot;,
+      &quot;646 555-4567&quot;
+   ]
+}
+Database
+With the growth of the user base, one server is not enough, and we need multiple servers: one
+for web/mobile traffic, the other for the database (Figure 3). Separating web/mobile traffic (web</code></pre>
+<p>tier) and database (data tier) servers allows them to be scaled independently.</p>
+<div class="figure-label">Figure 3</div>
+<p>Which databases to use? You can choose between a traditional relational database and a non-relational database. Let us examine their differences. Relational databases are also called a relational database management system (<span class="inline-code">RDBMS</span>) or <span class="inline-code">SQL</span> database. The most popular ones are <span class="inline-code">MySQL</span>, Oracle database, <span class="inline-code">PostgreSQL</span>, etc.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_5_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 6" /></div>
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Relational databases represent and store data in tables and rows. You can perform join operations using <span class="inline-code">SQL</span> across different database tables. Non-Relational databases are also called <span class="inline-code">NoSQL</span> databases. Popular ones are <span class="inline-code">CouchDB</span>, Neo4j, Cassandra, <span class="inline-code">HBase</span>, Amazon <span class="inline-code">DynamoDB</span>, etc. [2]. These databases are grouped into four categories: key-value stores, graph stores, column stores, and document stores. Join operations are generally not supported in non-relational databases. For most developers, relational databases are the best option because they have been around for over 40 years and historically, they have worked well. However, if relational databases are not suitable for your specific use cases, it is critical to explore beyond relational databases. Non-relational databases might be the right choice if: Your application requires super-low latency. Your data are unstructured, or you do not have any relational data. You only need to serialize and deserialize data (<span class="inline-code">JSON</span>, <span class="inline-code">XML</span>, <span class="inline-code">YAML</span>, etc.). You need to store a massive amount of data. Vertical scaling vs horizontal scaling Vertical scaling, referred to as “scale up”, means the process of adding more power (<span class="inline-code">CPU</span>, <span class="inline-code">RAM</span>, etc.) to your servers. Horizontal scaling, referred to as “scale-out”, allows you to scale by adding more servers into your pool of resources. When traffic is low, vertical scaling is a great option, and the simplicity of vertical scaling is its main advantage. Unfortunately, it comes with serious limitations. Vertical scaling has a hard limit. It is impossible to add unlimited <span class="inline-code">CPU</span> and memory to a single server. Vertical scaling does not have failover and redundancy. If one server goes down, the website/app goes down with it completely. Horizontal scaling is more desirable for large scale applications due to the limitations of vertical scaling. In the previous design, users are connected to the web server directly. Users will unable to access the website if the web server is offline. In another scenario, if many users access the web server simultaneously and it reaches the web server’s load limit, users generally experience slower response or fail to connect to the server. A load balancer is the best technique to address these problems.</p>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<p>Load balancer A load balancer evenly distributes incoming traffic among web servers that are defined in a load-balanced set. Figure 4 shows how a load balancer works.</p>
+<div class="figure-label">Figure 4</div>
+<p>As shown in Figure 4, users connect to the public <span class="inline-code">IP</span> of the load balancer directly. With this setup, web servers are unreachable directly by clients anymore. For better security, private <span class="inline-code">IPs</span> are used for communication between servers. A private <span class="inline-code">IP</span> is an <span class="inline-code">IP</span> address reachable only between servers in the same network; however, it is unreachable over the internet. The load balancer communicates with web servers through private <span class="inline-code">IPs</span>. In Figure 4, after a load balancer and a second web server are added, we successfully solved no failover issue and improved the availability of the web tier. Details are explained below: If server 1 goes offline, all the traffic will be routed to server 2. This prevents the website from going offline. We will also add a new healthy web server to the server pool to balance the load.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_7_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 8" /></div>
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>If the website traffic grows rapidly, and two servers are not enough to handle the traffic, the load balancer can handle this problem gracefully. You only need to add more servers to the web server pool, and the load balancer automatically starts to send requests to them. Now the web tier looks good, what about the data tier? The current design has one database, so it does not support failover and redundancy. Database replication is a common technique to address those problems. Let us take a look. Database replication Quoted from Wikipedia: “Database replication can be used in many database management systems, usually with a master/slave relationship between the original (master) and the copies (slaves)” [3]. A master database generally only supports write operations. A slave database gets copies of the data from the master database and only supports read operations. All the data-modifying commands like insert, delete, or update must be sent to the master database. Most applications require a much higher ratio of reads to writes; thus, the number of slave databases in a system is usually larger than the number of master databases. Figure 5 shows a master database with multiple slave databases.</p>
+
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>Web servers writes Master <span class="inline-code">DB</span> Slave <span class="inline-code">DB3</span> Slave <span class="inline-code">DB2</span> Slave <span class="inline-code">DB1</span> reads reads <span class="inline-code">readsDB</span> replication <span class="inline-code">DB</span> replication <span class="inline-code">DB</span> replication</p>
+<div class="figure-label">Figure 5</div>
+<h2>Advantages of database replication:</h2>
+<p>Better performance: In the master-slave model, all writes and updates happen in master nodes; whereas, read operations are distributed across slave nodes. This model improves performance because it allows more queries to be processed in parallel. Reliability: If one of your database servers is destroyed by a natural disaster, such as a typhoon or an earthquake, data is still preserved. You do not need to worry about data loss because data is replicated across multiple locations. High availability: By replicating data across different locations, your website remains in operation even if a database is offline as you can access data stored in another database server. In the previous section, we discussed how a load balancer helped to improve system availability. We ask the same question here: what if one of the databases goes offline? The architectural design discussed in Figure 5 can handle this case:</p>
+
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>If only one slave database is available and it goes offline, read operations will be directed to the master database temporarily. As soon as the issue is found, a new slave database will replace the old one. In case multiple slave databases are available, read operations are redirected to other healthy slave databases. A new database server will replace the old one. If the master database goes offline, a slave database will be promoted to be the new master. All the database operations will be temporarily executed on the new master database. A new slave database will replace the old one for data replication immediately. In production systems, promoting a new master is more complicated as the data in a slave database might not be up to date. The missing data needs to be updated by running data recovery scripts. Although some other replication methods like multi-masters and circular replication could help, those setups are more complicated; and their discussions are beyond the scope of this course. Interested readers should refer to the listed reference materials [4] [5].</p>
+<div class="figure-label">Figure 6 shows the system design after adding the load balancer and database replication.</div>
+
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<div class="figure-label">Figure 6</div>
+<h2>Let us take a look at the design:</h2>
+<p>A user gets the <span class="inline-code">IP</span> address of the load balancer from <span class="inline-code">DNS</span>. A user connects the load balancer with this <span class="inline-code">IP</span> address. The <span class="inline-code">HTTP</span> request is routed to either Server 1 or Server 2. A web server reads user data from a slave database. A web server routes any data-modifying operations to the master database. This includes write, update, and delete operations. Now, you have a solid understanding of the web and data tiers, it is time to improve the load/response time. This can be done by adding a cache layer and shifting static content (<span class="inline-code">JavaScript</span>/<span class="inline-code">CSS</span>/image/video files) to the content delivery network (<span class="inline-code">CDN</span>). Cache</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_11_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 12" /></div>
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<p>A cache is a temporary storage area that stores the result of expensive responses or frequently accessed data in memory so that subsequent requests are served more quickly. As illustrated in Figure 6, every time a new web page loads, one or more database calls are executed to fetch data. The application performance is greatly affected by calling the database repeatedly. The cache can mitigate this problem. Cache tier The cache tier is a temporary data store layer, much faster than the database. The benefits of having a separate cache tier include better system performance, ability to reduce database workloads, and the ability to scale the cache tier independently. Figure 7 shows a possible</p>
+<h2>setup of a cache server:</h2>
+<p><span class="inline-code">CacheWeb</span> server 2.1 If data doesn&#x27;t exist in cache,    save data to cache2.2 Return data to the web server</p>
+<ol><li>If data exists in cache, read data from cache</li></ol>
+<p>Database</p>
+<div class="figure-label">Figure 7</div>
+<p>After receiving a request, a web server first checks if the cache has the available response. If it has, it sends data back to the client. If not, it queries the database, stores the response in cache, and sends it back to the client. This caching strategy is called a read-through cache. Other caching strategies are available depending on the data type, size, and access patterns. A previous study explains how different caching strategies work [6]. Interacting with cache servers is simple because most cache servers provide <span class="inline-code">APIs</span> for common programming languages. The following code snippet shows typical Memcached <span class="inline-code">APIs</span>:</p>
+<h2>SECONDS = 1</h2>
+<p>cache.set(&#x27;<span class="inline-code">myKey</span>, &#x27;hi there&#x27;, 3600 * <span class="inline-code">SECONDS</span>) cache.get(&#x27;<span class="inline-code">myKey</span>&#x27;) Considerations for using cache Here are a few considerations for using a cache system: Decide when to use cache. Consider using cache when data is read frequently but modified infrequently. Since cached data is stored in volatile memory, a cache server is not ideal for persisting data. For instance, if a cache server restarts, all the data in memory is lost. Thus, important data should be saved in persistent data stores.</p>
+
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>Expiration policy. It is a good practice to implement an expiration policy. Once cached data is expired, it is removed from the cache. When there is no expiration policy, cached data will be stored in the memory permanently. It is advisable not to make the expiration date too short as this will cause the system to reload data from the database too frequently. Meanwhile, it is advisable not to make the expiration date too long as the data can become stale. Consistency: This involves keeping the data store and the cache in sync. Inconsistency can happen because data-modifying operations on the data store and cache are not in a single transaction. When scaling across multiple regions, maintaining consistency between the data store and cache is challenging. For further details, refer to the paper titled “Scaling Memcache at Facebook” published by Facebook [7]. Mitigating failures: A single cache server represents a potential single point of failure (<span class="inline-code">SPOF</span>), defined in Wikipedia as follows: “A single point of failure (<span class="inline-code">SPOF</span>) is a part of a system that, if it fails, will stop the entire system from working” [8]. As a result, multiple cache servers across different data centers are recommended to avoid <span class="inline-code">SPOF</span>. Another recommended approach is to overprovision the required memory by certain percentages. This provides a buffer as the memory usage increases.</p>
+<div class="figure-label">Figure 8</div>
+<p>Eviction Policy: Once the cache is full, any requests to add items to the cache might cause existing items to be removed. This is called cache eviction. Least-recently-used (<span class="inline-code">LRU</span>) is the most popular cache eviction policy. Other eviction policies, such as the Least Frequently Used (<span class="inline-code">LFU</span>) or First in First Out (<span class="inline-code">FIFO</span>), can be adopted to satisfy different use cases. Content delivery network (<span class="inline-code">CDN</span>)</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_13_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 14" /></div>
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>A <span class="inline-code">CDN</span> is a network of geographically dispersed servers used to deliver static content. <span class="inline-code">CDN</span> servers cache static content like images, videos, <span class="inline-code">CSS</span>, <span class="inline-code">JavaScript</span> files, etc. Dynamic content caching is a relatively new concept and beyond the scope of this course. It enables the caching of <span class="inline-code">HTML</span> pages that are based on request path, query strings, cookies, and request headers. Refer to the article mentioned in reference material [9] for more about</p>
+<pre><code>this. This course focuses on how to use CDN to cache static content.
+Here is how CDN works at the high-level: when a user visits a website, a CDN server closest to
+the user will deliver static content. Intuitively, the further users are from CDN servers, the
+slower the website loads. For example, if CDN servers are in San Francisco, users in Los</code></pre>
+<p>Angeles will get content faster than users in Europe. Figure 9 is a great example that shows how <span class="inline-code">CDN</span> improves load time. Client Client</p>
+<h2>CDN</h2>
+<p>Origin120ms 30ms</p>
+<div class="figure-label">Figure 9</div>
+<div class="figure-label">Figure 10 demonstrates the CDN workflow.</div>
+<div class="figure-label">Figure 10</div>
+<ol><li>User A tries to get image.png by using an image URL. The URL’s domain is provided by the</li></ol>
+<p><span class="inline-code">CDN</span> provider. The following two image <span class="inline-code">URLs</span> are samples used to demonstrate what image</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_14_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 15" /></div>
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p><span class="inline-code">URLs</span> look like on Amazon and Akamai <span class="inline-code">CDNs</span>: https://mysite.cloudfront.net/logo.jpg https://mysite.akamai.com/image-manager/img/logo.jpg</p>
+<ol><li>If the CDN server does not have image.png in the cache, the CDN server requests the file</li></ol>
+<p>from the origin, which can be a web server or online storage like Amazon S3.</p>
+<ol><li>The origin returns image.png to the CDN server, which includes optional HTTP header Time-</li></ol>
+<p>to-Live (<span class="inline-code">TTL</span>) which describes how long the image is cached.</p>
+<ol><li>The CDN caches the image and returns it to User A. The image remains cached in the CDN until the TTL expires.</li><li>User B sends a request to get the same image.</li><li>The image is returned from the cache as long as the TTL has not expired.</li></ol>
+<p>Considerations of using a <span class="inline-code">CDN</span> Cost: <span class="inline-code">CDNs</span> are run by third-party providers, and you are charged for data transfers in and out of the <span class="inline-code">CDN</span>. Caching infrequently used assets provides no significant benefits so you should consider moving them out of the <span class="inline-code">CDN</span>. Setting an appropriate cache expiry: For time-sensitive content, setting a cache expiry time is important. The cache expiry time should neither be too long nor too short. If it is too long, the content might no longer be fresh. If it is too short, it can cause repeat reloading of content from origin servers to the <span class="inline-code">CDN</span>. <span class="inline-code">CDN</span> fallback: You should consider how your website/application copes with <span class="inline-code">CDN</span> failure. If there is a temporary <span class="inline-code">CDN</span> outage, clients should be able to detect the problem and request resources from the origin. Invalidating files: You can remove a file from the <span class="inline-code">CDN</span> before it expires by performing one</p>
+<h2>of the following operations:</h2>
+<p>Invalidate the <span class="inline-code">CDN</span> object using <span class="inline-code">APIs</span> provided by <span class="inline-code">CDN</span> vendors. Use object versioning to serve a different version of the object. To version an object, you can add a parameter to the <span class="inline-code">URL</span>, such as a version number. For example, version number 2 is added to the query string: image.png?v=2.</p>
+<div class="figure-label">Figure 11 shows the design after the CDN and cache are added.</div>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<div class="figure-label">Figure 11</div>
+<ol><li>Static assets (JS, CSS, images, etc.,) are no longer served by web servers. They are</li></ol>
+<p>fetched from the <span class="inline-code">CDN</span> for better performance.</p>
+<ol><li>The database load is lightened by caching data.</li></ol>
+<p>Stateless web tier Now it is time to consider scaling the web tier horizontally. For this, we need to move state (for instance user session data) out of the web tier. A good practice is to store session data in the persistent storage such as relational database or <span class="inline-code">NoSQL</span>. Each web server in the cluster can access state data from databases. This is called stateless web tier.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_16_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 17" /></div>
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>Stateful architecture A stateful server and stateless server has some key differences. A stateful server remembers client data (state) from one request to the next. A stateless server keeps no state information.</p>
+<div class="figure-label">Figure 12 shows an example of a stateful architecture.</div>
+<div class="figure-label">Figure 12</div>
+<p>In Figure 12, user A’s session data and profile image are stored in Server 1. To authenticate User A, <span class="inline-code">HTTP</span> requests must be routed to Server 1. If a request is sent to other servers like Server 2, authentication would fail because Server 2 does not contain User A’s session data. Similarly, all <span class="inline-code">HTTP</span> requests from User B must be routed to Server 2; all requests from User C must be sent to Server 3. The issue is that every request from the same client must be routed to the same server. This can be done with sticky sessions in most load balancers [10]; however, this adds the overhead. Adding or removing servers is much more difficult with this approach. It is also challenging to handle server failures. Stateless architecture</p>
+<div class="figure-label">Figure 13 shows the stateless architecture.</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_17_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 18" /></div>
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<div class="figure-label">Figure 13</div>
+<p>In this stateless architecture, <span class="inline-code">HTTP</span> requests from users can be sent to any web servers, which fetch state data from a shared data store. State data is stored in a shared data store and kept out of web servers. A stateless system is simpler, more robust, and scalable.</p>
+<div class="figure-label">Figure 14 shows the updated design with a stateless web tier.</div>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_18_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 19" /></div>
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<div class="figure-label">Figure 14</div>
+<p>In Figure 14, we move the session data out of the web tier and store them in the persistent data store. The shared data store could be a relational database, Memcached/Redis, <span class="inline-code">NoSQL</span>, etc. The <span class="inline-code">NoSQL</span> data store is chosen as it is easy to scale. Autoscaling means adding or removing web servers automatically based on the traffic load. After the state data is removed out of web servers, auto-scaling of the web tier is easily achieved by adding or removing servers based on traffic load. Your website grows rapidly and attracts a significant number of users internationally. To improve availability and provide a better user experience across wider geographical areas, supporting multiple data centers is crucial. Data centers</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_19_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 20" /></div>
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<div class="figure-label">Figure 15 shows an example setup with two data centers. In normal operation, users are</div>
+<p><span class="inline-code">geoDNS</span>-routed, also known as geo-routed, to the closest data center, with a split traffic of x% in <span class="inline-code">US</span>-East and (100 – x)% in <span class="inline-code">US</span>-West. <span class="inline-code">geoDNS</span> is a <span class="inline-code">DNS</span> service that allows domain names to be resolved to <span class="inline-code">IP</span> addresses based on the location of a user.</p>
+<div class="figure-label">Figure 15</div>
+<p>In the event of any significant data center outage, we direct all traffic to a healthy data center. In</p>
+<div class="figure-label">Figure 16, data center 2 (US-West) is offline, and 100% of the traffic is routed to data center 1</div>
+<p>(<span class="inline-code">US</span>-East).</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_20_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 21" /></div>
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<div class="figure-label">Figure 16</div>
+<p>Several technical challenges must be resolved to achieve multi-data center setup: Traffic redirection: Effective tools are needed to direct traffic to the correct data center. <span class="inline-code">GeoDNS</span> can be used to direct traffic to the nearest data center depending on where a user is located. Data synchronization: Users from different regions could use different local databases or caches. In failover cases, traffic might be routed to a data center where data is unavailable. A common strategy is to replicate data across multiple data centers. A previous study shows how Netflix implements asynchronous multi-data center replication [11]. Test and deployment: With multi-data center setup, it is important to test your website/application at different locations. Automated deployment tools are vital to keep services consistent through all the data centers [11].</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_21_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 22" /></div>
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p>To further scale our system, we need to decouple different components of the system so they can be scaled independently. Messaging queue is a key strategy employed by many real-world distributed systems to solve this problem. Message queue A message queue is a durable component, stored in memory, that supports asynchronous communication. It serves as a buffer and distributes asynchronous requests. The basic architecture of a message queue is simple. Input services, called producers/publishers, create messages, and publish them to a message queue. Other services or servers, called consumers/subscribers, connect to the queue, and perform actions defined by the messages. The model is shown in Figure 17. publish consume <span class="inline-code">subscribeProducer</span> Consumer Message Queue</p>
+<div class="figure-label">Figure 17</div>
+<p>Decoupling makes the message queue a preferred architecture for building a scalable and reliable application. With the message queue, the producer can post a message to the queue when the consumer is unavailable to process it. The consumer can read messages from the queue even when the producer is unavailable. Consider the following use case: your application supports photo customization, including cropping, sharpening, blurring, etc. Those customization tasks take time to complete. In Figure 18, web servers publish photo processing jobs to the message queue. Photo processing workers pick up jobs from the message queue and asynchronously perform photo customization tasks. The producer and the consumer can be scaled independently. When the size of the queue becomes large, more workers are added to reduce the processing time. However, if the queue is empty most of the time, the number of workers can be reduced. publish Consumerqueue for photo <span class="inline-code">processingProducer</span> Photo processing workers consume Web servers</p>
+<div class="figure-label">Figure 18</div>
+
+</div>
+<div class="page-divider">Page 21</div>
+<div class="page-content" data-page="21">
+<p>Logging, metrics, automation When working with a small website that runs on a few servers, logging, metrics, and automation support are good practices but not a necessity. However, now that your site has grown to serve a large business, investing in those tools is essential. Logging: Monitoring error logs is important because it helps to identify errors and problems in the system. You can monitor error logs at per server level or use tools to aggregate them to a centralized service for easy search and viewing. Metrics: Collecting different types of metrics help us to gain business insights and understand the health status of the system. Some of the following metrics are useful: Host level metrics: <span class="inline-code">CPU</span>, Memory, disk I/O, etc. Aggregated level metrics: for example, the performance of the entire database tier, cache tier, etc. Key business metrics: daily active users, retention, revenue, etc. Automation: When a system gets big and complex, we need to build or leverage automation tools to improve productivity. Continuous integration is a good practice, in which each code check-in is verified through automation, allowing teams to detect problems early. Besides, automating your build, test, deploy process, etc. could improve developer productivity significantly. Adding message queues and different tools</p>
+<div class="figure-label">Figure 19 shows the updated design. Due to the space constraint, only one data center is</div>
+<p>shown in the figure.</p>
+<ol><li>The design includes a message queue, which helps to make the system more loosely coupled and failure resilient.</li><li>Logging, monitoring, metrics, and automation tools are included.</li></ol>
+
+</div>
+<div class="page-divider">Page 22</div>
+<div class="page-content" data-page="22">
+<div class="figure-label">Figure 19</div>
+<p>As the data grows every day, your database gets more overloaded. It is time to scale the data tier. Database scaling There are two broad approaches for database scaling: vertical scaling and horizontal scaling.</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_24_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 25" /></div>
+</div>
+<div class="page-divider">Page 23</div>
+<div class="page-content" data-page="23">
+<p>Vertical scaling Vertical scaling, also known as scaling up, is the scaling by adding more power (<span class="inline-code">CPU</span>, <span class="inline-code">RAM</span>, <span class="inline-code">DISK</span>, etc.) to an existing machine. There are some powerful database servers. According to Amazon Relational Database Service (<span class="inline-code">RDS</span>) [12], you can get a database server with 24 <span class="inline-code">TB</span> of <span class="inline-code">RAM</span>. This kind of powerful database server could store and handle lots of data. For example, stackoverflow.com in 2013 had over 10 million monthly unique visitors, but it only had 1 master database [13]. However, vertical scaling comes with some serious drawbacks: You can add more <span class="inline-code">CPU</span>, <span class="inline-code">RAM</span>, etc. to your database server, but there are hardware limits. If you have a large user base, a single server is not enough. Greater risk of single point of failures. The overall cost of vertical scaling is high. Powerful servers are much more expensive. Horizontal scaling Horizontal scaling, also known as sharding, is the practice of adding more servers. Figure 20 compares vertical scaling with horizontal scaling. (Increase <span class="inline-code">CPU</span>, <span class="inline-code">RAM</span>, <span class="inline-code">DISK</span>, etc)</p>
+<h2>VS</h2>
+<p>Vertical Scaling (Add more servers) Horizontal Scaling</p>
+<div class="figure-label">Figure 20</div>
+
+</div>
+<div class="page-divider">Page 24</div>
+<div class="page-content" data-page="24">
+<p>Sharding separates large databases into smaller, more easily managed parts called shards. Each shard shares the same schema, though the actual data on each shard is unique to the shard.</p>
+<div class="figure-label">Figure 21 shows an example of sharded databases. User data is allocated to a database</div>
+<p>server based on user <span class="inline-code">IDs</span>. Anytime you access data, a hash function is used to find the corresponding shard. In our example, <span class="inline-code">user_id</span> % 4 is used as the hash function. If the result equals to 0, shard 0 is used to store and fetch data. If the result equals to 1, shard 1 is used. The same logic applies to other shards. 0 1 2 3 <span class="inline-code">user_id</span> % 4</p>
+<div class="figure-label">Figure 21</div>
+<div class="figure-label">Figure 22 shows the user table in sharded databases.</div>
+
+</div>
+<div class="page-divider">Page 25</div>
+<div class="page-content" data-page="25">
+<p>Users <span class="inline-code">user_id</span>           ... 0 4 8</p>
+<h2>Section 12</h2>
+<p>... Shard 0 Users <span class="inline-code">user_id</span>           ... 1 5 9</p>
+<h2>Section 13</h2>
+<p>... Shard 1 Users <span class="inline-code">user_id</span>           ... 2 6</p>
+<h2>Section 10</h2>
+<h2>Section 14</h2>
+<p>... Shard 2 Users <span class="inline-code">user_id</span>           ... 3 7</p>
+<h2>Section 11</h2>
+<h2>Section 15</h2>
+<p>... Shard 3</p>
+<div class="figure-label">Figure 22</div>
+<p>The most important factor to consider when implementing a sharding strategy is the choice of the sharding key. Sharding key (known as a partition key) consists of one or more columns that determine how data is distributed. As shown in Figure 22, “<span class="inline-code">user_id</span>” is the sharding key. A sharding key allows you to retrieve and modify data efficiently by routing database queries to the correct database. When choosing a sharding key, one of the most important criteria is to choose a key that can evenly distributed data. Sharding is a great technique to scale the database but it is far from a perfect solution. It introduces complexities and new challenges to the system: Resharding data: Resharding data is needed when 1) a single shard could no longer hold more data due to rapid growth. 2) Certain shards might experience shard exhaustion faster</p>
+
+</div>
+<div class="page-divider">Page 26</div>
+<div class="page-content" data-page="26">
+<p>than others due to uneven data distribution. When shard exhaustion happens, it requires updating the sharding function and moving data around. Consistent hashing is a commonly used technique to solve this problem. Celebrity problem: This is also called a hotspot key problem. Excessive access to a specific shard could cause server overload. Imagine data for Katy Perry, Justin Bieber, and Lady Gaga all end up on the same shard. For social applications, that shard will be overwhelmed with read operations. To solve this problem, we may need to allocate a shard for each celebrity. Each shard might even require further partition. Join and de-normalization: Once a database has been sharded across multiple servers, it is hard to perform join operations across database shards. A common workaround is to de- normalize the database so that queries can be performed in a single table. In Figure 23, we shard databases to support rapidly increasing data traffic. At the same time, some of the non-relational functionalities are moved to a <span class="inline-code">NoSQL</span> data store to reduce the database load. Here is an article that covers many use cases of <span class="inline-code">NoSQL</span> [14].</p>
+
+</div>
+<div class="page-divider">Page 27</div>
+<div class="page-content" data-page="27">
+<div class="figure-label">Figure 23</div>
+<p>Millions of users and beyond Scaling a system is an iterative process. Iterating on what we have learned in this chapter could get us far. More fine-tuning and new strategies are needed to scale beyond millions of users. For example, you might need to optimize your system and decouple the system to even smaller services. All the techniques learned in this chapter should provide a good foundation to</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_29_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 30" /></div>
+</div>
+<div class="page-divider">Page 28</div>
+<div class="page-content" data-page="28">
+<p>tackle new challenges. To conclude this chapter, we provide a summary of how we scale our</p>
+<h2>system to support millions of users:</h2>
+<p>Keep web tier stateless Build redundancy at every tier Cache data as much as you can Support multiple data centers Host static assets in <span class="inline-code">CDN</span> Scale your data tier by sharding Split tiers into individual services Monitor your system and use automation tools Congratulations on getting this far! Now give yourself a pat on the back. Good job! Reference materials [1] Hypertext Transfer Protocol: https://en.wikipedia.org/wiki/<span class="inline-code">Hypertext_Transfer_Protocol</span> [2] Should you go Beyond Relational Databases?: https://blog.teamtreehouse.com/should-you-go-beyond-relational-databases [3] Replication: https://en.wikipedia.org/wiki/<span class="inline-code">Replication_</span>(computing)</p>
+<h2>[4] Multi-master replication:</h2>
+<p>https://en.wikipedia.org/wiki/Multi-<span class="inline-code">master_replication</span> [5] <span class="inline-code">NDB</span> Cluster Replication: Bidirectional and Circular Replication: https://dev.mysql.com/doc/refman/8.4/en/mysql-cluster-replication-multi-source.html [6] Caching Strategies and How to Choose the Right One: https://codeahoy.com/2017/08/11/caching-strategies-and-how-to-choose-the-right-one/ [7] R. Nishtala etc. al., &quot;Scaling Memcache at Facebook,&quot; 10th <span class="inline-code">USENIX</span> Symposium on Networked Systems Design and Implementation (<span class="inline-code">NSDI</span> ’13): https://www.usenix.org/system/file s/conference/nsdi13/nsdi13-final170_update.pdf [8] Single point of failure: https://en.wikipedia.org/wiki/<span class="inline-code">Single_point_of_failure</span> [9] Amazon <span class="inline-code">CloudFront</span> Dynamic Content Delivery: https://aws.amazon.com/cloudfront/dynamic-content/</p>
+
+</div>
+<div class="page-divider">Page 29</div>
+<div class="page-content" data-page="29">
+<p>[10] Configure Sticky Sessions for Your Classic Load Balancer: https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-sticky-sessions.html [11] Active-Active for Multi-Regional Resiliency: https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b</p>
+<h2>[12] Amazon EC2 High Memory Instances:</h2>
+<p>https://aws.amazon.com/ec2/instance-types/high-memory/ [13] What it takes to run Stack Overflow: http://nickcraver.com/blog/2013/11/22/what-it-takes-to-run-stack-overflow [14] What The Heck Are You Actually Using <span class="inline-code">NoSQL</span> For: http://highscalability.com/blog/2010/12/6/what-the-heck-are-you-actually-using-nosql-for.html Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>

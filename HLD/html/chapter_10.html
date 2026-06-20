@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 10</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #ffffff;
+      --bg-code: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-lld: #4f46e5;
+      --accent-hld: #059669;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .article-container {
+      max-width: 850px;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 2rem;
+      margin-bottom: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      color: var(--accent-hld);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #334155;
+      text-align: justify;
+    }
+
+    pre {
+      background-color: var(--bg-code);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: #334155;
+      white-space: pre;
+      word-wrap: normal;
+      word-break: normal;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .inline-code {
+      background-color: #f1f5f9;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .page-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 2.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+      position: relative;
+    }
+
+    .page-divider::before, .page-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .page-divider::before {
+      margin-right: 1rem;
+    }
+
+    .page-divider::after {
+      margin-left: 1rem;
+    }
+
+    .page-content {
+      margin-bottom: 2rem;
+    }
+
+    .figure-label {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1.2rem 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="article-container">
+    
+<div class="page-content" data-page="1">
+<h2>Section 10</h2>
+<p>Design A Web Crawler In this chapter, we focus on web crawler design: an interesting and classic system design interview question. A web crawler is known as a robot or spider. It is widely used by search engines to discover new or updated content on the web. Content can be a web page, an image, a video, a <span class="inline-code">PDF</span> file, etc. A web crawler starts by collecting a few web pages and then follows links on those pages to collect new content. Figure 1 shows a visual example of the crawl process.</p>
+
+</div>
+<div class="page-divider">Page 2</div>
+<div class="page-content" data-page="2">
+<div class="figure-label">Figure 1</div>
+<h2>A crawler is used for many purposes:</h2>
+<p>Search engine indexing: This is the most common use case. A crawler collects web pages to create a local index for search engines. For example, Googlebot is the web crawler behind the Google search engine. Web archiving: This is the process of collecting information from the web to preserve data for future uses. For instance, many national libraries run crawlers to archive web sites. Notable examples are the <span class="inline-code">US</span> Library of Congress [1] and the <span class="inline-code">EU</span> web archive [2]. Web mining: The explosive growth of the web presents an unprecedented opportunity for data mining. Web mining helps to discover useful knowledge from the internet. For</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_128_img_0.jpg" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 129" /></div>
+</div>
+<div class="page-divider">Page 3</div>
+<div class="page-content" data-page="3">
+<p>example, top financial firms use crawlers to download shareholder meetings and annual reports to learn key company initiatives. Web monitoring. The crawlers help to monitor copyright and trademark infringements over the Internet. For example, Digimarc [3] utilizes crawlers to discover pirated works and reports. The complexity of developing a web crawler depends on the scale we intend to support. It could be either a small school project, which takes only a few hours to complete or a gigantic project that requires continuous improvement from a dedicated engineering team. Thus, we will explore the scale and features to support below.</p>
+<h3>Step 1 - Understand the problem</h3>
+<p>and establish design scope The basic algorithm of a web crawler is simple:</p>
+<ol><li>Given a set of URLs, download all the web pages addressed by the URLs.</li><li>Extract URLs from these web pages</li><li>Add new URLs to the list of URLs to be downloaded. Repeat these 3 steps.</li></ol>
+<p>Does a web crawler work truly as simple as this basic algorithm? Not exactly. Designing a vastly scalable web crawler is an extremely complex task. It is unlikely for anyone to design a massive web crawler within the interview duration. Before jumping into the design, we must ask questions to understand the requirements and establish design scope: Candidate: What is the main purpose of the crawler? Is it used for search engine indexing, data mining, or something else? Interviewer: Search engine indexing. Candidate: How many web pages does the web crawler collect per month? Interviewer: 1 billion pages. Candidate: What content types are included? <span class="inline-code">HTML</span> only or other content types such as <span class="inline-code">PDFs</span> and images as well? Interviewer: <span class="inline-code">HTML</span> only. Candidate: Shall we consider newly added or edited web pages? Interviewer: Yes, we should consider the newly added or edited web pages.</p>
+
+</div>
+<div class="page-divider">Page 4</div>
+<div class="page-content" data-page="4">
+<p>Candidate: Do we need to store <span class="inline-code">HTML</span> pages crawled from the web? Interviewer: Yes, up to 5 years Candidate: How do we handle web pages with duplicate content? Interviewer: Pages with duplicate content should be ignored. Above are some of the sample questions that you can ask your interviewer. It is important to understand the requirements and clarify ambiguities. Even if you are asked to design a straightforward product like a web crawler, you and your interviewer might not have the same assumptions. Beside functionalities to clarify with your interviewer, it is also important to note down the following characteristics of a good web crawler: Scalability: The web is very large. There are billions of web pages out there. Web crawling should be extremely efficient using parallelization. Robustness: The web is full of traps. Bad <span class="inline-code">HTML</span>, unresponsive servers, crashes, malicious links, etc. are all common. The crawler must handle all those edge cases. Politeness: The crawler should not make too many requests to a website within a short time interval. Extensibility: The system is flexible so that minimal changes are needed to support new content types. For example, if we want to crawl image files in the future, we should not need to redesign the entire system. Back of the envelope estimation The following estimations are based on many assumptions, and it is important to communicate with the interviewer to be on the same page. Assume 1 billion web pages are downloaded every month. <span class="inline-code">QPS</span>: 1,000,000,000 / 30 days / 24 hours / 3600 seconds = ~400 pages per second. Peak <span class="inline-code">QPS</span> = 2 * <span class="inline-code">QPS</span> = 800 Assume the average web page size is 500k. 1-billion-page x 500k = 500 <span class="inline-code">TB</span> storage per month. If you are unclear about digital storage units, go through “Power of 2” section in the &quot;Back-of-the-envelope Estimation&quot; chapter again. Assuming data are stored for five years, 500 <span class="inline-code">TB</span> * 12 months * 5 years = 30 <span class="inline-code">PB</span>. A 30 <span class="inline-code">PB</span> storage is needed to store five-year content.</p>
+
+</div>
+<div class="page-divider">Page 5</div>
+<div class="page-content" data-page="5">
+<h3>Step 2 - Propose high-</h3>
+<p>level design and get buy-in Once the requirements are clear, we move on to the high-level design. Inspired by previous studies on web crawling [4] [5], we propose a high-level design as shown in Figure 2. seed <span class="inline-code">URLs</span> <span class="inline-code">HTML</span> Downloader <span class="inline-code">DNS</span> Resolver Content Parser Link Extractor <span class="inline-code">URL</span> Filter <span class="inline-code">URL</span> Frontier <span class="inline-code">URL</span> Seen? <span class="inline-code">URLStorage</span> <span class="inline-code">ContentStorage</span> Content Seen?</p>
+<div class="figure-label">Figure 2</div>
+<p>First, we explore each design component to understand their functionalities. Then, we examine the crawler workflow step-by-step. Seed <span class="inline-code">URLs</span> A web crawler uses seed <span class="inline-code">URLs</span> as a starting point for the crawl process. For example, to crawl all web pages from a university’s website, an intuitive way to select seed <span class="inline-code">URLs</span> is to use the university’s domain name. To crawl the entire web, we need to be creative in selecting seed <span class="inline-code">URLs</span>. A good seed <span class="inline-code">URL</span> serves as a good starting point that a crawler can utilize to traverse as many links as possible. The general strategy is to divide the entire <span class="inline-code">URL</span> space into smaller ones. The first proposed approach is based on locality as different countries may have different popular websites.</p>
+
+</div>
+<div class="page-divider">Page 6</div>
+<div class="page-content" data-page="6">
+<p>Another way is to choose seed <span class="inline-code">URLs</span> based on topics; for example, we can divide <span class="inline-code">URL</span> space into shopping, sports, healthcare, etc. Seed <span class="inline-code">URL</span> selection is an open-ended question. You are not expected to give the perfect answer. Just think out loud. <span class="inline-code">URL</span> Frontier Most modern web crawlers split the crawl state into two: to be downloaded and already downloaded. The component that stores <span class="inline-code">URLs</span> to be downloaded is called the <span class="inline-code">URL</span> Frontier. You can refer to this as a First-in-First-out (<span class="inline-code">FIFO</span>) queue. For detailed information about the <span class="inline-code">URL</span> Frontier, refer to the deep dive. <span class="inline-code">HTML</span> Downloader The <span class="inline-code">HTML</span> downloader downloads web pages from the internet. Those <span class="inline-code">URLs</span> are provided by the <span class="inline-code">URL</span> Frontier. <span class="inline-code">DNS</span> Resolver To download a web page, a <span class="inline-code">URL</span> must be translated into an <span class="inline-code">IP</span> address. The <span class="inline-code">HTML</span> Downloader calls the <span class="inline-code">DNS</span> Resolver to get the corresponding <span class="inline-code">IP</span> address for the <span class="inline-code">URL</span>. For instance, <span class="inline-code">URL</span> www.wikipedia.org is converted to <span class="inline-code">IP</span> address 198.35.26.96 as of 3/5/2019. Content Parser After a web page is downloaded, it must be parsed and validated because malformed web pages could provoke problems and waste storage space. Implementing a content parser in a crawl server will slow down the crawling process. Thus, the content parser is a separate component. Content Seen? Online research [6] reveals that 29% of the web pages are duplicated contents, which may cause the same content to be stored multiple times. We introduce the “Content Seen?” data structure to eliminate data redundancy and shorten processing time. It helps to detect new content previously stored in the system. To compare two <span class="inline-code">HTML</span> documents, we can compare them character by character. However, this method is slow and time-consuming, especially when billions of web pages are involved. An efficient way to accomplish this task is to compare the hash values of the two web pages [7]. Content Storage It is a storage system for storing <span class="inline-code">HTML</span> content. The choice of storage system depends on factors such as data type, data size, access frequency, life span, etc. Both disk and memory</p>
+
+</div>
+<div class="page-divider">Page 7</div>
+<div class="page-content" data-page="7">
+<p>are used. Most of the content is stored on disk because the data set is too big to fit in memory. Popular content is kept in memory to reduce latency. <span class="inline-code">URL</span> Extractor <span class="inline-code">URL</span> Extractor parses and extracts links from <span class="inline-code">HTML</span> pages. Figure 3 shows an example of a link extraction process. Relative paths are converted to absolute <span class="inline-code">URLs</span> by adding the “https://en.wikipedia.org” prefix. https://en.wikipedia.org/wiki/<span class="inline-code">Cong_Weixi</span> https://en.wikipedia.org/wiki/<span class="inline-code">Kay_Hagan</span> https://en.wikipedia.org/wiki/<span class="inline-code">Vladimir_Bukovsky</span> https://en.wikipedia.org/wiki/<span class="inline-code">John_Conyers</span></p>
+<h2>Extracted LInks:</h2>
+<div class="figure-label">Figure 3</div>
+<p><span class="inline-code">URL</span> Filter The <span class="inline-code">URL</span> filter excludes certain content types, file extensions, error links and <span class="inline-code">URLs</span> in “blacklisted” sites. <span class="inline-code">URL</span> Seen? “<span class="inline-code">URL</span> Seen?” is a data structure that keeps track of <span class="inline-code">URLs</span> that are visited before or already in the Frontier. “<span class="inline-code">URL</span> Seen?” helps to avoid adding the same <span class="inline-code">URL</span> multiple times as this can increase server load and cause potential infinite loops. Bloom filter and hash table are common techniques to implement the “<span class="inline-code">URL</span> Seen?” component. We will not cover the detailed implementation of the bloom filter and hash table here. For more</p>
+
+<div style="text-align: center; margin: 1.8rem 0;"><img src="../images/page_133_img_0.png" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" alt="Diagram on page 134" /></div>
+</div>
+<div class="page-divider">Page 8</div>
+<div class="page-content" data-page="8">
+<p>information, refer to the reference materials [4] [8]. <span class="inline-code">URL</span> Storage <span class="inline-code">URL</span> Storage stores already visited <span class="inline-code">URLs</span>. So far, we have discussed every system component. Next, we put them together to explain the workflow. Web crawler workflow To better explain the workflow step-by-step, sequence numbers are added in the design diagram as shown in Figure 4. seed <span class="inline-code">URLs</span> <span class="inline-code">HTML</span> Downloader <span class="inline-code">DNS</span> Resolver Content Parser Link Extractor <span class="inline-code">URL</span> Filter <span class="inline-code">URL</span> Frontier <span class="inline-code">URL</span> Seen? <span class="inline-code">URLStorage</span> <span class="inline-code">ContentStorage</span> Content Seen?1 5 3 4</p>
+<h2>Section 11</h2>
+<p>6 2 9 8 7</p>
+<h2>Section 10</h2>
+<div class="figure-label">Figure 4</div>
+<h3>Step 1: Add seed URLs to the URL Frontier</h3>
+<h3>Step 2: HTML Downloader fetches a list of URLs from URL Frontier.</h3>
+<h3>Step 3: HTML Downloader gets IP addresses of URLs from DNS resolver and starts</h3>
+<p>downloading.</p>
+<h3>Step 4: Content Parser parses HTML pages and checks if pages are malformed.</h3>
+
+</div>
+<div class="page-divider">Page 9</div>
+<div class="page-content" data-page="9">
+<h3>Step 5: After content is parsed and validated, it is passed to the “Content Seen?” component.</h3>
+<h3>Step 6: “Content Seen” component checks if a HTML page is already in the storage.</h3>
+<p>If it is in the storage, this means the same content in a different <span class="inline-code">URL</span> has already been processed. In this case, the <span class="inline-code">HTML</span> page is discarded. If it is not in the storage, the system has not processed the same content before. The content is passed to Link Extractor.</p>
+<h3>Step 7: Link extractor extracts links from HTML pages.</h3>
+<h3>Step 8: Extracted links are passed to the URL filter.</h3>
+<h3>Step 9: After links are filtered, they are passed to the “URL Seen?” component.</h3>
+<h3>Step 10: “URL Seen” component checks if a URL is already in the storage, if yes, it is</h3>
+<p>processed before, and nothing needs to be done.</p>
+<h3>Step 11: If a URL has not been processed before, it is added to the URL Frontier.</h3>
+<h3>Step 3 - Design deep dive</h3>
+<p>Up until now, we have discussed the high-level design. Next, we will discuss the most important building components and techniques in depth: Depth-first search (<span class="inline-code">DFS</span>) vs Breadth-first search (<span class="inline-code">BFS</span>) <span class="inline-code">URL</span> frontier <span class="inline-code">HTML</span> Downloader Robustness Extensibility Detect and avoid problematic content <span class="inline-code">DFS</span> vs <span class="inline-code">BFS</span> You can think of the web as a directed graph where web pages serve as nodes and hyperlinks (<span class="inline-code">URLs</span>) as edges. The crawl process can be seen as traversing a directed graph from one web page to others. Two common graph traversal algorithms are <span class="inline-code">DFS</span> and <span class="inline-code">BFS</span>. However, <span class="inline-code">DFS</span> is usually not a good choice because the depth of <span class="inline-code">DFS</span> can be very deep. <span class="inline-code">BFS</span> is commonly used by web crawlers and is implemented by a first-in-first-out (<span class="inline-code">FIFO</span>) queue. In a <span class="inline-code">FIFO</span> queue, <span class="inline-code">URLs</span> are dequeued in the order they are enqueued. However, this</p>
+
+</div>
+<div class="page-divider">Page 10</div>
+<div class="page-content" data-page="10">
+<h2>implementation has two problems:</h2>
+<p>Most links from the same web page are linked back to the same host. In Figure 5, all the links in wikipedia.com are internal links, making the crawler busy processing <span class="inline-code">URLs</span> from the same host (wikipedia.com). When the crawler tries to download web pages in parallel, Wikipedia servers will be flooded with requests. This is considered as “impolite”. . . . . . . wikipedia.com wikipedia.com/page1 wikipedia.com/page2 wikipedia.com/<span class="inline-code">pageN</span> wikipedia.com/page1/1 wikipedia.com/<span class="inline-code">pageN</span>/N wikipedia.com/<span class="inline-code">pageN</span>/1 wikipedia.com/page1/2 wikipedia.com/<span class="inline-code">pageN</span>/2 wikipedia.com/page2/1 wikipedia.com/page2/2</p>
+<div class="figure-label">Figure 5</div>
+<p>Standard <span class="inline-code">BFS</span> does not take the priority of a <span class="inline-code">URL</span> into consideration. The web is large and not every page has the same level of quality and importance. Therefore, we may want to prioritize <span class="inline-code">URLs</span> according to their page ranks, web traffic, update frequency, etc. <span class="inline-code">URL</span> frontier <span class="inline-code">URL</span> frontier helps to address these problems. A <span class="inline-code">URL</span> frontier is a data structure that stores <span class="inline-code">URLs</span> to be downloaded. The <span class="inline-code">URL</span> frontier is an important component to ensure politeness, <span class="inline-code">URL</span> prioritization, and freshness. A few noteworthy papers on <span class="inline-code">URL</span> frontier are mentioned in the reference materials [5] [9]. The findings from these papers are as follows:</p>
+
+</div>
+<div class="page-divider">Page 11</div>
+<div class="page-content" data-page="11">
+<p>Politeness Generally, a web crawler should avoid sending too many requests to the same hosting server within a short period. Sending too many requests is considered as “impolite” or even treated as denial-of-service (<span class="inline-code">DOS</span>) attack. For example, without any constraint, the crawler can send thousands of requests every second to the same website. This can overwhelm the web servers. The general idea of enforcing politeness is to download one page at a time from the same host. A delay can be added between two download tasks. The politeness constraint is implemented by maintain a mapping from website hostnames to download (worker) threads. Each downloader thread has a separate <span class="inline-code">FIFO</span> queue and only downloads <span class="inline-code">URLs</span> obtained from that queue. Figure 6 shows the design that manages politeness. Mapping Table Queue router Queue selector ... ... b1 b2 bn Worker thread <span class="inline-code">NWorker</span> thread 2Worker thread 1</p>
+<div class="figure-label">Figure 6</div>
+<p>Queue router: It ensures that each queue (b1, b2, … bn) only contains <span class="inline-code">URLs</span> from the same host. Mapping table: It maps each host to a queue.</p>
+
+</div>
+<div class="page-divider">Page 12</div>
+<div class="page-content" data-page="12">
+<p>Host Queue wikipedia.comb1 apple.com b2 ... ... nike.com bn</p>
+<div class="figure-label">Table 1</div>
+<p><span class="inline-code">FIFO</span> queues b1, b2 to bn: Each queue contains <span class="inline-code">URLs</span> from the same host. Queue selector: Each worker thread is mapped to a <span class="inline-code">FIFO</span> queue, and it only downloads <span class="inline-code">URLs</span> from that queue. The queue selection logic is done by the Queue selector. Worker thread 1 to N. A worker thread downloads web pages one by one from the same host. A delay can be added between two download tasks. Priority A random post from a discussion forum about Apple products carries very different weight than posts on the Apple home page. Even though they both have the “Apple” keyword, it is sensible for a crawler to crawl the Apple home page first. We prioritize <span class="inline-code">URLs</span> based on usefulness, which can be measured by <span class="inline-code">PageRank</span> [10], website traffic, update frequency, etc. “Prioritizer” is the component that handles <span class="inline-code">URL</span> prioritization. Refer to the reference materials [5] [10] for in-depth information about this concept.</p>
+<div class="figure-label">Figure 7 shows the design that manages URL priority.</div>
+
+</div>
+<div class="page-divider">Page 13</div>
+<div class="page-content" data-page="13">
+<p>f1 fnf2 Queue selector ... Prioritizer input <span class="inline-code">URLs</span> output <span class="inline-code">URLs</span></p>
+<div class="figure-label">Figure 7</div>
+<p>Prioritizer: It takes <span class="inline-code">URLs</span> as input and computes the priorities. Queue f1 to fn: Each queue has an assigned priority. Queues with high priority are selected with higher probability. Queue selector: Randomly choose a queue with a bias towards queues with higher priority.</p>
+<div class="figure-label">Figure 8 presents the URL frontier design, and it contains two modules:</div>
+<p>Front queues: manage prioritization Back queues: manage politeness</p>
+
+</div>
+<div class="page-divider">Page 14</div>
+<div class="page-content" data-page="14">
+<p>f1 fnf2 Front queue selector ... Prioritizer input <span class="inline-code">URLs</span> output <span class="inline-code">URLs</span> Mapping Table Back queue router Back queue selector ... ... b1 b2 bn Worker thread 1 Worker thread 2 Worker thread 3</p>
+<div class="figure-label">Figure 8</div>
+
+</div>
+<div class="page-divider">Page 15</div>
+<div class="page-content" data-page="15">
+<p>Freshness Web pages are constantly being added, deleted, and edited. A web crawler must periodically recrawl downloaded pages to keep our data set fresh. Recrawl all the <span class="inline-code">URLs</span> is time-consuming and resource intensive. Few strategies to optimize freshness are listed as follows: Recrawl based on web pages’ update history. Prioritize <span class="inline-code">URLs</span> and recrawl important pages first and more frequently. Storage for <span class="inline-code">URL</span> Frontier In real-world crawl for search engines, the number of <span class="inline-code">URLs</span> in the frontier could be hundreds of millions [4]. Putting everything in memory is neither durable nor scalable. Keeping everything in the disk is undesirable neither because the disk is slow; and it can easily become a bottleneck for the crawl. We adopted a hybrid approach. The majority of <span class="inline-code">URLs</span> are stored on disk, so the storage space is not a problem. To reduce the cost of reading from the disk and writing to the disk, we maintain buffers in memory for enqueue/dequeue operations. Data in the buffer is periodically written to the disk. <span class="inline-code">HTML</span> Downloader The <span class="inline-code">HTML</span> Downloader downloads web pages from the internet using the <span class="inline-code">HTTP</span> protocol. Before discussing the <span class="inline-code">HTML</span> Downloader, we look at Robots Exclusion Protocol first. Robots.txt Robots.txt, called Robots Exclusion Protocol, is a standard used by websites to communicate with crawlers. It specifies what pages crawlers are allowed to download. Before attempting to crawl a web site, a crawler should check its corresponding robots.txt first and follow its rules. To avoid repeat downloads of robots.txt file, we cache the results of the file. The file is downloaded and saved to cache periodically. Here is a piece of robots.txt file taken from https://www.amazon.com/robots.txt. Some of the directories like creatorhub are disallowed for Google bot. User-agent: Googlebot Disallow: /creatorhub/\* Disallow: /rss/people/\*/reviews Disallow: /gp/pdp/rss/\*/reviews</p>
+
+</div>
+<div class="page-divider">Page 16</div>
+<div class="page-content" data-page="16">
+<p>Disallow: /gp/cdp/member-reviews/ Disallow: /gp/aw/cr/ Besides robots.txt, performance optimization is another important concept we will cover for the <span class="inline-code">HTML</span> downloader. Performance optimization Below is a list of performance optimizations for <span class="inline-code">HTML</span> downloader.</p>
+<ol><li>Distributed crawl</li></ol>
+<p>To achieve high performance, crawl jobs are distributed into multiple servers, and each server runs multiple threads. The <span class="inline-code">URL</span> space is partitioned into smaller pieces; so, each downloader is responsible for a subset of the <span class="inline-code">URLs</span>. Figure 9 shows an example of a distributed crawl. <span class="inline-code">URL</span> Frontier . . . distribute <span class="inline-code">URLs</span> distribute <span class="inline-code">URLs</span> distribute <span class="inline-code">URLs</span> <span class="inline-code">HTML</span> Downloaders</p>
+<div class="figure-label">Figure 9</div>
+<ol><li>Cache DNS Resolver</li></ol>
+<p><span class="inline-code">DNS</span> Resolver is a bottleneck for crawlers because <span class="inline-code">DNS</span> requests might take time due to the synchronous nature of many <span class="inline-code">DNS</span> interfaces. <span class="inline-code">DNS</span> response time ranges from 10ms to 200ms. Once a request to <span class="inline-code">DNS</span> is carried out by a crawler thread, other threads are blocked until the first request is completed. Maintaining our <span class="inline-code">DNS</span> cache to avoid calling <span class="inline-code">DNS</span> frequently is an</p>
+
+</div>
+<div class="page-divider">Page 17</div>
+<div class="page-content" data-page="17">
+<p>effective technique for speed optimization. Our <span class="inline-code">DNS</span> cache keeps the domain name to <span class="inline-code">IP</span> address mapping and is updated periodically by cron jobs.</p>
+<ol><li>Locality</li></ol>
+<p>Distribute crawl servers geographically. When crawl servers are closer to website hosts, crawlers experience faster download time. Design locality applies to most of the system components: crawl servers, cache, queue, storage, etc.</p>
+<ol><li>Short timeout</li></ol>
+<p>Some web servers respond slowly or may not respond at all. To avoid long wait time, a maximal wait time is specified. If a host does not respond within a predefined time, the crawler will stop the job and crawl some other pages. Robustness Besides performance optimization, robustness is also an important consideration. We present a few approaches to improve the system robustness: Consistent hashing: This helps to distribute loads among downloaders. A new downloader server can be added or removed using consistent hashing. Refer to the &quot;Design consistent hashing&quot; chapter for more details. Save crawl states and data: To guard against failures, crawl states and data are written to a storage system. A disrupted crawl can be restarted easily by loading saved states and data. Exception handling: Errors are inevitable and common in a large-scale system. The crawler must handle exceptions gracefully without crashing the system. Data validation: This is an important measure to prevent system errors. Extensibility As almost every system evolves, one of the design goals is to make the system flexible enough to support new content types. The crawler can be extended by plugging in new modules.</p>
+<div class="figure-label">Figure 10 shows how to add new modules.</div>
+
+</div>
+<div class="page-divider">Page 18</div>
+<div class="page-content" data-page="18">
+<p>seed <span class="inline-code">URLs</span> <span class="inline-code">HTML</span> Downloader <span class="inline-code">DNS</span> Resolver Content Parser Link Extractor <span class="inline-code">URL</span> Filter <span class="inline-code">URL</span> Frontier <span class="inline-code">URL</span> Seen? <span class="inline-code">URLStorage</span> <span class="inline-code">ContentStorage</span> Content Seen? <span class="inline-code">PNG</span> Downloader Web Monitor Extension Module</p>
+<div class="figure-label">Figure 10</div>
+<p><span class="inline-code">PNG</span> Downloader module is plugged-in to download <span class="inline-code">PNG</span> files. Web Monitor module is added to monitor the web and prevent copyright and trademark infringements. Detect and avoid problematic content This section discusses the detection and prevention of redundant, meaningless, or harmful content.</p>
+<ol><li>Redundant content</li></ol>
+<p>As discussed previously, nearly 30% of the web pages are duplicates. Hashes or checksums help to detect duplication [11].</p>
+<ol><li>Spider traps</li></ol>
+<p>A spider trap is a web page that causes a crawler in an infinite loop. For instance, an infinite deep directory structure is listed as follows: http://www.spidertrapexample.com/foo/bar/foo/bar/foo/bar/...</p>
+
+</div>
+<div class="page-divider">Page 19</div>
+<div class="page-content" data-page="19">
+<p>Such spider traps can be avoided by setting a maximal length for <span class="inline-code">URLs</span>. However, no one-size- fits-all solution exists to detect spider traps. Websites containing spider traps are easy to identify due to an unusually large number of web pages discovered on such websites. It is hard to develop automatic algorithms to avoid spider traps; however, a user can manually verify and identify a spider trap, and either exclude those websites from the crawler or apply some customized <span class="inline-code">URL</span> filters.</p>
+<ol><li>Data noise</li></ol>
+<p>Some of the contents have little or no value, such as advertisements, code snippets, spam <span class="inline-code">URLs</span>, etc. Those contents are not useful for crawlers and should be excluded if possible.</p>
+<h3>Step 4 - Wrap up</h3>
+<p>In this chapter, we first discussed the characteristics of a good crawler: scalability, politeness, extensibility, and robustness. Then, we proposed a design and discussed key components. Building a scalable web crawler is not a trivial task because the web is enormously large and full of traps. Even though we have covered many topics, we still miss many relevant talking</p>
+<h2>points:</h2>
+<p>Server-side rendering: Numerous websites use scripts like <span class="inline-code">JavaScript</span>, <span class="inline-code">AJAX</span>, etc to generate links on the fly. If we download and parse web pages directly, we will not be able to retrieve dynamically generated links. To solve this problem, we perform server-side rendering (also called dynamic rendering) first before parsing a page [12]. Filter out unwanted pages: With finite storage capacity and crawl resources, an anti-spam component is beneficial in filtering out low quality and spam pages [13] [14]. Database replication and sharding: Techniques like replication and sharding are used to improve the data layer availability, scalability, and reliability. Horizontal scaling: For large scale crawl, hundreds or even thousands of servers are needed to perform download tasks. The key is to keep servers stateless. Availability, consistency, and reliability: These concepts are at the core of any large system’s success. Analytics: Collecting and analyzing data are important parts of any system because data is key ingredient for fine-tuning. Congratulations on getting this far! Now give yourself a pat on the back. Good job! Reference materials</p>
+
+</div>
+<div class="page-divider">Page 20</div>
+<div class="page-content" data-page="20">
+<p>[1] <span class="inline-code">US</span> Library of Congress: https://www.loc.gov/websites/ [2] <span class="inline-code">EU</span> Web Archive: http://data.europa.eu/webarchive [3] Digimarc: https://www.digimarc.com/products/digimarc-services/piracy-intelligence [4] Heydon A., Najork M. Mercator: A scalable, extensible web crawler World Wide Web, 2 (4) (1999), pp. 219-229 [5] By Christopher Olston, Marc Najork: Web Crawling. http://infolab.stanford.edu/~olston/publications/<span class="inline-code">crawling_survey</span>.pdf [6] 29% Of Sites Face Duplicate Content Issues: https://tinyurl.com/y6tmh55y [7] Rabin M.O., et al. Fingerprinting by random polynomials Center for Research in Computing Techn., Aiken Computation Laboratory, Univ. (1981) [8] B. H. Bloom, “Space/time trade-offs in hash coding with allowable errors,” Communications of the <span class="inline-code">ACM</span>, vol. 13, no. 7, pp. 422–426, 1970.</p>
+<h2>[9] Donald J. Patterson, Web Crawling:</h2>
+<p>https://www.ics.uci.edu/~lopes/teaching/cs221W12/slides/Lecture05.pdf [10] L. Page, S. Brin, R. Motwani, and T. Winograd, “The <span class="inline-code">PageRank</span> citation ranking: Bringing order to the web,” Technical Report, Stanford University, 1998. [11] Burton Bloom. Space/time trade-offs in hash coding with allowable errors. Communications of the <span class="inline-code">ACM</span>, 13(7), pages 422--426, July 1970. [12] Google Dynamic Rendering: https://developers.google.com/search/docs/guides/dynamic-r endering [13] T. Urvoy, T. Lavergne, and P. Filoche, “Tracking web spam with hidden style similarity,” in Proceedings of the 2nd International Workshop on Adversarial Information Retrieval on the Web, 2006. [14] H.-T. Lee, D. Leonard, X. Wang, and D. Loguinov, “<span class="inline-code">IRLbot</span>: Scaling to 6 billion pages and beyond,” in Proceedings of the 17th International World Wide Web Conference, 2008. Mark as Complete</p>
+
+</div>
+  </div>
+</body>
+</html>
